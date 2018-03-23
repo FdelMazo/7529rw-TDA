@@ -1,6 +1,21 @@
 def mergeSort(array):
-	n = len(array) - 1
-	while n > 0:
-		p = findMax(array, 0, n)
-		array[p], array[n] = array[n], array[p]
-		n -= 1
+	if len(array)<2: return array
+	medio = len(array)//2
+	mitad1, mitad2 = array[:medio], array[medio:]
+	izq = mergeSort(mitad1)
+	der = mergeSort(mitad2)
+	return merge(izq, der)
+	
+def merge(izq, der):
+	resultado = []
+	i, j = 0,0
+	while i<len(izq) and j<len(der):
+		if izq[i]<der[j]:
+			resultado.append(izq[i])
+			i+=1
+		else: 
+			resultado.append(der[j])
+			j+=1
+	resultado.extend(izq[i:])
+	resultado.extend(der[j:])
+	return resultado
