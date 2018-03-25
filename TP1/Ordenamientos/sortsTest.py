@@ -23,8 +23,8 @@ class TestListaVacia(unittest.TestCase):
 	def test003OrdenarListaVaciaQuickSort(self):
 		array = []
 		result = []
-		quickSort(array)
-		self.assertEqual(result, array)
+		arrayOrdenado = quickSort(array)
+		self.assertEqual(result, arrayOrdenado)
 
 	def test004OrdenarListaVaciaheapSort(self):
 		array = []
@@ -55,8 +55,8 @@ class TestListaDe2Elementos(unittest.TestCase):
 	def test003OrdenarLista2ElementosQuickSort(self):
 		array = [2, 1]
 		result = [1, 2]
-		quickSort(array)
-		self.assertEqual(result, array)
+		arrayOrdenado = quickSort(array)
+		self.assertEqual(result, arrayOrdenado)
 
 	def test004OrdenarLista2ElementosheapSort(self):
 		array = [2, 1]
@@ -87,8 +87,8 @@ class TestListaDe500Elementos(unittest.TestCase):
 	def test003OrdenarListaDe500ElementosQuickSort(self):
 		array = generarArrayRandom(500, 0, 1000)
 		result = sorted(array)
-		quickSort(array)
-		self.assertEqual(result, array)
+		arrayOrdenado = quickSort(array)
+		self.assertEqual(result, arrayOrdenado)
 
 	def test004OrdenarListaDe500ElementosheapSort(self):
 		array = generarArrayRandom(500, 0, 1000)
@@ -119,8 +119,8 @@ class TestListaDe1000Elementos(unittest.TestCase):
 	def test003OrdenarListaDe1000ElementosElementosQuickSort(self):
 		array = generarArrayRandom(1000, 0, 10000)
 		result = sorted(array)
-		quickSort(array)
-		self.assertEqual(result, array)
+		arrayOrdenado = quickSort(array)
+		self.assertEqual(result, arrayOrdenado)
 
 	def test004OrdenarListaDe1000ElementosElementosheapSort(self):
 		array = generarArrayRandom(1000, 0, 10000)
@@ -151,8 +151,8 @@ class TestListaDe500ElementosNegativos(unittest.TestCase):
 	def test003OrdenarListaDe500ElementosNegativosQuickSort(self):
 		array = generarArrayRandom(500, -1000, 0)
 		result = sorted(array)
-		quickSort(array)
-		self.assertEqual(result, array)
+		arrayOrdenado = quickSort(array)
+		self.assertEqual(result, arrayOrdenado)
 
 	def test004OrdenarListaDe500ElementosNegativosheapSort(self):
 		array = generarArrayRandom(500, -1000, 0)
@@ -183,8 +183,8 @@ class TestListaOrdenada(unittest.TestCase):
 	def test003OrdenarListaOrdenadaQuickSort(self):
 		array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		result = sorted(array)
-		quickSort(array)
-		self.assertEqual(result, array)
+		arrayOrdenado = quickSort(array)
+		self.assertEqual(result, arrayOrdenado)
 
 	def test004OrdenarListaOrdenadaheapSort(self):
 		array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
