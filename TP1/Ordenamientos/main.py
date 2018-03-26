@@ -26,7 +26,7 @@ def main():
 		print("\n\nComenzando ordenamientos sobre {} elementos\n".format(elementos))
 		for ordenamiento in SORTS:
 			print("Ejecutando {} con {} elementos del set '{}'".format(ordenamiento.__name__, elementos, args.set))
-			start_time = time.clock()
+			start_time = time.process_time()
 			lista = setALista(args.set, elementos)
 			ordenamiento(lista)
 			print("Tiempo final de ejecucion: {} segundos \n".format(time.clock() - start_time))
