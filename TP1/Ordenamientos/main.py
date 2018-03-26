@@ -1,7 +1,6 @@
 import argparse
 import time
 
-from generarArrayRandom import generarArrayRandom
 from heapSort import heapSort
 from mergeSort import mergeSort
 from quickSort import quickSort
