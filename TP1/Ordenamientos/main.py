@@ -29,6 +29,6 @@ def main():
 			start_time = time.process_time()
 			lista = setALista(args.set, elementos)
 			ordenamiento(lista)
-			print("Tiempo final de ejecucion: {} segundos \n".format(time.clock() - start_time))
+			print("Tiempo final de ejecucion: {} segundos \n".format(time.process_time() - start_time))
 
 main()
