@@ -8,7 +8,7 @@ from quickSort import quickSort
 from insertionSort import insertionSort
 from selectionSort import selectionSort
 
-SORTS = [(mergeSort, "mergeSort"), (quickSort, "quickSort"), (heapSort, "heapSort")]
+SORTS = [(insertionSort, "insertionSort), (selectionSort, "selectionSort"), (mergeSort, "mergeSort"), (quickSort, "quickSort"), (heapSort, "heapSort")]
 CANTIDAD_ELEMENTOS = [50, 100, 500, 1000, 2000, 3000, 4000, 5000, 7500, 10000]
 
 def setALista(nombre_archivo, cantidadElementos):
