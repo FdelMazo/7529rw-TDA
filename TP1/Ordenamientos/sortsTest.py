@@ -1,10 +1,14 @@
 import unittest
+import random
+
 from heapSort import heapSort
 from mergeSort import mergeSort
 from insertionSort import insertionSort
 from selectionSort import selectionSort
 from quickSort import quickSort
-from generarArrayRandom import generarArrayRandom
+
+def generarArrayRandom(n, low, high):
+	return [int(n*random.random()) for i in range(low, high)]
 
 class TestListaVacia(unittest.TestCase):
 
