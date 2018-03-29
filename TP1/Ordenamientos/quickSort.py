@@ -1,19 +1,19 @@
 def quickSort(array):
     if len(array) < 2 :
         return array
-    minors_list, pivot_list, major_list = _partition(array)
-    return quickSort(minors_list) + pivot_list + quickSort(major_list)
+    array_menores, array_pivotes, array_mayores = _particion(array)
+    return quickSort(array_menores) + array_pivotes + quickSort(array_mayores)
 
-def _partition(array):
+def _particion(array):
     pivot = array[0]
-    minors = []
-    pivots = []
-    majors = []
-    for element in array:
-        if element < pivot:
-            minors.append(element)
-        elif element == pivot:
-            pivots.append(element)
+    menores = []
+    pivotes = []
+    mayores = []
+    for elemento in array:
+        if elemento < pivot:
+            menores.append(elemento)
+        elif elemento == pivot:
+            pivotes.append(elemento)
         else:
-            majors.append(element)
-    return minors, pivots, majors
+            mayores.append(elemento)
+    return menores, pivotes, mayores

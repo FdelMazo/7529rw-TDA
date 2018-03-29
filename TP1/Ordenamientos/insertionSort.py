@@ -1,6 +1,6 @@
 def insertionSort(array):
-	n = len(array) - 1
-	for i in range(0, n):
+	tamanio = len(array) - 1
+	for i in range(0, tamanio):
 		if array[i + 1] < array[i]:
 			relocate(array, i + 1)
 

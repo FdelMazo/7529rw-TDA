@@ -1,14 +1,14 @@
 def selectionSort(array):
-	n = len(array) - 1
-	while n > 0:
-		p = findMax(array, 0, n)
-		array[p], array[n] = array[n], array[p]
-		n -= 1
+	tamanio = len(array) - 1
+	while tamanio > 0:
+		pos_max = buscarMax(array, 0, tamanio)
+		array[pos_max], array[tamanio] = array[tamanio], array[pos_max]
+		tamanio -= 1
 
 
-def findMax(array, a, b):
-	maxPos = a
-	for i in range(a + 1, b + 1, 1):
+def buscarMax(array, inicio, fin):
+	maxPos = inicio
+	for i in range(inicio + 1, fin + 1, 1):
 		if array[i] > array[maxPos]:
 			maxPos = i
 	return maxPos
