@@ -86,7 +86,7 @@ def guardarAsignacion(equipos, nombreArchivo):
     archivo.close()
     
 
-def jugadoresEquiposGS(nombreArchivoJugadores, extensionArchivoJugadores, nombreArchivoEquipos, extensionArchivoEquipos, archivoSalida, cantidadJugadores, cantidadEquipos, vacantesPorEquipo, crearArchivos):
+def matchingGS(nombreArchivoJugadores, extensionArchivoJugadores, nombreArchivoEquipos, extensionArchivoEquipos, archivoSalida, cantidadJugadores, cantidadEquipos, vacantesPorEquipo, crearArchivos):
     '''Todos los equipos y jugadores empiezan desasignados'''
     equipos = {} #O(1)
     jugadores = {} #O(1)
@@ -95,6 +95,3 @@ def jugadoresEquiposGS(nombreArchivoJugadores, extensionArchivoJugadores, nombre
     cargaDeArchivos(jugadores, equipos, nombreArchivoJugadores, extensionArchivoJugadores, nombreArchivoEquipos, extensionArchivoEquipos, cantidadJugadores, cantidadEquipos, vacantesPorEquipo) #O(cantidadJugadores * cantidadEquipos)
     asignacion(jugadores, equipos, cantidadEquipos, vacantesPorEquipo)
     guardarAsignacion(equipos, archivoSalida)
-
-# jugadoresEquiposGS('archivos/jugador_', '.prf', 'archivos/equipo_', '.prf', 'asignacion.txt', 200, 20, 10, 'y')
-jugadoresEquiposGS('archivos/jugador_', '.prf', 'archivos/equipo_', '.prf', 'asignacion.txt', 200, 20, 10, 'y')
