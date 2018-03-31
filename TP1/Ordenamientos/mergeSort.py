@@ -1,21 +1,10 @@
 def mergeSort(array):
-	if len(array)<2: return array
-	medio = len(array)//2
-	mitad1, mitad2 = array[:medio], array[medio:]
-	izq = mergeSort(mitad1)
-	der = mergeSort(mitad2)
-	return _mergeSort(izq, der)
-
-def _mergeSort(izq, der):
-	resultado = []
-	i, j = 0,0
-	while i<len(izq) and j<len(der):
-		if izq[i]<der[j]:
-			resultado.append(izq[i])
-			i+=1
-		else:
-			resultado.append(der[j])
-			j+=1
-	resultado.extend(izq[i:])
-	resultado.extend(der[j:])
-	return resultado
+        l = len(array)
+        if l < 2: return array
+        izq, der = mergeSort(array[:l//2]), mergeSort(array[l//2:])
+        resultado = []
+        while izq and der:
+                if izq[0] < der[0]: resultado.append(izq.pop(0))
+                else: resultado.append(der.pop(0))
+        resultado.extend(izq) if izq else resultado.extend(der)
+        return resultado

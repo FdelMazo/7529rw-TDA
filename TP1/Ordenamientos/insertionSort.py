@@ -1,13 +1,10 @@
 def insertionSort(array):
-	tamanio = len(array) - 1
-	for i in range(0, tamanio):
-		if array[i + 1] < array[i]:
-			relocate(array, i + 1)
-
-def relocate(array, p):
-	v = array[p]
-	i = p
-	while i > 0 and v < array[i - 1]:
-		array[i] = array[i - 1]
-		i -= 1
-	array[i] = v
+	l = len(array)
+	for i in range(l):
+            if i == (l - 1): return
+            if array[i + 1] < array[i]:
+                act = i + 1
+                for j in range(i, -1, -1):
+                    if array[act] < array[j]:
+                        array[act], array[j], act = array[j], array[act], j
+                    else: break
