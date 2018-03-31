@@ -48,14 +48,14 @@ def rutasASet(rutas):
 	return aux[1:]
 
 def exportCSV(diccionario, rutas):
-	claves = sorted(diccionario.claves())
+	claves = sorted(diccionario.keys())
 	cadena_aux = rutasASet(rutas)
 	with open(os.path.join('.',"estadisticas.csv"), "w") as archivo:
 		for clave in claves:
 			archivo.write(str(clave) + " Elementos," + cadena_aux + "\n")
 			aux = diccionario[clave]
-			setsclaves = sorted(aux.claves())
-			for sort in sorted(aux[setsclaves[0]].claves()):
+			setsclaves = sorted(aux.keys())
+			for sort in sorted(aux[setsclaves[0]].keys()):
 				linea = sort + ","
 				for sets in setsclaves:
 					linea+= str(aux[sets][sort])
