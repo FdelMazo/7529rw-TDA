@@ -59,30 +59,51 @@ def exportCSV(diccionario, rutas):
 					linea+= ","
 				archivo.write(linea[:-1] + "\n")
 			archivo.write("\n")
-### ultra hardcore todo esto, despues lo hago ver mas lindo (juani) ###				
+### ultra hardcore todo esto, despues lo hago ver mas lindo (juani) ###
+
+def obtenerTiempoDeEjecucionDelOrdenamiento(ordenamiento, lista):
+    """Recibe la funcion del ordenamiento y una lista de ints.
+    Devuelve el tiempo de ejecucion en segundos de dicho ordenamiento sobre la lista."""
+    start_time = time.process_time()
+    ordenamiento(lista)
+    tiempo = time.process_time() - start_time
+    return tiempo
+
+def actualizarDiccionario(dic, setNombre, elementos, ordenamientoNombre, tiempo):
+    """Recibe: diccionario, el nombre del set, los elementos del set, el nombre del ordenamiento y el tiempo que tardo
+    ejecucion con el set y la cantidad nombrada anteriormente."""
+    dic[elementos] = dic.get(elementos, {})
+    dic[elementos][setNombre] = dic[elementos].get(setNombre, {})
+    dic[elementos][setNombre][ordenamientoNombre] = tiempo
+
+def crearDiccionarioDeSets(set):
+    """Recibe el nombre clave que representa a los sets.
+    Crea un diccionario donde la clave es el nombre del set y el valor la lista de numeros"""
+    dic = {}
+    listaRutas = rutasPorPalabra(set)
+    for setRuta in listaRutas:
+        nombreSet = rutaASet(setRuta)
+        arraySet = setALista(setRuta, 10000)
+        dic[nombreSet] = arraySet
+    return dic
 
 def main():
-	'''	parser = argparse.ArgumentParser()
-	parser.add_argument('set',help='Nombre de archivo de set', nargs='?', action = 'store', default = "sets/set1.txt")
-	args = parser.parse_args()
-	'''
-	lista_rutas = sorted(rutasPorPalabra("hola"))
-	sys.setrecursionlimit(10000)
-	diccionario_auxiliar = {}
-	for ruta_set in lista_rutas: # esto tiene que ser una funcion aparte, posiblemente dos
-		for elementos in CANTIDAD_ELEMENTOS:
-			diccionario_auxiliar[elementos] = diccionario_auxiliar.get(elementos, {})
-			nombreSet = rutaASet(ruta_set)
-			diccionario_auxiliar[elementos][nombreSet] = diccionario_auxiliar[elementos].get(nombreSet, {})
-			print("\n\nComenzando ordenamientos sobre {} elementos\n".format(elementos))
-			for ordenamiento in SORTS:
-				print("Ejecutando {} con {} elementos del set '{}'".format(ordenamiento[0].__name__, elementos, ruta_set))
-				start_time = time.process_time()
-				lista = setALista(ruta_set, elementos)
-				ordenamiento[0](lista)
-				tiempo = time.process_time() - start_time
-				diccionario_auxiliar[elementos][nombreSet][ordenamiento[1]] = tiempo
-				print("Tiempo final de ejecucion: {} segundos \n".format(tiempo))
-	exportCSV(diccionario_auxiliar, lista_rutas)
+    '''	parser = argparse.ArgumentParser()
+    parser.add_argument('set',help='Nombre de archivo de set', nargs='?', action = 'store', default = "sets/set1.txt")
+    args = parser.parse_args()
+    '''
+    sys.setrecursionlimit(10000)
+    setDic = crearDiccionarioDeSets("set")
+    archivosDic = {}
+    for setNombre in sorted(setDic):
+        for elementos in CANTIDAD_ELEMENTOS:
+            print("\n\nComenzando ordenamientos sobre {} elementos\n".format(elementos))
+            for ordenamiento in SORTS:
+                print("Ejecutando {} con {} elementos del set '{}'".format(ordenamiento[0].__name__, elementos, setNombre))
+                lista = setDic[setNombre]
+                tiempo = obtenerTiempoDeEjecucionDelOrdenamiento(ordenamiento[0], lista[:elementos])
+                actualizarDiccionario(archivosDic, setNombre, elementos, ordenamiento[1], tiempo)
+                print("Tiempo final de ejecucion: {} segundos \n".format(tiempo))
+    exportCSV(archivosDic, sorted(rutasPorPalabra("set")))
 
 main()
