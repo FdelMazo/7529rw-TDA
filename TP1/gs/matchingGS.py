@@ -1,54 +1,49 @@
+import os
 from Jugador import Jugador
 from Equipo import Equipo
-from generarLigas import generarLiga
-from generarLigas import EXTENSION
+from generadorLigas import generarLiga
 
-def cargaDeArchivos(jugadores, equipos, nombreArchivoJugadores, nombreArchivoEquipos, cantidadJugadores, cantidadEquipos, vacantesPorEquipo):
+JUGADORES = "jugador"
+EQUIPOS = "equipo"
+EXTENSION = ".prf"
+DIRECTORIO = "archivos"
+
+def cargaDeArchivos(cantidadJugadores, cantidadEquipos, vacantes):
+    '''Recibe la cantidad de jugadores y de equipos de una liga y las vacantes de cada equipo. Devuelve un diccJugadores/diccEquipos con los identificadores de cada jugador/equipo como clave y un objeto Jugador/Equipo que lo representa como valor'''
+    diccJugadores = {}
+    diccEquipos = {}
+    for identificadorJugador in range(cantidadJugadores):
+        diccJugadores[identificadorJugador] = Jugador(identificadorJugador, leerPreferencias(identificadorJugador, JUGADORES))
+    for identificadorEquipo in range(cantidadEquipos):
+        diccEquipos[identificadorEquipo] = Equipo(identificadorEquipo, leerPreferencias(identificadorEquipo, EQUIPOS), vacantes)
+    return diccJugadores, diccEquipos
     
+def leerPreferencias(identificador, tipo):
+    '''Recibe un identificador de un objeto y su tipo. Lee las preferencias de dicho identificador y devuelve una lista con sus preferencias del tipo contrario.'''
     listaAux = []
-    for i in range(cantidadJugadores): #O(cantidadJugadores * cantidadEquipos)
-        numeroJugador = i + 1 #O(1)
-        with open(nombreArchivoJugadores + str(numeroJugador) + EXTENSION,"r") as archivo: #O(1)
-            for linea in archivo: #O(cantidadEquipos)
-                listaAux.append(int(linea.rstrip('\n')))
-        archivo.close() #O(1)
-        jugadores[numeroJugador] =  Jugador(numeroJugador, listaAux) #O(1)
-        
-    listaAux = []
-    for i in range(cantidadEquipos): #O(cantidadJugadores * cantidadEquipos)
-        numeroEquipo = i + 1 #O(1)
-        with open(nombreArchivoEquipos + str(numeroEquipo) + EXTENSION,"r") as archivo: #O(1)
-            for linea in archivo: #O(cantidadJugadores)
-                listaAux.append(int(linea.rstrip('\n')))
-        archivo.close() #O(1)
-        equipos[numeroEquipo] =  Equipo(numeroEquipo, listaAux, vacantesPorEquipo) #O(1)
+    ruta = os.path.join(DIRECTORIO,"{}_{}{}".format(tipo, identificador, EXTENSION))
+    with open(ruta,"r") as archivo: #O(1)
+        for linea in archivo: #O(cantidadEquipos o cantidadJugadores)
+            listaAux.append(int(linea.rstrip('\n')))
+    return listaAux
 
-
-def asignacion(diccJugadores, diccEquipos, cantidadEquipos, vacantesPorEquipo):
-    vacantesEnEquipos = cantidadEquipos * vacantesPorEquipo
-    
-    '''Mientras haya un equipo con vacantes.'''
-    while vacantesEnEquipos: #O(J*E)
-        for numero, equipo in dicEquipos.items():
+def asignacion(diccJugadores, diccEquipos, vacantesDisponibles):
+    '''Recibe un diccionario de jugadores y uno de equipos con sus respectivos objetos como valor y sus identificadores como clave y recibe la cantidad de vacantes totales disponibles entre todos los equipos. Asigna a cada objeto equipo a sus respectivos jugadores usando el algoritmo de Gale-Shapley.'''
+    while vacantesDisponibles: #O(J*E)
+        for equipo in diccEquipos.values():
             while equipo.getVacantes():
-                '''El equipo actual ofrece una vacante a su jugador favorito actual'''
-                numerojugadorActual = equipo.getFavorito() #O(1)
-                jugadorActual = diccJugadores[numerojugadorActual] #O(1)
-                
-                '''Si el jugador esta libre, acepta la vacante'''
+                favorito = equipo.getFavorito() #O(1)
+                jugadorActual = diccJugadores[favorito] #O(1)
                 if not jugadorActual.estaAsignado(): #O(1)
                     equipo.agregarJugador(jugadorActual) #O(1)
-                    vacantesEnEquipos -=1 #O(1)
+                    vacantesDisponibles -=1 #O(1)
                                 
                 else:
-                    '''Si no esta libre, pero prefiere más al equipo actual, acepta la vacante
-                    y el otro equipo pierde a ese jugador.'''
-                    if jugadorActual.compararPreferencias(equipo.getNumero(), jugadorActual.getLugarAsignado().getNumero()) > 0: #O(1)
-                        jugadorActual.getLugarAsignado().quitarJugador(jugadorActual) #O(1)
+                    equipoActual = jugadorActual.getLugarAsignado()
+                    if jugadorActual.compararPreferencias(equipo, equipoActual) > 0: #O(1)
+                        equipoActual.quitarJugador(jugadorActual) #O(1)
                         equipo.agregarJugador(jugadorActual) #O(1)
-                        
                 equipo.setearProximoFavorito() #O(1)
-
 
 def guardarAsignacion(diccEquipos, nombreArchivo):
     '''Recibe un diccionario de equipos con sus jugadores y un nombre de archivo. Escribe las asignaciones de los jugadores a dichos equipos en un archivo .txt de nombre recibido por parametro.'''
@@ -65,10 +60,8 @@ def matchingGS(cantidadJugadores, cantidadEquipos, vacantesPorEquipo, archivoSal
     Los jugadores y equipos deben estar guardados en la carpeta archivos.
     Todos los equipos y jugadores empiezan desasignados.
     Si no se le indica lo contrario, el algoritmo crea un set de prueba aleatorio de jugadores y equipos de cantidades recibidas por parametro.'''
-    equipos = {} #O(1)
-    jugadores = {} #O(1)
     if crearArchivos: #O(1)
         generarLiga(cantidadJugadores, cantidadEquipos) #O(cantidadJugadores * cantidadEquipos)
-    cargaDeArchivos(jugadores, equipos, nombreArchivoJugadores, nombreArchivoEquipos, cantidadJugadores, cantidadEquipos, vacantesPorEquipo) #O(cantidadJugadores * cantidadEquipos)
-    asignacion(jugadores, equipos, cantidadEquipos, vacantesPorEquipo)
+    jugadores, equipos = cargaDeArchivos(cantidadJugadores, cantidadEquipos, vacantesPorEquipo) #O(cantidadJugadores * cantidadEquipos)
+    asignacion(jugadores, equipos, cantidadEquipos * vacantesPorEquipo)
     guardarAsignacion(equipos, archivoSalida)

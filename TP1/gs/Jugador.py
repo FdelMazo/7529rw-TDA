@@ -36,8 +36,8 @@ class Jugador(EntidadConPreferencias):
         self.asignado = False
         self.lugarAsignado = None
     
-    def compararPreferencias(self, num1, num2):
-        for p in self.preferencias:
-            if num1 == p: return 1
-            elif num2 == p: return -1
+    def compararPreferencias(self, equipo1, equipo2):
+        for preferencia in self.preferencias:
+            if equipo1.getNumero() == preferencia: return 1
+            elif equipo2.getNumero() == preferencia: return -1
     '''Nunca debería ser cero '''

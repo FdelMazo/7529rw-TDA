@@ -23,7 +23,7 @@ class Equipo(EntidadConPreferencias):
         self.jugadores = jugadoresEquipo
         
     def getJugadores(self):
-        return jugadoresEquipo
+        return self.jugadores
     
     def getFavorito(self):
         return self.preferencias[self.posicionFavoritoActual]

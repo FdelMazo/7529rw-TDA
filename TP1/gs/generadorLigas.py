@@ -1,8 +1,8 @@
 import random
 import os
 
-JUGADORES = "jugador"
-EQUIPOS = "equipo"
+JUGADOR = "jugador"
+EQUIPO = "equipo"
 EXTENSION = ".prf"
 DIRECTORIO = "archivos"
 
@@ -15,10 +15,8 @@ def generarArchivoPrioridades(ruta, cantidad):
 
 def generarLiga(cantidadJugadores, cantidadEquipos):
     '''Recibe la cantidad de jugadores y de equipos y genera dichas cantidades de equipos y jugadores. Son guardados en la carpeta directorio_liga'''
-    if not os.path.exists(directorio_liga):
-        os.makedirs(directorio_liga)
     for contador in range(cantidadJugadores):
-        generarSetAleatorio(os.path.join(DIRECTORIO, "{}_{}{}".format(JUGADOR, contador, EXTENSION)), cantidadJugadores)
+        generarArchivoPrioridades(os.path.join(DIRECTORIO, "{}_{}{}".format(JUGADOR, contador, EXTENSION)), cantidadEquipos)
     for contador in range(cantidadEquipos):
-        generarSetAleatorio(os.path.join(DIRECTORIO, "{}_{}{}".format(EQUIPO, contador, EXTENSION)), cantidadEquipos)
+        generarArchivoPrioridades(os.path.join(DIRECTORIO, "{}_{}{}".format(EQUIPO, contador, EXTENSION)), cantidadJugadores)
 
