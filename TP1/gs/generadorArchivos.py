@@ -1,24 +1,17 @@
 import random
-def generarSetAleatorio(nombre, lista, cantidad):
-    arreglo = random.sample(lista, cantidad)
-    file = open(nombre,"w")
-    str_arreglo = ''.join(str(arreglo))
-    preferencias = str_arreglo.replace('[','').replace(']','')
-    file.write(preferencias)
-    file.close()
 
-def generarArchivos(nombreArchivoJugadores, extensionArchivoJugadores, cantidadJugadores, nombreArchivoEquipos, extensionArchivoEquipos, cantidadEquipos):
-    lista_equipos = []
-    for i in range(cantidadEquipos):
-        lista_equipos.append(i + 1)
+ARCHIVO_JUGADORES = "jugador"
+ARCHIVO_EQUIPOS = "equipo"
+EXTENSION = ".prf"
 
-    lista_jugadores = []
-    for i in range(cantidadJugadores):
-        lista_jugadores.append(i + 1)
+def generarSetAleatorio(nombre_archivo, cantidad):
+    prioridades = random.sample(range(cantidad), cantidad)
+    with open(nombre_archivo, "w") as archivo:
+        for prioridad in prioridades:
+            archivo.write(str(prioridad) + "\n")
 
-    for i in range(cantidadEquipos):
-        generarSetAleatorio(nombreArchivoEquipos + str(i + 1) + extensionArchivoJugadores, lista_jugadores, cantidadJugadores)
-        
-    for i in range(cantidadJugadores):
-        generarSetAleatorio(nombreArchivoJugadores + str(i + 1) + extensionArchivoEquipos, lista_equipos, cantidadEquipos)
-        
+def generarArchivos(cantidadJugadores, cantidadEquipos):
+    for contador in range(cantidadJugadores):
+        generarSetAleatorio("{}_{}{}".format(ARCHIVO_JUGADORES, contador, EXTENSION), cantidadJugadores)
+    for contador in range(cantidadEquipos):
+        generarSetAleatorio("{}_{}{}".format(ARCHIVO_EQUIPOS, contador, EXTENSION), cantidadEquipos)
