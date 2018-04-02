@@ -30,12 +30,10 @@ def rutasPorPalabra(palabra):
 	return lista_rutas
 
 def rutaASet(ruta):
-	'''Recibe una ruta de un archivo set y devuelve la cadena que representa a dicho set (ULTRA HARDCOREADO, hay que cambiarlo pero quiero visualizar el csv'''
-	aux = ""
-	for caracter in ruta:
-		if caracter.isdigit():
-			aux+=caracter
-	return "set " + aux
+    '''Recibe una ruta de un archivo set y devuelve la cadena que representa a dicho set (ULTRA HARDCOREADO, hay que cambiarlo pero quiero visualizar el csv'''
+    lista = ruta.split("/")
+    nombre = lista[-1]
+    return nombre[:-4]
 
 def rutasASet(rutas):
 	aux = ""
@@ -44,21 +42,22 @@ def rutasASet(rutas):
 		aux+= rutaASet(ruta)
 	return aux[1:]
 
-def exportCSV(diccionario, rutas):
-	keys = sorted(diccionario.keys())
-	cadena_aux = rutasASet(rutas)
-	with open(os.path.join('.',"estadisticas.csv"), "w") as archivo:
-		for key in keys:
-			archivo.write(str(key) + " Elementos," + cadena_aux + "\n")
-			aux = diccionario[key]
-			setsKeys = sorted(aux.keys())
-			for sort in sorted(aux[setsKeys[0]].keys()):
-				linea = sort + ","
-				for sets in setsKeys:
-					linea+= str(aux[sets][sort])
-					linea+= ","
-				archivo.write(linea[:-1] + "\n")
-			archivo.write("\n")
+def exportCSV(diccionario, rutas, nombre):
+    keys = sorted(diccionario.keys())
+    cadena_aux = rutasASet(rutas)
+    nombre = str(nombre) + ".csv"
+    with open(os.path.join('.', nombre), "w") as archivo:
+        for key in keys:
+            archivo.write(str(key) + " Elementos," + cadena_aux + "\n")
+            aux = diccionario[key]
+            setsKeys = sorted(aux.keys())
+            for sort in sorted(aux[setsKeys[0]].keys()):
+                linea = sort + ","
+                for sets in setsKeys:
+                    linea+= str(aux[sets][sort])
+                    linea+= ","
+                archivo.write(linea[:-1] + "\n")
+            archivo.write("\n")
 ### ultra hardcore todo esto, despues lo hago ver mas lindo (juani) ###
 
 def obtenerTiempoDeEjecucionDelOrdenamiento(ordenamiento, lista):
@@ -87,6 +86,16 @@ def crearDiccionarioDeSets(set):
         dic[nombreSet] = arraySet
     return dic
 
+def imprimirTiempoDeEjecucionDelOrdenamiento(setNombre, setDic, archivosDic):
+    for elementos in CANTIDAD_ELEMENTOS:
+        print("\n\nComenzando ordenamientos sobre {} elementos\n".format(elementos))
+        for ordenamiento in SORTS:
+            print("Ejecutando {} con {} elementos del set '{}'".format(ordenamiento[0].__name__, elementos, setNombre))
+            lista = setDic[setNombre]
+            tiempo = obtenerTiempoDeEjecucionDelOrdenamiento(ordenamiento[0], lista[:elementos])
+            actualizarDiccionario(archivosDic, setNombre, elementos, ordenamiento[1], tiempo)
+            print("Tiempo final de ejecucion: {} segundos \n".format(tiempo))
+
 def main():
     '''	parser = argparse.ArgumentParser()
     parser.add_argument('set',help='Nombre de archivo de set', nargs='?', action = 'store', default = "sets/set1.txt")
@@ -94,16 +103,14 @@ def main():
     '''
     sys.setrecursionlimit(10000)
     setDic = crearDiccionarioDeSets("set")
-    archivosDic = {}
+    peoresCasosDic = crearDiccionarioDeSets("descendente")
+    setArchivosDic = {}
+    peoresCasosArchivosDic = {}
     for setNombre in sorted(setDic):
-        for elementos in CANTIDAD_ELEMENTOS:
-            print("\n\nComenzando ordenamientos sobre {} elementos\n".format(elementos))
-            for ordenamiento in SORTS:
-                print("Ejecutando {} con {} elementos del set '{}'".format(ordenamiento[0].__name__, elementos, setNombre))
-                lista = setDic[setNombre]
-                tiempo = obtenerTiempoDeEjecucionDelOrdenamiento(ordenamiento[0], lista[:elementos])
-                actualizarDiccionario(archivosDic, setNombre, elementos, ordenamiento[1], tiempo)
-                print("Tiempo final de ejecucion: {} segundos \n".format(tiempo))
-    exportCSV(archivosDic, sorted(rutasPorPalabra("set")))
+        imprimirTiempoDeEjecucionDelOrdenamiento(setNombre, setDic, setArchivosDic)
+    for setNombre in sorted(peoresCasosDic):
+        imprimirTiempoDeEjecucionDelOrdenamiento(setNombre, peoresCasosDic, peoresCasosArchivosDic)
+    exportCSV(setArchivosDic, sorted(rutasPorPalabra("set")), "estadisticas")
+    exportCSV(peoresCasosArchivosDic, sorted(rutasPorPalabra("descendente")), "peoresCasos")
 
 main()
