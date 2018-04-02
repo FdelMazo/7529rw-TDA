@@ -1,31 +1,5 @@
 from Jugador import Jugador
 from Equipo import Equipo
-import random
-
-
-def generarSetAleatorio(nombre, lista, cantidad):
-    arreglo = random.sample(lista, cantidad) #O(cantidad)
-    file = open(nombre,"w") #O(1)
-    file.write(str(arreglo[0])) #O(1)
-    for i in range(1, len(arreglo)):#O(cantidad)
-        file.write('\n' + str(arreglo[i])) 
-    file.close() #O(1)
-
-def generarArchivos(nombreArchivoJugadores, extensionArchivoJugadores, cantidadJugadores, nombreArchivoEquipos, extensionArchivoEquipos, cantidadEquipos):
-    lista_equipos = [] #O(1)
-    for i in range(cantidadEquipos): #O(cantidadEquipos)
-        lista_equipos.append(i + 1)
-
-    lista_jugadores = [] #O(1)
-    for i in range(cantidadJugadores): #O(cantidadJugadores)
-        lista_jugadores.append(i + 1)
-
-    for i in range(cantidadEquipos): #O(cantidadEquipos * cantidadDeJugadores)
-        generarSetAleatorio(nombreArchivoEquipos + str(i + 1) + extensionArchivoJugadores, lista_jugadores, cantidadJugadores)
-        
-    for i in range(cantidadJugadores): #O(cantidadEquipos * cantidadDeJugadores)
-        generarSetAleatorio(nombreArchivoJugadores + str(i + 1) + extensionArchivoEquipos, lista_equipos, cantidadEquipos)
-        
 
 def cargaDeArchivos(jugadores, equipos, nombreArchivoJugadores, extensionArchivoJugadores, nombreArchivoEquipos, extensionArchivoEquipos, cantidadJugadores, cantidadEquipos, vacantesPorEquipo):
     
