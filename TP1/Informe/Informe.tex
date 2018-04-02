@@ -1,8 +1,5 @@
-\documentclass[titlepage,a4paper]{article}
+\documentclass[article,a4paper]{article}
 
-\usepackage{a4wide}
-\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,bookmarksopen=true]{hyperref}
-\usepackage{bookmark}
 \usepackage{amsmath}
 \usepackage{fancyhdr}
 \usepackage[spanish]{babel}
@@ -12,17 +9,18 @@
 \usepackage{float}
 \usepackage{minted}
 
-\pagestyle{fancy} % Encabezado y pie de página
+\pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{TP1 - 1c2018}
 \fancyhead[R]{Teoría de Algoritmos I - FIUBA}
 \renewcommand{\headrulewidth}{0.4pt}
 \fancyfoot[C]{\thepage}
 \renewcommand{\footrulewidth}{0.4pt}
+\setlength{\footskip}{17pt}
 
 \begin{document}
 
-\begin{titlepage} % Carátula
+\begin{titlepage}
 	\hfill\includegraphics[width=6cm]{fiuba.jpg}
     \centering
     \vfill
@@ -61,60 +59,28 @@
 \section{Cálculo Empírico de Tiempos de Ejecución}
 \subsection{Complejidad Teórica}
 \subsubsection{Selección}
-\begin{minted}[xleftmargin=\parindent,linenos]{python}
-def selectionSort(array):
-	l = len(array)
-	for i in range(l, 0, -1):
-		m = array.index(obtenerMaxHasta(array, i))
-		array[m], array[i - 1] = array[i - 1], array[m]
-		
-def obtenerMaxHasta(array, finArray):
-    max = array[0]
-    for i in range(finArray):
-        if array[i] > max: max = array[i]
-    return max
-\end{minted}
 
-1) Hallar la longitud de un arreglo es una operación $O(n)$, con n la cantidad de elementos del arreglo. A su vez, asignar dicho valor a una variable es de orden $O(1)$, por lo que el orden total de esta sentencia es de $O(n + 1)$
+De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: https://wiki.python.org/moin/TimeComplexity} del ordenamiento de selección, la complejidad teóricas es:
 
-2) La sentencia de for en sí misma se considera de orden $O(1)$, pero lo importante es que a partir de esa sentencia se generarán n iteraciones (n = l) . Luego se tiene un orden de sentencia de $O(1 + nf(n))$, donde $f(n)$ representa la complejidad dentro del for.
+$T seleccion(n) = O(1 + 1 + 1 + n * (1 + n + (1 + 1 + n (2) + 1)  + 4 ) ) = O(2n^2 + 9n + 3)$\\
 
-3) Asignar una variable se considera de orden $O(1)$, y hallar el índice de un elemento se considera $O(n)$, para una cantidad de elementos n arbitrariamente grande. Luego el orden de la sentencia es $O(1 + n + g(n))$ con $g(n)$ representa la complejidad de la función obtenerMaxHasta.
+Esto viene de analizar linea por linea teniendo en cuenta:
+\begin{itemize}
+\item Hacer una asignación y comparar variables: $O(1)$
+\item Operadores aritméticos básicos: $O(1)$
+\item Sacar la longitud de un arreglo: $O(1)$
+\item Hacer un ciclo definido que itera por todo el arreglo: $O(n * f(n))$
+\item Hallar el indice de un elemento: $O(n)$
+\end{itemize}
+Finalmente, queda:
 
-4) Asignar dos variables y hacer dos restas tiene un orden de $O(4)$.
+$Peor T selecccion(n) \in O(2n^2 + 9n + 3) \in O(n^2)$ 
 
-5) Asignar una variable es $O(1)$.
+$Promedio T selecccion(n)  \in O(2n^2 + 9n + 3) \in O(n^2)$
 
-6) La sentencia for en sí misma tiene un orden de $O(1)$, generando i iteraciones, con i la cantidad de elementos del sub arreglo del cual se quiere conocer el máximo. El orden de la sentencia es $O(1 + i h(n))$ con $h(n)$ dada por el análisis en el punto siguiente. Pero como n es arbitrariamente grande, entonces también lo son los sub arreglos que de él puedan desprenderse, pudiendo aproximar i n y por ende $O(1 + i h(n))  \approx  O(1 + n h(n))$.
-
-7) Hacer una comparación y luego asignar una variable da como resultado un orden de $O(2)$.
-
-8) Devolver una variable se considera de orden $O(1)$.
-
-Finalmente se tiene un orden de 
-$O( n + 1 + 1+ n (1 + n + (1+ 1 + n (2) + 1)  + 4 ) ) =
-O( 3n2 + 9n + 2)$
- 
-Luego, denominando al peor tiempo de ordenamiento por selección como PeorTseleccción(n):
-$PeorTseleccción(n) \in O( 3n2 + 9n + 2)$ 
-
-y análogamente, denominando al tiempo promedio del ordenamiento de selección $PromedioTseleccción(n): PromedioTseleccción(n)  \in O( 3n2 + 9n + 2)$. 
 
 \subsubsection{Inserción}
-\begin{minted}[xleftmargin=\parindent,linenos]{python}
-def insertionSort(array):
-	l = len(array)
-	for i in range(l):
-            if i == (l - 1): return
-            if array[i + 1] < array[i]:
-                act = i + 1
-                for j in range(i, -1, -1):
-                    if array[act] < array[j]:
-                        array[act], array[j], act = array[j], array[act], j
-                    else: break
-\end{minted}
 
-1)  Hallar la longitud de un arreglo es una operación $O(n)$, con n la cantidad de elementos del arreglo. A su vez, asignar dicho valor a una variable es de orden $O(1)$, por lo que el orden total de esta sentencia es de $O(n + 1)$.
 
 2) La sentencia de for en sí misma se considera de orden $O(1)$, pero lo importante es que a partir de esa sentencia se generarán n iteraciones (n = l) .  Luego se tiene un orden de sentencia de $O(1 + nf(n))$, donde $f(n)$ representa la complejidad dentro del for.
 
@@ -123,6 +89,7 @@ def insertionSort(array):
 4) Hacer una suma y una comparación tiene un orden de $O(2)$. Como para todos los análisis se considera el peor caso, se debe considerara que esta comparación siempre da un resultado verdadero, y por ende, el algoritmo continúa (o bien, aunque fuera para la mayoría de los casos, con un n suficientemente grande, sería aproximadamente n).
 
 5) Hacer una suma y asignarlo a una variable es $O(2)$.
+
 6) La sentencia for en sí misma tiene un orden de $O(1)$, generando i iteraciones, con i la cantidad de elementos del sub array de los elementos predecesores al actual. Como n es arbitrariamente grande, entonces también debe ser así considerados el conjunto de elementos menores a uno dado (), pudiendo aproximar i n y por ende el orden termina siendo $O(1 + i h(n))  \approx  O(1 + n h(n))$ con $h(n)$ dada por el análisis en los puntos siguientes.
 
 7) Hacer una comparación tiene un orden de $O(1)$.
@@ -132,15 +99,13 @@ def insertionSort(array):
 9) Hacer un return tiene un orden de $O(1)$. Como se considera el peor caso, se asume que la mayoría de las veces el algoritmo continuará dando la condición anterior el valor de verdadero, y por ende, esta sentencia no se ejecuta.
 
 Finalmente se tiene un orden de:
-$O( n + 1 + 1 + n(3 + 2 + 2 + 1 + n(1 + 3) ) ) = O( 4n2 + 9n + 2)$
+$O( 1 + 1 + 1 + n(3 + 2 + 2 + 1 + n(1 + 3) ) ) = O( 3n^2 + 9n + 3)$
 
 Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$posibles distribuciones de los elementos, sólo una estará ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo también tiene orden cuadrático.
 
-Denominando al peor tiempo de ordenamiento por inserción como $PeorTinserción(n):
-PeorTinserción(n) \in O(4n2 + 9n + 2)$
+$PeorTinserción(n) \in O(3n^2 + 9n + 3)$
 
-y análogamente, denominando al tiempo promedio del ordenamiento de inserción $PromedioTinserción(n):
-PromedioTinserción(n) \in O(4n2 + 9n + 2) $
+$PromedioTinserción(n) \in O(3n^2 + 9n + 3) $
 
 \subsubsection{Quicksort}
 \begin{minted}[xleftmargin=\parindent,linenos]{python}
@@ -361,9 +326,6 @@ Con respecto al caso promedio, los tiempos se cumplieron de forma exactamente co
 
 
 
-
-
-
 \section{Algoritmo Gale-Shapley}
 
 \subsection{Algoritmo}
@@ -441,6 +403,9 @@ En el anexo junto con el código del algoritmo se ve la posibilidad que brinda d
 20: 42 83 13 128 53 50 144 89 121 95
 \end{verbatim}
 
+
+
+\appendix
 \section{Ejecución y compilación}
 
 \subsection{Compilación}
@@ -491,5 +456,6 @@ Por ejemplo, para cumplir con la consigna se requieren los siguientes comandos:
 >>> matchingGS('archivos/jugador_', '.prf', 'archivos/equipo_', '.prf', 'asignacion.txt', 200, 20, 10, 'y')
 \end{minted}
 
+\section{Tablas}
 
 \end{document}
