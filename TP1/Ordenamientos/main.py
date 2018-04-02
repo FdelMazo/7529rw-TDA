@@ -55,15 +55,26 @@ def main():
     parser.add_argument('set',help='Nombre de archivo de set', nargs='?', action = 'store', default = "sets/set1.txt")
     args = parser.parse_args()
     '''
+    """Como correr el main: python3 main.py 1.c o 1.f"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('ejercicio', help='Punto del TP1 que se desea ejecutar. Puntos disponibles:'
+                                          '1.c (ejecutar tiempos de los ordenamientos),'
+                                          '1.f (ejecutar peores casos de los ordenamientos)', nargs='?', action='store', default=None)
+    args = parser.parse_args()
+
     sys.setrecursionlimit(10000)
     setDic = crearDiccionarioDeSets("set")
     peoresCasosDic = crearDiccionarioDeSets("descendente")
     setArchivosDic = {}
     peoresCasosArchivosDic = {}
-    for setNombre in sorted(setDic):
-        imprimirTiempoDeEjecucionDelOrdenamiento(setNombre, setDic, setArchivosDic)
-    for setNombre in sorted(peoresCasosDic):
-        imprimirTiempoDeEjecucionDelOrdenamiento(setNombre, peoresCasosDic, peoresCasosArchivosDic)
+    if str(args.ejercicio) == "1.c":
+        for setNombre in sorted(setDic):
+            imprimirTiempoDeEjecucionDelOrdenamiento(setNombre, setDic, setArchivosDic)
+    elif str(args.ejercicio) == "1.f":
+        for setNombre in sorted(peoresCasosDic):
+            imprimirTiempoDeEjecucionDelOrdenamiento(setNombre, peoresCasosDic, peoresCasosArchivosDic)
+    else:
+        print("WRONG!")
     exportCSV(setArchivosDic, sorted(rutasPorPalabra("set")), "estadisticas")
     exportCSV(peoresCasosArchivosDic, sorted(rutasPorPalabra("descendente")), "peoresCasos")
 

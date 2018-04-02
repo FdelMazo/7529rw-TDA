@@ -14,7 +14,6 @@ def rutasPorPalabra(palabra):
 		for archivo in contenido:
 			if palabra in archivo:
 				lista_rutas.append((os.path.join(origen, archivo)))
-	print(lista_rutas)
 	return lista_rutas
 
 def rutaASet(ruta):
