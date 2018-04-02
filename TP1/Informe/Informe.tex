@@ -1,7 +1,10 @@
 \documentclass[article,a4paper]{article}
 
+\usepackage{a4wide}
 \usepackage{amsmath}
 \usepackage{fancyhdr}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,bookmarksopen=true]{hyperref}
+\usepackage{soul}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -60,19 +63,22 @@
 \subsection{Complejidad Teórica}
 \subsubsection{Selección}
 
-De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: https://wiki.python.org/moin/TimeComplexity} del ordenamiento de selección, la complejidad teóricas es:
+\hl{El ordenamiento de seleccion consiste en.....}
 
-$T seleccion(n) = O(1 + 1 + 1 + n * (1 + n + (1 + 1 + n (2) + 1)  + 4 ) ) = O(2n^2 + 9n + 3)$\\
+De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: \url{https://wiki.python.org/moin/TimeComplexity}} del ordenamiento de selección, la complejidad teóricas es:
+
+$T seleccion(n) = O(1 + 1 + 1 + n * (1 + n + (1 + 1 + n (2) + 1)  + 4 ) ) = O(2n^2 + 9n + 3) \in O(n^2)$\\
 
 Esto viene de analizar linea por linea teniendo en cuenta:
 \begin{itemize}
 \item Hacer una asignación y comparar variables: $O(1)$
 \item Operadores aritméticos básicos: $O(1)$
 \item Sacar la longitud de un arreglo: $O(1)$
-\item Hacer un ciclo definido que itera por todo el arreglo: $O(n * f(n))$
+\item Hacer un ciclo definido que itera por todo el arreglo: $O(n * f(n))$ siendo $f(n)$ lo que hay dentro del ciclo.
 \item Hallar el indice de un elemento: $O(n)$
 \end{itemize}
-Finalmente, queda:
+
+\hl{Este ordenamiento itera siempre por el arreglo sin importar su disposicion inicial. Por lo tanto, su peor caso y su caso promedio son iguales al tiempo analizado... :}
 
 $Peor T selecccion(n) \in O(2n^2 + 9n + 3) \in O(n^2)$ 
 
@@ -81,210 +87,128 @@ $Promedio T selecccion(n)  \in O(2n^2 + 9n + 3) \in O(n^2)$
 
 \subsubsection{Inserción}
 
+\hl{El ordenamiento de insercion consiste en... Al igual que el de seleccion, el algoritmo consiste de dos ciclos anidados que recorren el arreglo entero, por lo tanto, el tiempo esperado sera cuadratico}
 
-2) La sentencia de for en sí misma se considera de orden $O(1)$, pero lo importante es que a partir de esa sentencia se generarán n iteraciones (n = l) .  Luego se tiene un orden de sentencia de $O(1 + nf(n))$, donde $f(n)$ representa la complejidad dentro del for.
+Este ordenamiento usa las mismas herramientas usadas en el ordenamiento de selección. Por lo tanto, con las consideraciones anteriores tomadas, queda:
 
-3) Hacer una comparación y una resta tiene un orden de $O(2)$ (se asume que el return no se produce en la mayoría de los casos).
+$O( 1 + 1 + 1 + n(3 + 2 + 2 + 1 + n(1 + 3) ) ) = O(3n^2 + 8n + 3) \in O(n^2)$
 
-4) Hacer una suma y una comparación tiene un orden de $O(2)$. Como para todos los análisis se considera el peor caso, se debe considerara que esta comparación siempre da un resultado verdadero, y por ende, el algoritmo continúa (o bien, aunque fuera para la mayoría de los casos, con un n suficientemente grande, sería aproximadamente n).
+\hl{Siendo la condicion de corte que en la iteracion el elemento actual no sea menor a lo iterado descendientemente, el peor caso del algoritmo es donde el arreglo inicial esta dispuesto de manera descendiente, de tal forma que el ciclo sea ejecutado sin cortes.}
 
-5) Hacer una suma y asignarlo a una variable es $O(2)$.
+$PeorTinserción(n) \in O(3n^2 + 8n + 3) \in O(n^2)$
 
-6) La sentencia for en sí misma tiene un orden de $O(1)$, generando i iteraciones, con i la cantidad de elementos del sub array de los elementos predecesores al actual. Como n es arbitrariamente grande, entonces también debe ser así considerados el conjunto de elementos menores a uno dado (), pudiendo aproximar i n y por ende el orden termina siendo $O(1 + i h(n))  \approx  O(1 + n h(n))$ con $h(n)$ dada por el análisis en los puntos siguientes.
+\hl{Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$ posibles distribuciones de los elementos, solo una estara ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.}
 
-7) Hacer una comparación tiene un orden de $O(1)$.
-
-8) Asignar tres variables tiene un orden de $O(3)$.
- 
-9) Hacer un return tiene un orden de $O(1)$. Como se considera el peor caso, se asume que la mayoría de las veces el algoritmo continuará dando la condición anterior el valor de verdadero, y por ende, esta sentencia no se ejecuta.
-
-Finalmente se tiene un orden de:
-$O( 1 + 1 + 1 + n(3 + 2 + 2 + 1 + n(1 + 3) ) ) = O( 3n^2 + 9n + 3)$
-
-Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$posibles distribuciones de los elementos, sólo una estará ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo también tiene orden cuadrático.
-
-$PeorTinserción(n) \in O(3n^2 + 9n + 3)$
-
-$PromedioTinserción(n) \in O(3n^2 + 9n + 3) $
-
-\subsubsection{Quicksort}
-\begin{minted}[xleftmargin=\parindent,linenos]{python}
-def quickSort(array):
-    if len(array) < 2 : return array
-    pivote = array[0]
-    menores, pivotes, mayores = [], [], []
-    for elemento in array:
-        if elemento < pivote:
-            menores.append(elemento)
-        else:
-            pivotes.append(elemento) if (elemento == pivote) else mayores.append(elemento)            
-    return quickSort(menores) + pivotes + quickSort(mayores)
-\end{minted}
-
-1) Hallar la longitud de un arreglo es una operación $O(n)$, con n la cantidad de elementos del arreglo. A su vez, realizar una comparación es $O(1)$, y como para la mayoría de los casos se debe considerar que el return no se produce, se tiene una sentencia de orden $O(n)$. 
-
-2) Asignar una variable es $O(1)$.
-
-3) Inicializar tres variables es $O(3)$.
-
-4) La sentencia for por sí misma tiene un orden de $O(1)$, generando n iteraciones, con n la cantidad de elementos del arreglo. Luego se tiene un orden de sentencia de $O(1 + nf(n))$, donde $f(n)$ representa la complejidad dentro del for.
-
-5) Realizar una comparación es $O(1)$.
-
-6) Agregar un elemento a una lista es $O(1)$.
-
-7) La complejidad de la comparación ya está contemplada en el item 5.
-
-8) Realizar una comparación es $O(1)$, y agregar un elemento a una lista también, por lo que se tiene una complejidad de $O(2)$, y por considerar el peor caso, es está la complejidad que se considera para la operación dentro del for (sumada a la de la primera comparación).
-
-9) Para analizar la recursividad, se recurre al Teorema Maestro, ya que este algoritmo utiliza el principio de divisiòn y conquista. Sea tiene el tiempo de quicksort:
-
-$Tquicksort(n) = a.Tquicksort(\frac{n}{b}) + f(n^d)$
-
-La cantidad de llamadas recursivas (a) son dos. Para analizar b, se debe considerar dos casos. Por un lado, en el caso promedio, b será igual a 2, ya que en un arreglo arbitrariamente grande, es mucho más probable tomar en cualquier posición a un elemento alejado de las cotas superiores e inferiores que muy próximo a ellas, por lo que la recursión dividirá el problema en “dos partes iguales” (probablemente nunca sean exactamente iguales, pero con un n arbitrariamente grande, las diferencias que puedan existir son despreciables en tanto el pivote elegido no esté lo suficientemente próximo a una cota superior o inferior). Pero existe un peor caso en donde el pivote elegido es una cota, y en general, siempre se toma una cota como pivote inicial (por ejemplo, si el arreglo ya estuviera ordenado, ya que en esta implementación siempre se toma como pivote al primer elemento del arreglo parametrizado). Para este peor caso (pero a su vez menos probable) se tiene que b=1, ya que todos (o casi todos, para n muy grande es indistinguible) los elementos quedan “a la derecha o a la izquierda” del pivote. 
-
-Por último, el tiempo de las llamadas no recursivas es $O(4n + 4)$, por lo que $d=1$ (siendo que la ecuación aproxima dicho orden al lineal). Se tiene entonces:
-
-$PromedioTquicksort(n) = 2PromedioTquicksort(\frac{n}{2}) + O(n)$
-
-
-$PromedioTquicksort(n) = $ $\begin{cases}
-  n \log b  & \text{si }a > b^d\\    
-  n^{\log n} & \text{si }a = b^d\\    
-  n^d & \text{si }a < b^d\\    
-\end{cases}$
-
-Para este caso, como $2 = 2^1$, se tiene que $PromedioTquicksort(n) = (n \log n)$, por lo que:
-
-$PromedioTquicksort(n) \in O(n \log n))$
-
-Para el caso de b=1, no se puede aplicar el teorema del maestro, porque no hay “división y conquista” propiamente dicha (el arreglo no se subdivide apreciablemente). Para este caso, la recursividad funciona como un nuevo llamado a la estructura anteriormente analizada del código (items 1 a 8), por lo que en un peor caso donde el arreglo está ordenado, esta nueva llamada se produce n veces (nuevamente, por considerar n lo suficientemente grande), y para este caso se tiene una complejidad de $O( n(4n + 4) ) =  O( 4n^2 + 4n)$
-
-Denominando al tiempo promedio de quicksort PeorTquicksort(n):
-
-$PeorTquicksort(n) \in O(4n^2 + 4n)$
-
-\subsubsection{Heapsort}
-\begin{minted}[xleftmargin=\parindent,linenos]{python}
-def heapSort(array):
-    heapify(array, len(array))
-    aux_heap = list(array)
-    array.clear()
-    while aux_heap:
-        array.append(heappop(aux_heap))
-\end{minted}
-1)  El heapify de un arreglo es $O(n)$ con n la cantidad de elementos del arreglo.
-
-2) Duplicar el array es $O(n)$, y asignarlo a una variable es $O(1)$ por lo que para esta sentencia se tiene una complejidad de $O(n + 1)$.
-
-3) Vaciar un array es $O(1)$. 
-
-4) La propia sentencia del while tiene una complejidad de $O(1)$, y a su vez genera n iteraciones (ya que el heap tiene n elementos). Luego, la complejidad de esta sentencia es $O( 1 + nf(n))$ con $f(n)$ la función que describe la complejidad del punto siguiente.
-
-5) Eliminar un elemento del heap es $O(\log n)$ y agregarlo al array es $O(1)$. Luego se tiene que la complejidad de la sentencia es $O(1 + \log n)$. 
-
-$O( n + n +1 + 1 +1+n(1 + \log n  ) = O( 3n + 3 +n \log n )$ 
-
-Denominando al peor tiempo heapsort como PeorTheapsort(n):
-
-$PeorTheapsort(n)  \in O(3n + 3 +n \log n$
-
-y análogamente, denominando al tiempo promedio de heapsort PromedioTheapsort(n):
-
-$PromedioTheapsort(n) \in O(3n + 3 +n \log n$ 
+$PromedioTinserción(n) \in O(3n^2 + 8n + 3) \in O(n^2)$
 
 \subsubsection{Mergesort}
-\begin{minted}[xleftmargin=\parindent,linenos]{python}
-def mergeSort(array):
-        l = len(array)
-        if l < 2: return array
-        izq, der = mergeSort(array[:l//2]), mergeSort(array[l//2:])
-        resultado = []
-        while izq and der:
-                if izq[0] < der[0]: resultado.append(izq.pop(0))
-                else: resultado.append(der.pop(0))
-        resultado.extend(izq) if izq else resultado.extend(der)
-        return resultado
-\end{minted}
 
-1)  Hallar la longitud de un arreglo es una operación $O(n)$, con n la cantidad de elementos del arreglo. A su vez, asignar dicho valor a una variable es de orden $O(1)$, por lo que el orden total de esta sentencia es de $O(n + 1)$.
+\hl{El algoritmo Mergesort consiste en.... El metodo usado es el de Division y Conquista, y por lo tanto, para calcular su complejidad teorica va a ser utilizado el Teorema Maestro}
 
-2) Hacer la comparación y el return tiene un orden de $O(2)$, pero como se asume el análisis de un caso con un n arbitrariamente grande, no se puede asumir que la mayoría de las veces se tendrá el return, por lo que la complejidad de esta sentencia pasa a ser $O(1)$.
+En cuanto a código se introducen nuevos metodos:
 
-3) Asignar dos variables sumado a dos operaciones da una complejidad de $O(4)$. La parte recursiva se analizará al final.
+\begin{itemize}
+\item \texttt{Append} y \texttt{pop}: $O(1)$
+\item \texttt{Extend}: $O(k)$ siendo k la cantidad de elementos agregados 
+\end{itemize}
 
-4) Asignar una variable es $O(1)$.
+También es de notar que este es el primer algoritmo donde usamos llamadas recursivas, por su naturaleza de división y conquista.
 
-5) Hacer dos comparaciones es $O(2)$. A su vez esto genera n i iteraciones, ya que la suma de la parte izquierda como la derecha de todo el arreglo dan como resultado el arreglo entero. Luego la complejidad de esta sentencia es $O(2 + nf(n))$, donde $f(n)$ representa la complejidad dentro del while.
+Aplicando el Teorema Maestro: 
 
-6) Realizar una comparación, un pop del primer elemento y un append son todas operaciones $O(1)$, por lo que la sentencia es $O(3)$. 
-
-7) Esta sentencia no realiza una comparación, por lo que considerando el peor caso, se asume que el algoritmo entra a la sentencia descrita en 6, y por ende, la 7 no se ejecuta.
-
-8) Realizar una comparación es $O(1)$, y el extend agrega, en el peor de los casos, la mitad del arreglo original, por lo que la operación total es $O(1 + \frac{n}{2})$.
-
-9) El return es $O(1)$.
-
-Ni en el peor caso ni en el caso promedio se puede considerar que la lista tiene uno o ningún elemento, por lo que para analizar la complejidad de este algoritmo, considerando su recursividad,  se recurre al Teorema Maestro. Se tiene el tiempo de mergesort (tanto en el peor caso como en el caso promedio):
-
-$Tmergesort(n) = a.Tmergesort(\frac{n}{b}) + f(n^d)$
+$Tmergesort(n) = a.Tmergesort(\frac{n}{b}) + f(n^c)$
 
 La cantidad de llamadas recursivas (a) son dos. Cada llamada recursiva divide la entrada inicial a la mitad (b=2). Por último, el tiempo de las llamadas no recursivas es 
 
-$O(n +1 + 1 +4 + 1+ 2 +n(1 + 1 +1) + 1 + \frac{n}{2} +1 ) =O( \frac{9n}{2} +11 )$
+$O(1 + 1 + 1 +4 + 1+ 2 +n(1 + 1 +1) + 1 + \frac{n}{2} +1 ) = O( \frac{9n}{2} +11 )$
+
 (asumiendo un n lo suficientemente grande como para que se requieran intercalar aproximadamente n elementos la mayoría de las veces), por lo que d=1. Se tiene entonces:
 
 $Tmergesort(n) = 2.Tmergesort(\frac{n}{2}) + f(n)$
-Por el Teorema Maestro: Como $2 = 2^1$, se tiene que $Tmergesort(n) =(n \log n)$
 
-Luego, denominando al peor tiempo mergesort como PeorTmergesort(n): $PeorTmergesort(n) \in O(n \log n))$
+Como $(a = b^c)$ ($2 = 2^1$), se tiene que:
 
-y denominando al tiempo promedio de mergesort PromedioTmergesort(n): $PromedioTmergesort(n) \in O(n \log n))$
+$Tmergesort(n) \in O(n \log n)$
+
+\hl{Texto sobre peor tiempo y tiempo promedio de mergesort}
+
+$PeorTmergesort(n) \in O(n \log n))$
+
+$PromedioTmergesort(n) \in O(n \log n))$
+
+\subsubsection{Quicksort}
+
+\hl{El algoritmo Quicksort consiste en.... Al igual que en Mergesort, siendo Division y Conquista el paradigma utilizado, se usa el Teorema Maestro para calcular su complejidad.}
+
+Considerando las complejidades analizadas hasta ahora (en código no hay nada nuevo) y aplicando el Teorema Maestro se tiene:
+
+$Tquicksort(n) = a.Tquicksort(\frac{n}{b}) + f(n^c)$
+
+La cantidad de llamadas recursivas (a) son 2. Para analizar b, se debe considerar dos casos. Por un lado, en el caso promedio, b será igual a 2, ya que en un arreglo arbitrariamente grande, es mucho más probable tomar en cualquier posición a un elemento alejado de las cotas superiores e inferiores que muy próximo a ellas, por lo que la recursión dividirá el problema en “dos partes iguales” (probablemente nunca sean exactamente iguales, pero con un n arbitrariamente grande, las diferencias que puedan existir son despreciables en tanto el pivote elegido no esté lo suficientemente próximo a una cota superior o inferior). El tiempo de las llamadas no recursivas es $O(4n + 4)$, por lo que $c=1$
+
+Para este caso, como $(a = b^c)$ ($2 = 2^1$), se tiene que:
+
+$PromedioTquicksort(n) \in O(n \log n))$
+
+Pero existe un peor caso en donde el pivote elegido es una el menor o el mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$ elementos respectivamente. Por lo tanto, usamos como peor caso un arreglo ordenado descendientemente y tomando de pivote el primer elemento del arreglo. Para este peor caso se tiene que b=1, ya los elementos quedan “a la derecha o a la izquierda” del pivote. Para este caso, donde no se puede aplicar el teorema del maestro (porque no hay división y conquista propiamente dicha) queda:
+
+$PeorTquicksort(n) = O( n(4n + 4) ) =  O( 4n^2 + 4n) \in O(n^2)$
+
+\subsubsection{Heapsort}
+
+\hl{El algoritmo Heapsort consiste en.... }
+
+\hl{Se introduce el concepto de cola de priodidad / Heap (explicar apenitas). Los tiempos del heap de minimos implementado son...}
+
+\begin{itemize}
+\item \texttt{Heapify}: $O(x)$
+\item \texttt{Upheap}: $O(x)$
+\item \texttt{Downheap}: $O(x)$
+\item \texttt{Heappop}: $O(x)$
+\item \texttt{Heapush}: $O(x)$
+\end{itemize}
+
+Considerando todo esto queda: 
+
+$O( n + n +1 + 1 +1+n(1 + \log n  ) = O(3n + 3 + n \log n ) \in O(n \log n)$ 
+
+\hl{Texto sobre peor tiempo y tiempo promedio de mergesort}
+
+$PeorTheapsort(n)  \in O(3n + 3 + n \log n) \in O(n \log n)$
+
+$PromedioTheapsort(n) \in O(3n + 3 +n \log n) \in O(n \log n)$ 
 
 \subsection{Comparación}
 
 \subsubsection{Peores tiempos}
 
-$PeorTseleccción(n) \in O( 3n2 + 9n + 2)$ 
+En orden ascendiente de eficiencia:\\
 
-$PeorTinserción(n) \in O(4n2 + 9n + 2)$
+$PeorTinsercion(n) \in O(4n^2 + 9n + 2) \in O(n^2)$
 
-$PeorTquicksort(n) \in O(4n^2 + 4n)$
+$PeorTselecccion(n) \in O(3n^2 + 8n + 3) \in O(n^2)$ 
 
-$PeorTheapsort(n)  \in O(3n + 3 +n \log n$
+$PeorTquicksort(n) \in O(4n^2 + 4n) \in O(n^2)$
 
-$PeorTmergesort(n) \in O(n \log n))$
+$PeorTheapsort(n)  \in O(3n + 3 +n \log n) \in O(n \log n)$
 
-Luego, el orden ascendente en eficiencia en el peor caso es inmediato:
-inserción, selección, quicksort, heapsort y mergesort.
+$PeorTmergesort(n) \in O(n \log n)) \in O(n \log n)$
 
 \subsubsection{Tiempos promedio}
 
-$PromedioTseleccción(n)  \in O( 3n2 + 9n + 2)$
+En orden ascendiente de eficiencia:\\
 
-$PromedioTinserción(n) \in O(4n2 + 9n + 2) $
+$PromedioTinsercion(n) \in O(4n^2 + 9n + 2) \in O(n^2)$
 
-$PromedioTquicksort(n) \in O(n \log n))$
+$PromedioTselecccion(n)  \in O(3n^2 + 8n + 3) \in O(n^2)$
 
-$PromedioTheapsort(n) \in O(3n + 3 +n \log n$ 
+$PromedioTheapsort(n) \in O(3n + 3 +n \log n) \in O(n \log n)$ 
 
-$PromedioTmergesort(n) \in O(n \log n))$
+$PromedioTmergesort(n) \in O(n \log n)) \in O(n \log n)$
 
-El orden parcial ascendente en eficiencia: inserción, selección y heapsort es inmediato. Para poder terminar de ubicar en la escala a quicksort y mergesort, se pone el foco en la complejidad de su parte no recursiva: por parte de quicksort es O(4n + 4), y en el caso de mergesort es $O( \frac{9n}{2} +11 )$. De aqui que el orden para tiempos promedios en orden ascendente es: inserción, selección, heapsort, mergesort y quicksort .
+$PromedioTquicksort(n) \in O(n \log n)) \in O(n \log n)$\\
 
-Es decir, la diferencia fundamental en ambos casos es que en el peor caso quicksort será mucho menos eficiente.
-
-\subsection{Tiempos de ejecución}
-
-Se presentan los tiempos de ejecución en segundos, redondeados a tres decimales, de cada algoritmo con cada intervalo de cada set.
-
-% GRAFICO; TABLA EXCEL ANEXO
-
-\subsection{Tiempos medios}
-
-Se calcularon los promedios de cada tiempo para cada cantidad de elementos y cada algoritmo:
-
-% GRAFICO; PROMEDIO TABLA EXCEL ANEXO
+Para poder terminar de ubicar en la escala a quicksort y mergesort, se pone el foco en la complejidad de su parte no recursiva: por parte de quicksort es $O(4n + 4)$, y en el caso de mergesort es $O( \frac{9n}{2} +11 )$. Es decir, la diferencia fundamental en ambos casos es que en el peor caso quicksort será mucho menos eficiente.
 
 \subsection{Peores sets}
 
@@ -308,22 +232,33 @@ Para este algoritmo, el numero de comparaciones entre los elementos del arreglo 
 
 Como se analizó con el Teorema Maestro, Mergesort es de orden $O(n \log n)$, por lo que no presenta un peor caso para ningún set en general.
 
+\subsection{Tiempos de ejecución}
 
-\subsection{Tiempos medios}
+Se calcularon los promedios de cada tiempo para cada cantidad de elementos y cada algoritmo:
+
+\hl{TABLA DE PROMEDIOS}
+
+\hl{GRAFICOS}
 
 Es claro que el caso de orden solo afecta descendente en quicksort e insertionsort.
 Se ve en la comparación que para pocos elementos el comportamiento de los ordenamientos es similar. Pasando los mil elementos se ve como quicksort e insertsort empeoran notablemente. Para el set mayor, se ve que insertionSort tarda cuatro veces más, y quicksort tarda más de 200 veces lo que tardaba en promedio. El resto de los ordenamientos no se ve afectado notablemente.
 En el gráfico es más que notorio como quicksort tomó un orden cuadrático al igual que los ordenamientos por inserción y selección.
 
 En el siguiente gráfico se muestra la comparación explícita del insertion sort:
-y a continuación el análogo de quicksort:
+y a continuación el análogo de quicksort
+
+\hl{TABLA DE PEORES SETS}
+
+\hl{GRAFICOS DE PEORES SETS}
+
+\hl{La tabla entera con todas las ejecuciones puede verse en el anexo al final.}
+
 
 \subsection{Comparación con valores teóricos}
 
 De acuerdo a las complejidades analizadas para el peor caso, se predice que los algoritmos de selección inserción y quicksort tardarán mucho más en ordenar arreglos que heapsort o mergesort. Esto se cumple, con la salvedad que en el análisis teórico para el peor caso se preveía que el ordenamiento por selección tendría peor desempeño que quicksort, lo cual no ocurrió, por ser el set especialmente diseñado para que quicksort se comporte de forma poco eficiente.
 
 Con respecto al caso promedio, los tiempos se cumplieron de forma exactamente coherente con el orden de eficiencia predicho (en orden ascendente) en el análisis teórico: inserción, selección, heapsort, mergesort y quicksort. En síntesis, excepto por el peor caso de quicksort que no fue considerado de forma explícita, el análisis teórico se condice con los valores visualizados en la práctica.
-
 
 
 \section{Algoritmo Gale-Shapley}
@@ -408,42 +343,28 @@ En el anexo junto con el código del algoritmo se ve la posibilidad que brinda d
 \appendix
 \section{Ejecución y compilación}
 
-\subsection{Compilación}
-Como el trabajo fue realizado en python, no debe ser compilado. La versión de Python usada fue 3.6.1, en su versión de 64 bits (el código podría llegar a ser compatible con versiones previas de python 3, pero se recomienda utilizar la indicada).
+\section{Ejecución principal}
 
-\subsection{Generación de scripts}
-El script generarSetRandom.py permite generar los sets aleatorios Por ejemplo, si se desea crear un set de 100 elementos con números del 1 al 100 con el nombre “setDePrueba.txt” se debe escribir al final del archivo:
+\hl{Todo el codigo fue hecho en Python 3.6.1. Para ejecutar la parte de ordenamientos.. para la de stable matching...}
 
-generarSet(“setDePrueba.txt”, 1, 100, 100)
+\subsection{Generación de sets aleatorios}
 
-y ejecutarlo. O bien, importar el archivo y ejecutar la misma función:
+El script generarSetRandom.py permite generar los sets aleatorios de n numeros (en este caso, n=10000) en un rango determinado. Ejemplo de ejecución:
 
 \begin{minted}{shell}
 >>> from generarSetRandom import generarSet
->>> generarSet(“setDePrueba.txt”, 1, 100, 100)
-\end{minted}
-
-Para esto último, es necesario abrir python desde la ubicación donde se encuentra el archivo.
-
-El generarSet es una “muestra aleatoria” de números que no se repiten,  por lo que la cantidad dada en el tercer parámetro no debe superar el rango de las cotas. Es decir, no se puede pedir una cantidad de 100 de números del 1 al 10. Se eligió ese método para las pruebas para asegurar que siempre la muestra sea representativa. 
-
-La creación de los scripts ordenados de los peores casos se generaron también con este script:
-\begin{minted}{shell}
->>> from generarSetRandom import generarSet
->>> generarSet(“setDePrueba.txt”, 1, 100, 100)
+>>> generarSet("set1.txt", 1, 1000000, 10000)
 \end{minted}
 
 \subsection{Pruebas de ordenamientos}
-Se pueden realizar las pruebas de cada ordenamiento ejecutando directamente el test correspondiente al ordenamiento que se desea probar. Todas las pruebas son iguales, e incluyen asserts con ordenamientos aleatorios.
-Ejemplo de ejecución: python heapTest.py
-
-\subsection{Medición de tiempos}
-Para esto se debe importar el archivo medicionTiempos.py, y  llamar a la función medicionTiempos con la palabra clave de los archivos como parámetro. Por ejemplo, si los archivos se llaman “set” (set1, set2, etc.):
+Para verificar que los ordenamientos anden correctamente se realizaron varias pruebas unitarias que verfiquen distintos comportamientos desde los casos triviales hasta los casos borde y demás. Todas las pruebas son iguales, e incluyen asserts con ordenamientos aleatorios.
 
 \begin{minted}{shell}
->>> from medicionTiempos import medicionTiempos
->>> medicionTiempos(“set”)
+>>> python3 heapTest.py -v
 \end{minted}
+
+\subsection{Medición de tiempos}
+ Los tiempos de ejecución fueron calculados con el modulo \texttt{time} de Python, en particular su función \texttt{process\_time} \footnote{\url{https://docs.python.org/3/library/time.html\#process\_time}}.
 
 \subsection{Stable matching}
  Para generar un matching estable, se debe importar el archivo matchinGS.py y ejecutar la siguiente línea:
@@ -456,6 +377,6 @@ Por ejemplo, para cumplir con la consigna se requieren los siguientes comandos:
 >>> matchingGS('archivos/jugador_', '.prf', 'archivos/equipo_', '.prf', 'asignacion.txt', 200, 20, 10, 'y')
 \end{minted}
 
-\section{Tablas}
+\section{Tablas de ejecución}
 
 \end{document}
