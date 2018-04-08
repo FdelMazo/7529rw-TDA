@@ -236,21 +236,8 @@ Para este algoritmo, el numero de comparaciones entre los elementos del arreglo 
 
 Se calcularon los promedios de cada tiempo para cada cantidad de elementos y cada algoritmo:
 
-\begin{table}[h]
-\centering
-\caption{Tiempos promedio sobre 10 sets aleatorios}
-\resizebox{\textwidth}{!}{\begin{tabular}{lllllllllll}
-Promedios     & 50 Elementos & 100 Elementos & 500 Elementos & 1000 Elementos & 2000 Elementos & 3000 Elementos & 4000 Elementos & 5000 Elementos & 7500 Elementos & 10000 Elementos \\
-heapSort      & 0.0001918    & 0.0004454     & 0.0031486     & 0.0071124      & 0.0155359      & 0.0244543      & 0.0338884      & 0.0436388      & 0.0693577      & 0.0948624       \\
-insertionSort & 0.0001648    & 0.0005625     & 0.0131826     & 0.0514842      & 0.1984840      & 0.4477631      & 0.7776322      & 1.2132667      & 2.6847850      & 4.8147374       \\
-mergeSort     & 0.0001562    & 0.0003355     & 0.0022104     & 0.0047541      & 0.0107222      & 0.0173661      & 0.0247102      & 0.0328206      & 0.0544240      & 0.0787522       \\
-quickSort     & 0.0000776    & 0.0001754     & 0.0010672     & 0.0022888      & 0.0049410      & 0.0076537      & 0.0106931      & 0.0135835      & 0.0211154      & 0.0289411       \\
-selectionSort & 0.0001518    & 0.0004635     & 0.0098650     & 0.0401897      & 0.1618426      & 0.3629149      & 0.6486356      & 1.0275165      & 2.3131156      & 4.1221336      
-\end{tabular}}
-\end{table}
-
-\hl{GRAFICOS}
-
+\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{GraficoCasoRandom}}
+  
 Es claro que el caso de orden solo afecta descendente en quicksort e insertionsort.
 Se ve en la comparación que para pocos elementos el comportamiento de los ordenamientos es similar. Pasando los mil elementos se ve como quicksort e insertsort empeoran notablemente. Para el set mayor, se ve que insertionSort tarda cuatro veces más, y quicksort tarda más de 200 veces lo que tardaba en promedio. El resto de los ordenamientos no se ve afectado notablemente.
 En el gráfico es más que notorio como quicksort tomó un orden cuadrático al igual que los ordenamientos por inserción y selección.
@@ -258,9 +245,9 @@ En el gráfico es más que notorio como quicksort tomó un orden cuadrático al 
 En el siguiente gráfico se muestra la comparación explícita del insertion sort:
 y a continuación el análogo de quicksort
 
-\hl{TABLA DE PEORES SETS}
-
-\hl{GRAFICOS DE PEORES SETS}
+\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{GraficoCasoAscendente}}
+\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{GraficoCasoDescendente}}
+\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{GraficoCasoAntiMergeSort}}
 
 Las tablas enteras con todas las ejecuciones pueden verse en el anexo al final.
 
@@ -403,79 +390,154 @@ Por ejemplo, para cumplir con la consigna se requieren los siguientes comandos:
 \centering
 \caption{Tiempos de ejecución sobre 10 sets aleatorios}
 \resizebox{\textwidth}{!}{\begin{tabular}{lllllllllll}
-50 Elementos    & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0001990       & 0.0001907       & 0.0001891       & 0.0001938       & 0.0001934       & 0.0001917       & 0.0001918       & 0.0001895       & 0.0001913       & 0.0001882       \\
-insertionSort   & 0.0001892       & 0.0001371       & 0.0001660       & 0.0001588       & 0.0001855       & 0.0001692       & 0.0001687       & 0.0001649       & 0.0001390       & 0.0001701       \\
-mergeSort       & 0.0001559       & 0.0001691       & 0.0001497       & 0.0001473       & 0.0001871       & 0.0001535       & 0.0001553       & 0.0001475       & 0.0001494       & 0.0001474       \\
-quickSort       & 0.0000930       & 0.0000783       & 0.0000656       & 0.0000742       & 0.0000859       & 0.0000790       & 0.0000683       & 0.0000764       & 0.0000835       & 0.0000715       \\
-selectionSort   & 0.0001585       & 0.0001462       & 0.0001457       & 0.0001572       & 0.0001770       & 0.0001532       & 0.0001471       & 0.0001412       & 0.0001484       & 0.0001431       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-100 Elementos   & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0004628       & 0.0004357       & 0.0004416       & 0.0004395       & 0.0004721       & 0.0004456       & 0.0004398       & 0.0004393       & 0.0004376       & 0.0004396       \\
-insertionSort   & 0.0006016       & 0.0004875       & 0.0005864       & 0.0005397       & 0.0005859       & 0.0005434       & 0.0005937       & 0.0005453       & 0.0005518       & 0.0005897       \\
-mergeSort       & 0.0004126       & 0.0003231       & 0.0003208       & 0.0003193       & 0.0003264       & 0.0003165       & 0.0003248       & 0.0003278       & 0.0003216       & 0.0003626       \\
-quickSort       & 0.0002314       & 0.0001618       & 0.0001489       & 0.0001659       & 0.0002118       & 0.0001675       & 0.0001430       & 0.0002106       & 0.0001622       & 0.0001512       \\
-selectionSort   & 0.0004638       & 0.0004911       & 0.0004886       & 0.0004427       & 0.0004483       & 0.0004572       & 0.0004580       & 0.0004540       & 0.0004462       & 0.0004848       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-500 Elementos   & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0030533       & 0.0030936       & 0.0032325       & 0.0030782       & 0.0038497       & 0.0030170       & 0.0030266       & 0.0030229       & 0.0030469       & 0.0030654       \\
-insertionSort   & 0.0136415       & 0.0124605       & 0.0127208       & 0.0127717       & 0.0132443       & 0.0131570       & 0.0133048       & 0.0137052       & 0.0131902       & 0.0136295       \\
-mergeSort       & 0.0022618       & 0.0022861       & 0.0022894       & 0.0021574       & 0.0021868       & 0.0021266       & 0.0021218       & 0.0021060       & 0.0022879       & 0.0022802       \\
-quickSort       & 0.0011439       & 0.0010552       & 0.0010782       & 0.0010665       & 0.0010709       & 0.0010688       & 0.0010897       & 0.0010095       & 0.0009802       & 0.0011091       \\
-selectionSort   & 0.0097367       & 0.0097802       & 0.0096571       & 0.0098280       & 0.0099636       & 0.0099066       & 0.0101287       & 0.0097905       & 0.0100458       & 0.0098125       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-1000 Elementos  & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0067792       & 0.0070043       & 0.0068986       & 0.0069345       & 0.0072190       & 0.0073125       & 0.0081850       & 0.0068475       & 0.0070931       & 0.0068505       \\
-insertionSort   & 0.0557468       & 0.0530118       & 0.0504737       & 0.0531597       & 0.0493994       & 0.0491072       & 0.0500725       & 0.0509751       & 0.0517923       & 0.0511030       \\
-mergeSort       & 0.0047706       & 0.0046603       & 0.0047385       & 0.0048127       & 0.0047386       & 0.0050988       & 0.0047663       & 0.0046766       & 0.0046974       & 0.0045815       \\
-quickSort       & 0.0024357       & 0.0022442       & 0.0021556       & 0.0022674       & 0.0023423       & 0.0024573       & 0.0023988       & 0.0022838       & 0.0021472       & 0.0021557       \\
-selectionSort   & 0.0392514       & 0.0398083       & 0.0408062       & 0.0390289       & 0.0409778       & 0.0399334       & 0.0419789       & 0.0391787       & 0.0403418       & 0.0405913       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-2000 Elementos  & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0151945       & 0.0158168       & 0.0157971       & 0.0155492       & 0.0158204       & 0.0156259       & 0.0154056       & 0.0153501       & 0.0154657       & 0.0153334       \\
-insertionSort   & 0.2046429       & 0.2006181       & 0.2024749       & 0.2056349       & 0.1898632       & 0.1968394       & 0.1917384       & 0.1970580       & 0.1982147       & 0.1977560       \\
-mergeSort       & 0.0104069       & 0.0110417       & 0.0106184       & 0.0104917       & 0.0111254       & 0.0107095       & 0.0108427       & 0.0105588       & 0.0108963       & 0.0105309       \\
-quickSort       & 0.0052252       & 0.0050108       & 0.0047761       & 0.0049240       & 0.0050046       & 0.0054048       & 0.0046839       & 0.0048581       & 0.0048070       & 0.0047157       \\
-selectionSort   & 0.1591686       & 0.1619187       & 0.1596146       & 0.1594604       & 0.1612478       & 0.1636533       & 0.1664229       & 0.1593405       & 0.1594487       & 0.1681502       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-3000 Elementos  & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0248542       & 0.0245927       & 0.0246410       & 0.0244733       & 0.0241362       & 0.0240608       & 0.0248536       & 0.0244547       & 0.0240737       & 0.0244031       \\
-insertionSort   & 0.4642353       & 0.4359567       & 0.4520979       & 0.4604680       & 0.4363386       & 0.4307528       & 0.4336375       & 0.4531719       & 0.4739809       & 0.4369914       \\
-mergeSort       & 0.0175188       & 0.0174770       & 0.0176094       & 0.0170248       & 0.0173747       & 0.0174046       & 0.0174765       & 0.0171947       & 0.0172623       & 0.0173179       \\
-quickSort       & 0.0081988       & 0.0078375       & 0.0073443       & 0.0076117       & 0.0080461       & 0.0079049       & 0.0071992       & 0.0076201       & 0.0074061       & 0.0073687       \\
-selectionSort   & 0.3607497       & 0.3639719       & 0.3580664       & 0.3629982       & 0.3609123       & 0.3635284       & 0.3722692       & 0.3614427       & 0.3647209       & 0.3604892       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-4000 Elementos  & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0346565       & 0.0336802       & 0.0339677       & 0.0340717       & 0.0336008       & 0.0335720       & 0.0339500       & 0.0333064       & 0.0346048       & 0.0334737       \\
-insertionSort   & 0.7642057       & 0.7622381       & 0.7893028       & 0.8062393       & 0.7972879       & 0.7578662       & 0.7728094       & 0.7724688       & 0.7829292       & 0.7709742       \\
-mergeSort       & 0.0267617       & 0.0245633       & 0.0243198       & 0.0249443       & 0.0243686       & 0.0246409       & 0.0246596       & 0.0242289       & 0.0243485       & 0.0242665       \\
-quickSort       & 0.0114064       & 0.0120993       & 0.0102182       & 0.0105307       & 0.0106509       & 0.0105468       & 0.0099800       & 0.0104413       & 0.0107408       & 0.0103171       \\
-selectionSort   & 0.6733503       & 0.6439389       & 0.6497549       & 0.6419530       & 0.6407484       & 0.6357381       & 0.6603671       & 0.6480176       & 0.6498467       & 0.6426408       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-5000 Elementos  & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0434337       & 0.0438778       & 0.0438421       & 0.0439822       & 0.0440419       & 0.0435336       & 0.0434554       & 0.0436433       & 0.0435107       & 0.0430669       \\
-insertionSort   & 1.2046899       & 1.2067181       & 1.2318115       & 1.2126116       & 1.2713901       & 1.2186838       & 1.2074905       & 1.1798034       & 1.1919579       & 1.2075106       \\
-mergeSort       & 0.0334444       & 0.0321602       & 0.0321446       & 0.0328516       & 0.0330439       & 0.0323602       & 0.0322786       & 0.0320510       & 0.0334991       & 0.0343719       \\
-quickSort       & 0.0155413       & 0.0134631       & 0.0130190       & 0.0133885       & 0.0141153       & 0.0138595       & 0.0127920       & 0.0134561       & 0.0133596       & 0.0128409       \\
-selectionSort   & 1.0469931       & 1.0154521       & 1.0209151       & 1.0145462       & 1.0357843       & 1.0230973       & 1.0330363       & 1.0267096       & 1.0410148       & 1.0176163       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-7500 Elementos  & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0761486       & 0.0690381       & 0.0677706       & 0.0684095       & 0.0693999       & 0.0695108       & 0.0689707       & 0.0679884       & 0.0679949       & 0.0683460       \\
-insertionSort   & 2.7435652       & 2.7176744       & 2.6794948       & 2.6554472       & 2.6782472       & 2.7283597       & 2.6667099       & 2.6543722       & 2.7092949       & 2.6146844       \\
-mergeSort       & 0.0556103       & 0.0540695       & 0.0530913       & 0.0542600       & 0.0558728       & 0.0565334       & 0.0543427       & 0.0539535       & 0.0534051       & 0.0531010       \\
-quickSort       & 0.0230795       & 0.0208836       & 0.0197867       & 0.0208041       & 0.0225761       & 0.0219401       & 0.0202990       & 0.0211298       & 0.0203927       & 0.0202629       \\
-selectionSort   & 2.3154659       & 2.3086698       & 2.3049995       & 2.2768136       & 2.3440388       & 2.3188534       & 2.3363819       & 2.3072892       & 2.2852925       & 2.3333513       \\
-                &                 &                 &                 &                 &                 &                 &                 &                 &                 &                 \\
-10000 Elementos & SetRandom01.txt & SetRandom02.txt & SetRandom03.txt & SetRandom04.txt & SetRandom05.txt & SetRandom06.txt & SetRandom07.txt & SetRandom08.txt & SetRandom09.txt & SetRandom10.txt \\
-heapSort        & 0.0962717       & 0.0939746       & 0.0953125       & 0.0946152       & 0.0952729       & 0.0962848       & 0.0934928       & 0.0938169       & 0.0944631       & 0.0951193       \\
-insertionSort   & 4.7843860       & 4.9401893       & 4.8736038       & 4.9175287       & 4.6675018       & 5.2088326       & 4.7089758       & 4.6241228       & 4.7480252       & 4.6742076       \\
-mergeSort       & 0.0788291       & 0.0790973       & 0.0782618       & 0.0793668       & 0.0797673       & 0.0811491       & 0.0776949       & 0.0772860       & 0.0782807       & 0.0777895       \\
-quickSort       & 0.0302665       & 0.0293813       & 0.0280447       & 0.0284348       & 0.0300433       & 0.0303997       & 0.0278232       & 0.0289522       & 0.0280421       & 0.0280232       \\
-selectionSort   & 4.1073481       & 4.1029277       & 4.0807135       & 4.1329075       & 4.1677506       & 4.1426343       & 4.1079860       & 4.1103651       & 4.1249414       & 4.1437618      
+50 Elementos    & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.00019300  & 0.00018855  & 0.00019178  & 0.00020529  & 0.00018293  & 0.00018698  & 0.00019424  & 0.00019802  & 0.00018284  & 0.00018867  \\
+insertionSort   & 0.00019945  & 0.00015891  & 0.00012839  & 0.00018014  & 0.00016239  & 0.00016163  & 0.00018052  & 0.00017342  & 0.00016791  & 0.00019444  \\
+mergeSort       & 0.00016291  & 0.00014654  & 0.00014624  & 0.00015401  & 0.00014920  & 0.00014525  & 0.00014689  & 0.00014798  & 0.00014500  & 0.00014480  \\
+quickSort       & 0.00008861  & 0.00007581  & 0.00008263  & 0.00008232  & 0.00008747  & 0.00008240  & 0.00008242  & 0.00009243  & 0.00008440  & 0.00008239  \\
+selectionSort   & 0.00015473  & 0.00015757  & 0.00014861  & 0.00015807  & 0.00015818  & 0.00014677  & 0.00015120  & 0.00015299  & 0.00015108  & 0.00015492  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+100 Elementos   & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.00043570  & 0.00045246  & 0.00044005  & 0.00042592  & 0.00042845  & 0.00043440  & 0.00041988  & 0.00041455  & 0.00044249  & 0.00043516  \\
+insertionSort   & 0.00058790  & 0.00064046  & 0.00054841  & 0.00053005  & 0.00067365  & 0.00052636  & 0.00048715  & 0.00049590  & 0.00057678  & 0.00063538  \\
+mergeSort       & 0.00034085  & 0.00030815  & 0.00032360  & 0.00032457  & 0.00031131  & 0.00031344  & 0.00031926  & 0.00032349  & 0.00032025  & 0.00031099  \\
+quickSort       & 0.00017878  & 0.00016309  & 0.00017036  & 0.00016766  & 0.00015238  & 0.00017618  & 0.00017809  & 0.00019167  & 0.00016401  & 0.00018156  \\
+selectionSort   & 0.00053624  & 0.00044922  & 0.00051516  & 0.00052856  & 0.00052489  & 0.00051390  & 0.00051862  & 0.00052146  & 0.00051781  & 0.00053284  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+500 Elementos   & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.00297829  & 0.00302412  & 0.00294132  & 0.00303563  & 0.00305413  & 0.00306853  & 0.00292844  & 0.00296854  & 0.00307565  & 0.00297974  \\
+insertionSort   & 0.01235648  & 0.01359664  & 0.01212989  & 0.01256291  & 0.01334884  & 0.01287573  & 0.01298992  & 0.01232904  & 0.01256445  & 0.01355928  \\
+mergeSort       & 0.00211735  & 0.00207506  & 0.00200294  & 0.00210409  & 0.00210602  & 0.00207392  & 0.00207665  & 0.00209064  & 0.00224680  & 0.00204810  \\
+quickSort       & 0.00105629  & 0.00103137  & 0.00113191  & 0.00104716  & 0.00097052  & 0.00114077  & 0.00130709  & 0.00114264  & 0.00105451  & 0.00108588  \\
+selectionSort   & 0.01152360  & 0.01153958  & 0.01241996  & 0.01133049  & 0.01146322  & 0.01228531  & 0.01155788  & 0.01251674  & 0.01120192  & 0.01215812  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+1000 Elementos  & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.00739671  & 0.00694720  & 0.00662311  & 0.00683279  & 0.00688662  & 0.00678391  & 0.00675784  & 0.00681219  & 0.00681572  & 0.00672041  \\
+insertionSort   & 0.05100241  & 0.05244503  & 0.04842442  & 0.05063798  & 0.05230036  & 0.05133143  & 0.04899568  & 0.05267124  & 0.05200502  & 0.04858271  \\
+mergeSort       & 0.00456525  & 0.00470494  & 0.00455071  & 0.00461912  & 0.00467384  & 0.00457552  & 0.00441806  & 0.00447197  & 0.00453215  & 0.00448089  \\
+quickSort       & 0.00234790  & 0.00223786  & 0.00238862  & 0.00225757  & 0.00217189  & 0.00256744  & 0.00237706  & 0.00256044  & 0.00233367  & 0.00232482  \\
+selectionSort   & 0.04496951  & 0.04662944  & 0.04389748  & 0.04555453  & 0.04726154  & 0.04648492  & 0.04423733  & 0.04462990  & 0.04494551  & 0.04885741  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+2000 Elementos  & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.01523260  & 0.01514745  & 0.01499430  & 0.01506648  & 0.01513730  & 0.01514470  & 0.01494349  & 0.01490355  & 0.01500769  & 0.01512852  \\
+insertionSort   & 0.19201088  & 0.20843868  & 0.19088637  & 0.20495201  & 0.18710003  & 0.19607610  & 0.19952160  & 0.19383391  & 0.19547072  & 0.19744693  \\
+mergeSort       & 0.01019977  & 0.01023930  & 0.01023052  & 0.01000460  & 0.00995667  & 0.01017505  & 0.01017236  & 0.01010934  & 0.01008799  & 0.01013720  \\
+quickSort       & 0.00521293  & 0.00494697  & 0.00516645  & 0.00492783  & 0.00488734  & 0.00544569  & 0.00523995  & 0.00549807  & 0.00492884  & 0.00510515  \\
+selectionSort   & 0.18609935  & 0.18948616  & 0.17618832  & 0.18041831  & 0.18240617  & 0.17892075  & 0.17892672  & 0.17642920  & 0.17546178  & 0.17538898  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+3000 Elementos  & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.02425120  & 0.02387434  & 0.02414011  & 0.02377146  & 0.02410929  & 0.02380476  & 0.02375325  & 0.02389451  & 0.02424637  & 0.02389495  \\
+insertionSort   & 0.41653200  & 0.43707999  & 0.46344494  & 0.42481478  & 0.42187480  & 0.43046910  & 0.44544637  & 0.43564340  & 0.43663127  & 0.46514423  \\
+mergeSort       & 0.01658727  & 0.01641316  & 0.01661186  & 0.01664745  & 0.01655258  & 0.01660167  & 0.01633104  & 0.01628040  & 0.01666285  & 0.01652746  \\
+quickSort       & 0.00768843  & 0.00768781  & 0.00794279  & 0.00745642  & 0.00730129  & 0.00819662  & 0.00793997  & 0.00869121  & 0.00756967  & 0.00793418  \\
+selectionSort   & 0.39494834  & 0.39463882  & 0.39689663  & 0.39429853  & 0.39780394  & 0.39295478  & 0.39391488  & 0.39499579  & 0.39344403  & 0.39364438  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+4000 Elementos  & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.03284454  & 0.03317121  & 0.03303558  & 0.03275882  & 0.03270194  & 0.03312007  & 0.03281572  & 0.03249362  & 0.03293303  & 0.03310914  \\
+insertionSort   & 0.73809955  & 0.78122650  & 0.76783974  & 0.73013473  & 0.75447225  & 0.76763770  & 0.77887734  & 0.76187592  & 0.71228048  & 0.76942447  \\
+mergeSort       & 0.02300822  & 0.02343306  & 0.02342124  & 0.02328943  & 0.02313355  & 0.02297004  & 0.02354313  & 0.02337101  & 0.02330195  & 0.02324881  \\
+quickSort       & 0.01065544  & 0.01044370  & 0.01096001  & 0.01008401  & 0.00996224  & 0.01140329  & 0.01128360  & 0.01181481  & 0.01050973  & 0.01088262  \\
+selectionSort   & 0.70282919  & 0.69928560  & 0.70064164  & 0.69431765  & 0.70229424  & 0.71497047  & 0.69866235  & 0.69994268  & 0.70156687  & 0.72132049  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+5000 Elementos  & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.04218705  & 0.04252301  & 0.04292750  & 0.04175632  & 0.04291162  & 0.04227332  & 0.04209742  & 0.04247767  & 0.04263719  & 0.04305448  \\
+insertionSort   & 1.18204778  & 1.18909509  & 1.23801325  & 1.20648208  & 1.17101943  & 1.19625304  & 1.15185332  & 1.17470414  & 1.16457618  & 1.23412736  \\
+mergeSort       & 0.03085920  & 0.03151913  & 0.03105532  & 0.03084717  & 0.03090164  & 0.03082855  & 0.03068934  & 0.03070248  & 0.03090970  & 0.03058693  \\
+quickSort       & 0.01348742  & 0.01339856  & 0.01387731  & 0.01308612  & 0.01279298  & 0.01425968  & 0.01398410  & 0.01520034  & 0.01339186  & 0.01383017  \\
+selectionSort   & 1.09344189  & 1.09182913  & 1.08739355  & 1.09608341  & 1.09816645  & 1.09037545  & 1.09863278  & 1.08801684  & 1.08548364  & 1.09908680  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+7500 Elementos  & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.06720685  & 0.06698542  & 0.06631842  & 0.06606606  & 0.06628988  & 0.06588071  & 0.06770505  & 0.06685129  & 0.06663839  & 0.06648876  \\
+insertionSort   & 2.57472254  & 2.59746984  & 2.65947080  & 2.67775495  & 2.56712238  & 2.59690785  & 2.61323801  & 2.65732562  & 2.64076297  & 2.59815267  \\
+mergeSort       & 0.05152882  & 0.05065012  & 0.05108126  & 0.05083490  & 0.05160936  & 0.05160909  & 0.05094111  & 0.05134133  & 0.05152861  & 0.05148814  \\
+quickSort       & 0.02149095  & 0.02084428  & 0.02167369  & 0.02034912  & 0.02018938  & 0.02239834  & 0.02201772  & 0.02336442  & 0.02102273  & 0.02195938  \\
+selectionSort   & 2.47117228  & 2.46195340  & 2.45594133  & 2.49144226  & 2.55074881  & 2.45745252  & 2.45648722  & 2.46622304  & 2.45988945  & 2.45254629  \\
+                &             &             &             &             &             &             &             &             &             &             \\
+10000 Elementos & SetRandom01 & SetRandom02 & SetRandom03 & SetRandom04 & SetRandom05 & SetRandom06 & SetRandom07 & SetRandom08 & SetRandom09 & SetRandom10 \\
+heapSort        & 0.09234720  & 0.09180443  & 0.09170632  & 0.09235643  & 0.09237836  & 0.09184556  & 0.09126658  & 0.09187549  & 0.09198058  & 0.09326896  \\
+insertionSort   & 4.72838785  & 4.82092053  & 4.71846541  & 4.64045077  & 4.54181549  & 4.66178385  & 4.71195490  & 4.69176563  & 4.71393896  & 4.55890200  \\
+mergeSort       & 0.07408563  & 0.07491511  & 0.07442679  & 0.07556444  & 0.07424022  & 0.07440036  & 0.07488256  & 0.07554801  & 0.07454557  & 0.07566138  \\
+quickSort       & 0.02859854  & 0.02852403  & 0.02988460  & 0.02795936  & 0.02736539  & 0.03078863  & 0.03012384  & 0.03184481  & 0.02881059  & 0.03051086  \\
+selectionSort   & 4.39602486  & 4.53192356  & 4.42551569  & 4.38844704  & 4.39688216  & 4.38836099  & 4.37352012  & 4.36608303  & 4.38014397  & 4.41154632 
 \end{tabular}}
 \end{table}
 
 \subsection{Tiempos de ejecución sobre sets de peores casos}
 
+\begin{table}[h]
+\centering
+\caption{Tiempos de ejecución sobre sets de peores casos}
+\resizebox{\textwidth}{!}{\begin{tabular}{llll}
+50 Elementos    & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.00019076            & 0.00019639             & 0.00019591           \\
+insertionSort   & 0.00008863            & 0.00025928             & 0.00017495           \\
+mergeSort       & 0.00013198            & 0.00012936             & 0.00016123           \\
+quickSort       & 0.00010511            & 0.00021609             & 0.00007588           \\
+selectionSort   & 0.00015379            & 0.00017830             & 0.00014877           \\
+                &                       &                        &                      \\
+100 Elementos   & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.00044040            & 0.00045656             & 0.00044259           \\
+insertionSort   & 0.00015114            & 0.00103772             & 0.00059984           \\
+mergeSort       & 0.00027315            & 0.00025770             & 0.00034205           \\
+quickSort       & 0.00023045            & 0.00122071             & 0.00015803           \\
+selectionSort   & 0.00050055            & 0.00051576             & 0.00052916           \\
+                &                       &                        &                      \\
+500 Elementos   & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.00301888            & 0.00314215             & 0.00305248           \\
+insertionSort   & 0.00754665            & 0.02486666             & 0.01330533           \\
+mergeSort       & 0.00178736            & 0.00150784             & 0.00219066           \\
+quickSort       & 0.00144711            & 0.01701240             & 0.00098198           \\
+selectionSort   & 0.01397305            & 0.01146357             & 0.01073899           \\
+                &                       &                        &                      \\
+1000 Elementos  & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.00641547            & 0.00700476             & 0.00681840           \\
+insertionSort   & 0.01028943            & 0.10172295             & 0.05063511           \\
+mergeSort       & 0.00343820            & 0.00318392             & 0.00474329           \\
+quickSort       & 0.00325053            & 0.06670774             & 0.00210982           \\
+selectionSort   & 0.04148693            & 0.04537355             & 0.04498098           \\
+                &                       &                        &                      \\
+2000 Elementos  & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.01498572            & 0.01590648             & 0.01521888           \\
+insertionSort   & 0.20658237            & 0.40062390             & 0.20731328           \\
+mergeSort       & 0.00718856            & 0.00687276             & 0.01042529           \\
+quickSort       & 0.00666559            & 0.26670357             & 0.00457816           \\
+selectionSort   & 0.16384546            & 0.17722821             & 0.17759822           \\
+                &                       &                        &                      \\
+3000 Elementos  & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.02359586            & 0.02542199             & 0.02450462           \\
+insertionSort   & 0.36514390            & 0.89720549             & 0.42969440           \\
+mergeSort       & 0.01193742            & 0.01135866             & 0.01716967           \\
+quickSort       & 0.01067033            & 0.61337249             & 0.00691992           \\
+selectionSort   & 0.36580858            & 0.38940469             & 0.38187676           \\
+                &                       &                        &                      \\
+4000 Elementos  & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.03246327            & 0.03465382             & 0.03468144           \\
+insertionSort   & 0.53935292            & 1.61456817             & 0.80864784           \\
+mergeSort       & 0.01669425            & 0.01551590             & 0.02410504           \\
+quickSort       & 0.01437967            & 1.05857313             & 0.00943377           \\
+selectionSort   & 0.64824312            & 0.69593576             & 0.68986472           \\
+                &                       &                        &                      \\
+5000 Elementos  & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.04232100            & 0.04454269             & 0.04267399           \\
+insertionSort   & 0.63864610            & 2.51006811             & 1.23260760           \\
+mergeSort       & 0.02256834            & 0.02123960             & 0.03262972           \\
+quickSort       & 0.01851022            & 1.67519015             & 0.01154715           \\
+selectionSort   & 1.02462675            & 1.08650996             & 1.09569943           \\
+                &                       &                        &                      \\
+7500 Elementos  & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.06385494            & 0.07023154             & 0.06806638           \\
+insertionSort   & 0.82478965            & 5.61531854             & 2.78372849           \\
+mergeSort       & 0.03786933            & 0.03684131             & 0.05324423           \\
+quickSort       & 0.02843785            & 3.83673572             & 0.01850192           \\
+selectionSort   & 2.28155172            & 2.40440954             & 2.44082323           \\
+                &                       &                        &                      \\
+10000 Elementos & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
+heapSort        & 0.08850804            & 0.09332258             & 0.09097488           \\
+insertionSort   & 0.93969506            & 8.90286811             & 4.92954869           \\
+mergeSort       & 0.05498279            & 0.05593248             & 0.07747910           \\
+quickSort       & 0.03932556            & 5.78526304             & 0.02463167           \\
+selectionSort   & 4.08425468            & 4.20178312             & 4.48006365          
+\end{tabular}}
+\end{table}
 
 \end{document}
