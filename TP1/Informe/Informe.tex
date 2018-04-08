@@ -1,6 +1,6 @@
 \documentclass[article,a4paper]{article}
 
-\usepackage[utf8]{inputenc}
+\usepackage{fancyvrb}
 \usepackage[T1]{fontenc}
 \usepackage{changepage}
 \usepackage{ragged2e, lipsum}
@@ -228,7 +228,6 @@ $\mbox{T Peor Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \l
 Se calcularon los promedios de cada tiempo para cada cantidad de elementos y cada algoritmo:
 
 \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoRandom}}
-\makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoAscendente}}
 \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoDescendente}}
 \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoAntiMergeSort}}
 
@@ -269,13 +268,9 @@ El orden cuadrático del algoritmo, entonces, es evidente, ya que es el peor cas
 
 \subsubsection{Matching estable}
 
-Para está demostración, se simplificará la estructura original de la solución implementada. Considerando el primer método llamado "jugadoresEquiposGS", se excluyen las características de la generación de los archivos .'prf', su carga, y el correspondiente almacenamiento del archivo donde se guarda la asignación estable. Entonces, el método se reduce a la asignación propiamente dicha.
+Para está demostración, se simplificará la estructura original de la solución implementada. Considerando el primer método llamado "jugadoresEquiposGS", se excluyen las características de la generación de los archivos de perfil, su carga, y el correspondiente almacenamiento del archivo donde se guarda la asignación estable. Entonces, el método se reduce a la asignación propiamente dicha.
 
-Por una cuestión de comodidad, se puede traducir esto a un psuedcódigo basado en la documentación del método de asignación:
-'''Mientras haya un equipo con vacantes.'''
-    '''El equipo actual ofrece una vacante a su jugador favorito actual'''
-        '''Si el jugador esta libre, acepta la vacante'''
-              '''Si no esta libre, pero prefiere más al equipo actual, acepta la vacantey el otro equipo pierde a ese jugador.'''
+Mientras haya un equipo con vacantes, el equipo actual ofrece una vacante a su jugador favorito actual. Si el jugador esta libre, acepta la vacante, si no esta libre, pero prefiere más al equipo actual, acepta la vacantey el otro equipo pierde a ese jugador.
 
 Como hay igual cantidad de jugadores que de vacantes totales, se ve que todos los equipos podrán cubrir todos su puestos. Supongamos que hubiera un equipo "a" que ya ha "ofrecido una vacante" a todos los jugadores de acuerdo con su favoritismo, y ninguno la hubiera aceptado. Esto es decir que todos los jugadores ya han aceptado una vacante en un equipo previamente. Pero esto es una contradicción, porque existe la misma cantidad de jugadores que de vacantes totales, y por hipótesis hay una (al menos) vacante que "a" no puede cubrir. Justamente, la contradicción viene de suponer que un equipo no ha podido satisfacer una de sus vacantes ofreciéndole a todos los jugadores, por lo que esto es falso. Con esto se ve además que la máxima cantidad de "proposiciones" que un equipo puede hacer es igual a la cantidad de vacantes disponibles en total, es decir, con la cantidad de jugadores.
 
@@ -292,10 +287,44 @@ Todas los caminos a los que conduce la hipótesis "hay una inestabilidad en la a
 
 No existe posibilidad que quede un equipo con alguna vacante libre, o un jugador sólo, como se probó al principio.
 
-\subsection{Ejecución}
-En el anexo junto con el código del algoritmo se ve la posibilidad que brinda de generar los archivos prf. El resultado de una de las ejecuciones fue la siguiente asignación: 
 
-\begin{verbatim}
+\newpage
+\appendix
+
+\section{Ejecución y compilación}
+
+Todo el trabajo fue codificado en Python 3.6.1. 
+
+\subsection{Ordenamientos: Ejecución general}
+
+El programa principal es ejecutado desde el archivo main, especificando por linea de comando el caso a ejecutar, entre "Random" y "Peor", refiriendose a los sets por donde se ejecutaran los ordenamientos. La ejecución consiste de iterar sobre los sets generados previamente y en cada uno ejecutar cada ordenamiento estudiado sobre distintas cantidades del mismo elemento. Este archivo genera un 'SalidaRandom.csv' con las estadisticas necesarias para analizar.
+
+\begin{minted}{shell}
+>>> python main.py Random
+>>> python main.py Peor
+\end{minted}
+
+\subsection{Medición de tiempos}
+ Los tiempos de ejecución fueron calculados con el modulo \texttt{time} de Python, en particular su función \texttt{process\_time} \footnote{\url{https://docs.python.org/3/library/time.html\#process\_time}}.
+
+\subsection{Generación de sets aleatorios}
+
+El script generarSets.py permite generar los sets aleatorios de n numeros (en este caso, n=10000) en un rango determinado. Este archivo también contiene la creación de los sets de peores casos.
+
+\subsection{Pruebas de ordenamientos}
+Para verificar que los ordenamientos anden correctamente se realizaron varias pruebas unitarias que verfiquen distintos comportamientos desde los casos triviales hasta los casos borde y demás. Todas las pruebas son iguales, e incluyen asserts con ordenamientos aleatorios.
+
+\begin{minted}{shell}
+>>> python heapTest.py -v
+\end{minted}
+
+\subsection{Stable matching}
+Para generar un matching estable que cumpla con la consigna se utiliza el archivo main. Este importa el archivo matchinGS.py, ejecuta aplica el algoritmo Los parametros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida, y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad.
+
+El resultado de una de las ejecuciones fue:
+
+\begin{center}
+\begin{BVerbatim}
 1: 150 120 119 11 22 175 28 15 78 130
 2: 182 200 8 191 44 36 60 134 17 159
 3: 189 34 1 138 142 45 190 100 197 187
@@ -316,57 +345,11 @@ En el anexo junto con el código del algoritmo se ve la posibilidad que brinda d
 18: 105 56 90 66 47 183 7 75 108 16
 19: 41 81 102 184 3 122 194 79 157 139
 20: 42 83 13 128 53 50 144 89 121 95
-\end{verbatim}
+\end{BVerbatim}
+\end{center}
 
-
-\appendix
-
-\section{Ejecución y compilación}
-
-Todo el trabajo fue codificado en Python 3.6.1. 
-
-\subsection{Ordenamientos: Ejecución general}
-
-El programa principal es ejecutado desde el archivo main, especificando por linea de comando el caso a ejecutar, entre "Random" y "Peor", refiriendose a los sets por donde se ejecutaran los ordenamientos. La ejecución consiste de iterar sobre los sets generados previamente y en cada uno ejecutar cada ordenamiento estudiado sobre distintas cantidades del mismo elemento. Este archivo genera un 'SalidaRandom.csv' con las estadisticas necesarias para analizar.
-
-\begin{minted}{shell}
->>> python main.py Random
->>> python main.py Peor
-\end{minted}
-
-\subsection{Generación de sets aleatorios}
-
-El script generarSetRandom.py permite generar los sets aleatorios de n numeros (en este caso, n=10000) en un rango determinado. Ejemplo de ejecución:
-
-\begin{minted}{shell}
->>> from generarSetRandom import generarSet
->>> generarSet("set01.txt", 1, 1000000, 10000)
-\end{minted}
-
-\subsection{Pruebas de ordenamientos}
-Para verificar que los ordenamientos anden correctamente se realizaron varias pruebas unitarias que verfiquen distintos comportamientos desde los casos triviales hasta los casos borde y demás. Todas las pruebas son iguales, e incluyen asserts con ordenamientos aleatorios.
-
-\begin{minted}{shell}
->>> python3 heapTest.py -v
-\end{minted}
-
-\subsection{Medición de tiempos}
- Los tiempos de ejecución fueron calculados con el modulo \texttt{time} de Python, en particular su función \texttt{process\_time} \footnote{\url{https://docs.python.org/3/library/time.html\#process\_time}}.
-
-\subsection{Stable matching}
- Para generar un matching estable, se debe importar el archivo matchinGS.py y ejecutar la siguiente línea:
-matchingGS(‘ruta de los archivos  de jugadores y su correspondiente nombre sin número’, ‘extensión de los archivos jugadores’, ‘ruta de los archivos de equipos y su correspondiente nombre sin número’, ‘extensión de los archivos de equipos’, ‘nombre completo del archivo donde se guardará la asignación’, cantidad de jugadores, cantidad de equipos, cantidad de vacantes por equipo, ‘y’ si se quieren generar los archivos o cualquier otro caracter en otro caso)
-
-Por ejemplo, para cumplir con la consigna se requieren los siguientes comandos:
-
-\begin{minted}{shell}
->>> from matchingGS import matchingGS
->>> matchingGS('archivos/jugador_', '.prf', 'archivos/equipo_', '.prf', 'asignacion.txt', 200, 20, 10, 'y')
-\end{minted}
 
 \section{Tablas de ejecución}
-
-\subsection{Tiempos de ejecución sobre sets aleatorios}
 
 \begin{table}[h]
 \centering
@@ -443,8 +426,6 @@ quickSort       & 0.02859854  & 0.02852403  & 0.02988460  & 0.02795936  & 0.0273
 selectionSort   & 4.39602486  & 4.53192356  & 4.42551569  & 4.38844704  & 4.39688216  & 4.38836099  & 4.37352012  & 4.36608303  & 4.38014397  & 4.41154632 
 \end{tabular}}
 \end{table}
-
-\subsection{Tiempos de ejecución sobre sets de peores casos}
 
 \begin{table}[h]
 \centering

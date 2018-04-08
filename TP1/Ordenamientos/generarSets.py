@@ -13,12 +13,6 @@ def generarSetAntiMerge(nombre, cantidad):
                 for numero in arreglo:
                         archivo.write(str(numero) + "\n")
 
-def generarSetAscendente(nombre, cantidad):
-    archivo = open(nombre,"w")
-    for i in range(1, cantidad+1):
-        archivo.write(str(i) + "\n")
-    archivo.close()
-
 def generarSetDescendente(nombre, cantidad):
     archivo = open(nombre,"w")
     for i in range(cantidad, 0, -1):
@@ -43,5 +37,4 @@ generarRandomSet("SetRandom08.txt", 1, 1000000, 10000)
 generarRandomSet("SetRandom09.txt", 1, 1000000, 10000)
 generarRandomSet("SetRandom10.txt", 1, 1000000, 10000)
 generarSetAntiMerge("SetPeorCasoMergesort.txt", 10000)
-generarSetAscendente("SetPeorCasoAscendente.txt", 10000)
 generarSetDescendente("SetPeorCasoDescendente.txt", 10000)
