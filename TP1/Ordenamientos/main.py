@@ -43,6 +43,6 @@ def main():
 
     for set in sorted(diccionarioSets):
         imprimirTiempoEjecucion(diccionarioSets, set, resultados)
-    exportCSV(resultados, sets)
+    exportCSV(resultados, sets, args.caso)
 
 main()

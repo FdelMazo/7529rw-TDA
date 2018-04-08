@@ -10,8 +10,8 @@ def actualizarDiccionarioResultados(resultados, set, elementos, sort, tiempo):
     resultados[elementos][set] = resultados[elementos].get(set, {})
     resultados[elementos][set][sort] = tiempo
 
-def exportCSV(resultados, sets):
-	with open("Salida.csv", "w") as archivo:
+def exportCSV(resultados, sets, caso):
+	with open("Salida{}.csv".format(caso), "w") as archivo:
 		for cantidadElementos in sorted(resultados.keys()):
 			archivo.write("{} Elementos,".format(str(cantidadElementos)) + ','.join(sets) + "\n")
 			diccionarioAux = resultados[cantidadElementos]
