@@ -63,7 +63,7 @@
 \subsection{Complejidad Teórica}
 \subsubsection{Selección}
 
-El ordenamiento de selección es uno de los algoritmos de ordenamiento más faciles de implementar. En cada iteracion, se halla el máximo elemento de la seccion del arreglo desordenado y se intercambian las posiciones de este valor y el ultimo elemento. Se reduce en una unidad la seccion del arreglo desordenado y al resto se lo considera ordenado.
+El ordenamiento de selección es uno de los algoritmos de ordenamiento más faciles de implementar. En cada iteracion, se halla el mínimo elemento de la sección del arreglo desordenado y se intercambian las posiciones de este valor y el último elemento. Se reduce en una unidad la sección del arreglo desordenado y al resto se lo considera ordenado.
 
 De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: \url{https://wiki.python.org/moin/TimeComplexity}} del ordenamiento de selección, la complejidad teóricas es:
 
@@ -214,7 +214,7 @@ Para poder terminar de ubicar en la escala a quicksort y mergesort, se pone el f
 
 \subsubsection{Selección}
 
-Como se ve en el análisis, el comportamiento de este algoritmo no depende de las característicos del arreglo. En término más específicos, el algoritmo de selección no es un algoritmo “adaptativo”: su conducta no se ve afectada por ninguna característica del array, por lo cual realizará el mismo número de comparación entre elementos tanto en el peor caso, en el caso promedio y en el mejor caso (considerando una longitud de arreglo arbitrariamente grande).\hl{(EL PEOR CASO DE SELECCION ES ARREGLO ORDENADO)}
+Como se ve en el análisis, el comportamiento de este algoritmo no depende de las características del arreglo. En términos más específicos, el algoritmo de selección no es un algoritmo “adaptativo”: su conducta no se ve afectada por ninguna característica del array, por lo cual realizará el mismo número de comparaciones e intercambios entre elementos tanto en el peor caso, en el caso promedio y en el mejor caso (considerando una longitud de arreglo arbitrariamente grande). Sin embargo, un arreglo considerado como el peor valor de entrada posible es un arreglo ordenado de forma descendente, debido a que nuestra implementación se busca el mínimo en cada iteración. Si bien asintóticamente no hay diferencia, diferirá en un valor constante el cual será mayor para un arreglo ordenado de esta forma.
 
 \subsubsection{Inserción}
 
