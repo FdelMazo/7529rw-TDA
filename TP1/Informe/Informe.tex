@@ -1,8 +1,14 @@
 \documentclass[article,a4paper]{article}
 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{changepage}
+\usepackage{ragged2e, lipsum}
+\usepackage{tabularx, caption, booktabs}
 \usepackage{a4wide}
 \usepackage{amsmath}
 \usepackage{fancyhdr}
+\usepackage{adjustbox}
 \usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,bookmarksopen=true]{hyperref}
 \usepackage{soul}
 \usepackage[spanish]{babel}
@@ -222,7 +228,7 @@ Este algoritmo sí presenta un peor caso: cuando el arreglo de entrada se encuen
 
 \subsubsection{Mergesort}
 
-Asintóticamente, Mergesort es siempre de orden O(n log n), pero hay casos donde se requieren más comparaciones entre elementos, lo que conlleva a un tiempo que, si bien no difiere del orden asintótico, es mayor. Aún así, es ínfimo en comparación al crecimiento de los peores casos de otros algoritmos de ordenamiento. El arreglo considerado como el peor valor de entrada es aquel que maximiza el número de comparaciones entre elementos al ser ordenado por Mergesort. Para lograr esto, el arreglo de entrada debe estar ordenado de forma tal que, los elementos de la mitad izquierda y los elementos de la mitad derecha estén intercalados de forma ordenada. Para hacer más clara la idea, si consideramos el arreglo ordenado {1,2,3,4,5,6,7,8}, para acomodar los elementos de forma que Mergesort maximice el número de comparaciones se permutan los elementos de forma que la mitad izquierda sea {1,3,5,7} y la mitad derecha {2,4,6,8}.\hl{ME PARECE QUE ASÍ ESTÁ BIEN, PERO DEJO EL AVISO AMARILLO JUST IN CASE.}
+\hl{Como se analizo con el Teorema Maestro, Mergesort es de orden $O(n \log n)$, por lo que no presenta un peor caso para ningun set en general.}
 
 \subsubsection{Quicksort}
 
@@ -383,9 +389,6 @@ Por ejemplo, para cumplir con la consigna se requieren los siguientes comandos:
 \end{minted}
 
 \section{Tablas de ejecución}
-
-\subsection{Tiempos de ejecución sobre sets aleatorios}
-
 \begin{table}[h]
 \centering
 \caption{Tiempos de ejecución sobre 10 sets aleatorios}
@@ -462,12 +465,12 @@ selectionSort   & 4.39602486  & 4.53192356  & 4.42551569  & 4.38844704  & 4.3968
 \end{tabular}}
 \end{table}
 
-\subsection{Tiempos de ejecución sobre sets de peores casos}
-
 \begin{table}[h]
 \centering
 \caption{Tiempos de ejecución sobre sets de peores casos}
-\resizebox{\textwidth}{!}{\begin{tabular}{llll}
+\begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
+\tiny
+\begin{tabular}{lllllllllll}
 50 Elementos    & SetPeorCasoAscendente & SetPeorCasoDescendente & SetPeorCasoMergesort \\
 heapSort        & 0.00019076            & 0.00019639             & 0.00019591           \\
 insertionSort   & 0.00008863            & 0.00025928             & 0.00017495           \\
@@ -536,8 +539,9 @@ heapSort        & 0.08850804            & 0.09332258             & 0.09097488   
 insertionSort   & 0.93969506            & 8.90286811             & 4.92954869           \\
 mergeSort       & 0.05498279            & 0.05593248             & 0.07747910           \\
 quickSort       & 0.03932556            & 5.78526304             & 0.02463167           \\
-selectionSort   & 4.08425468            & 4.20178312             & 4.48006365          
-\end{tabular}}
+selectionSort   & 4.08425468            & 4.20178312             & 4.48006365           
+\end{tabular}
+\end{adjustbox}
 \end{table}
 
 \end{document}
