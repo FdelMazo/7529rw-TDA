@@ -71,9 +71,9 @@
 
 El ordenamiento de selección es uno de los algoritmos de ordenamiento más faciles de implementar. En cada iteracion, se halla el mínimo elemento de la sección del arreglo desordenado y se intercambian las posiciones de este valor y el último elemento. Se reduce en una unidad la sección del arreglo desordenado y al resto se lo considera ordenado.
 
-De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: \url{https://wiki.python.org/moin/TimeComplexity}} del ordenamiento de selección, la complejidad teóricas es:
+De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: \url{https://wiki.python.org/moin/TimeComplexity}} del ordenamiento de selección, la complejidad teórica es:
 
-$T seleccion(n) = O(1 + 1 + 1 + n * (1 + n + (1 + 1 + n (2) + 1)  + 4 ) ) = O(2n^2 + 9n + 3) \in O(n^2)$\\
+$\mbox{T seleccion(n)} = \mathcal O(2 + 1 + n * (1 + 1 + 1 + n * (1 + 1) + 1 + 2)) = \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$\\
 
 Esto viene de analizar linea por linea teniendo en cuenta:
 \begin{itemize}
@@ -84,63 +84,59 @@ Esto viene de analizar linea por linea teniendo en cuenta:
 \item Hallar el indice de un elemento: $O(n)$
 \end{itemize}
 
-\hl{Este ordenamiento itera siempre por el arreglo sin importar su disposicion inicial. Por lo tanto, su peor caso y su caso promedio son iguales al tiempo analizado:} (EL PEOR CASO DE SELECCION ES UN ARREGLO ORDENADO)
+Este ordenamiento itera siempre por el arreglo sin importar su disposicion inicial. Por lo tanto, su peor caso y su caso promedio son iguales al tiempo analizado:
 
-$Peor T selecccion(n) \in O(2n^2 + 9n + 3) \in O(n^2)$ 
+$\mbox{Peor T selecccion(n)} \in O(n^2 + 6n + n) \in O(n^2)$ 
 
-$Promedio T selecccion(n)  \in O(2n^2 + 9n + 3) \in O(n^2)$
+$\mbox{Promedio T selecccion(n)}  \in O(n^2 + 6n + n) \in O(n^2)$
 
 
 \subsubsection{Inserción}
 
-Inicialmente, se tiene un solo elemento y se lo considera un conjunto ordenado. En cada iteración, se compara al siguiente elemento del conjunto ordenado con su predecesor y se intercambia en caso de ser menor a este. Se itera de esta forma hasta que la condicion anterior no se cumpla. Al igual que el de seleccion, el algoritmo consiste de dos ciclos anidados que recorren el arreglo entero, por lo tanto, el tiempo esperado sera cuadratico
+Inicialmente, se tiene un solo elemento y se lo considera un conjunto ordenado. En cada iteración, se compara al siguiente elemento del conjunto ordenado con su predecesor y se intercambia en caso de ser menor a este. Se itera de esta forma hasta que la condicion anterior no se cumpla. Al igual que el de seleccion, el algoritmo consiste de dos ciclos anidados que recorren el arreglo entero, por lo tanto, el tiempo esperado sera cuadrático.
 
-Este ordenamiento usa las mismas herramientas usadas en el ordenamiento de selección. Por lo tanto, con las consideraciones anteriores tomadas, queda:
+Este ordenamiento usa las mismas herramientas del ordenamiento de selección. Por lo tanto, con las consideraciones anteriores tomadas, queda:
 
-$O( 1 + 1 + 1 + n(3 + 2 + 2 + 1 + n(1 + 3) ) ) = O(3n^2 + 8n + 3) \in O(n^2)$
+$\mbox{T seleccion(n)} = \mathcal O( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3)) = \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
-Siendo la condicion de corte que en la iteracion el elemento actual no sea menor a lo iterado descendientemente, el peor caso del algoritmo es donde el arreglo inicial esta dispuesto de manera descendiente, de tal forma que el ciclo sea ejecutado sin cortes.
+Siendo la condición de corte que en la iteración el elemento actual no sea menor a lo iterado descendentemente, el peor caso del algoritmo es donde el arreglo inicial esta dispuesto de manera descendente, de tal forma que el ciclo sea ejecutado sin cortes.
 
-$PeorTinserción(n) \in O(3n^2 + 8n + 3) \in O(n^2)$
+$\mbox{Peor T inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
 Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$ posibles distribuciones de los elementos, solo una estara ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.
 
-$PromedioTinserción(n) \in O(3n^2 + 8n + 3) \in O(n^2)$
+$\mbox{Promedio T inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
 \subsubsection{Mergesort}
 
-El algoritmo de mergesort es un ordenamiento que utiliza la tecnica de División y Conquista, y por lo tanto, para calcular su complejidad teorica va a ser utilizado el Teorema Maestro. Si el arreglo solo tiene un elemento o ninguno se considera ordenado. En otro caso, el arreglo se subdivide por la mitad creando dos nuevos arreglos. Cada uno de estos arreglos se vuelve a subdividir de forma recursiva hasta que queda un elemento en cada subarreglo. A partir de aqui, cada mitad creada se une de forma ordenada en un nuevo arreglo hasta que queda un unico arreglo ordenado.
+El algoritmo de mergesort es un ordenamiento que utiliza la técnica de División y Conquista, y por lo tanto, para calcular su complejidad teórica va a ser utilizado el Teorema Maestro. Si el arreglo sólo tiene un elemento o ninguno se considera ordenado. En otro caso, el arreglo se subdivide por la mitad creando dos nuevos arreglos. Cada uno de estos arreglos se vuelve a subdividir de forma recursiva hasta que queda un elemento o dos en cada subarreglo. A partir de aqui, cada mitad creada se une de forma ordenada en un nuevo arreglo hasta que queda un único arreglo ordenado.
 
 En cuanto a código se introducen nuevos metodos:
 
 \begin{itemize}
-\item \texttt{Append} y \texttt{pop}: $O(1)$
-\item \texttt{Extend}: $O(k)$ siendo k la cantidad de elementos agregados 
+\item \texttt{Append} y \texttt{pop}: $\mathcal O(1)$
+\item \texttt{Extend}: $\mathcal O(k)$ siendo k la cantidad de elementos agregados 
 \end{itemize}
 
-También es de notar que este es el primer algoritmo donde usamos llamadas recursivas, por su naturaleza de división y conquista.
+También es de notar que este es el primer algoritmo donde usamos llamadas recursivas, por su naturaleza de división y conquista.\\
 
-Aplicando el Teorema Maestro: 
-
-$Tmergesort(n) = a.Tmergesort(\frac{n}{b}) + f(n^c)$
+Aplicando el Teorema Maestro: $\mbox{T mergesort(n)} = a * \mbox{T mergesort}(\frac{n}{b}) + f(n^c)$
 
 La cantidad de llamadas recursivas (a) son dos. Cada llamada recursiva divide la entrada inicial a la mitad (b=2). Por último, el tiempo de las llamadas no recursivas es 
 
-$O(1 + 1 + 1 +4 + 1+ 2 +n(1 + 1 +1) + 1 + \frac{n}{2} +1 ) = O( \frac{9n}{2} +11 )$
+$\mathcal O(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \mathcal O(3n + 5)) \in \mathcal O(n)$\\
 
-(asumiendo un n lo suficientemente grande como para que se requieran intercalar aproximadamente n elementos la mayoría de las veces), por lo que d=1. Se tiene entonces:
+Asumiendo un n lo suficientemente grande como para que se requieran intercalar aproximadamente n elementos la mayoría de las veces, por lo que c=1. Se tiene entonces:
 
-$Tmergesort(n) = 2.Tmergesort(\frac{n}{2}) + f(n)$
+$\mbox{T mergesort(n)} = 2 * \mbox{T mergesort} (\frac{n}{2}) + f(n)$
 
-Como $(a = b^c)$ ($2 = 2^1$), se tiene que:
+Como $(a = b^c)$, se tiene que: $\mbox{T mergesort(n)} \in \mathcal O(n \log n)$
 
-$Tmergesort(n) \in O(n \log n)$
+\hl{Texto sobre peor y promedio caso mergesort}
 
-\hl{Texto sobre peor tiempo y tiempo promedio de mergesort}
+$\mbox{PeorTmergesort(n)} \in O(n \log n))$
 
-$PeorTmergesort(n) \in O(n \log n))$
-
-$PromedioTmergesort(n) \in O(n \log n))$
+$\mbox{PromedioTmergesort(n)} \mathcal O(2 + 2 + 1 + 1 + (\frac n 2) 3 + \frac n 2 + 1) = \mathcal O(3n + 5)) \in \mathcal O(n \log n)$ \\
 
 \subsubsection{Quicksort}
 
@@ -389,6 +385,9 @@ Por ejemplo, para cumplir con la consigna se requieren los siguientes comandos:
 \end{minted}
 
 \section{Tablas de ejecución}
+
+\subsection{Tiempos de ejecución sobre sets aleatorios}
+
 \begin{table}[h]
 \centering
 \caption{Tiempos de ejecución sobre 10 sets aleatorios}
@@ -464,6 +463,8 @@ quickSort       & 0.02859854  & 0.02852403  & 0.02988460  & 0.02795936  & 0.0273
 selectionSort   & 4.39602486  & 4.53192356  & 4.42551569  & 4.38844704  & 4.39688216  & 4.38836099  & 4.37352012  & 4.36608303  & 4.38014397  & 4.41154632 
 \end{tabular}}
 \end{table}
+
+\subsection{Tiempos de ejecución sobre sets de peores casos}
 
 \begin{table}[h]
 \centering
