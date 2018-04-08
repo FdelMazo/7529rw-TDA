@@ -1,5 +1,6 @@
 from Jugador import Jugador
 from Equipo import Equipo
+from matchingGS import matchingGS
 
 def probar(mensaje, condicion):
     if condicion:
