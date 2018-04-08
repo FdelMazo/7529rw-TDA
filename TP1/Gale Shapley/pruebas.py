@@ -52,3 +52,11 @@ def pruebasJugador():
     probar('Esta bien asignado?', jugador.getLugarAsignado() == equipo)
     
 pruebasJugador()
+
+def testMatchingGS():
+    jugadores, equipos = matchingGS(200, 20, 10, "asignacion.txt", True)
+    for equipo in equipos.values():
+        for jugador in equipo.getJugadores():
+            descartados = jugador.getEquiposDescartados()
+            for equipo_descartado in descartados:
+                assert(equipos[equipo_descartado].getPosicionFavoritoActual() <= equipos[equipo_descartado].getPreferencias().index(jugador.getNumero()))
