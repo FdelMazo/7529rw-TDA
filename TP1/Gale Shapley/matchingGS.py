@@ -65,3 +65,4 @@ def matchingGS(cantidadJugadores, cantidadEquipos, vacantesPorEquipo, archivoSal
     jugadores, equipos = cargaDeArchivos(cantidadJugadores, cantidadEquipos, vacantesPorEquipo) #O(cantidadJugadores * cantidadEquipos)
     asignacion(jugadores, equipos, cantidadEquipos * vacantesPorEquipo)
     guardarAsignacion(equipos, archivoSalida)
+    return jugadores, equipos
