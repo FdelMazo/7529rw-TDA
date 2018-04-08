@@ -222,7 +222,7 @@ Este algoritmo sí presenta un peor caso: cuando el arreglo de entrada se encuen
 
 \subsubsection{Mergesort}
 
-\hl{Como se analizo con el Teorema Maestro, Mergesort es de orden $O(n \log n)$, por lo que no presenta un peor caso para ningun set en general.}
+Asintóticamente, Mergesort es siempre de orden O(n log n), pero hay casos donde se requieren más comparaciones entre elementos, lo que conlleva a un tiempo que, si bien no difiere del orden asintótico, es mayor. Aún así, es ínfimo en comparación al crecimiento de los peores casos de otros algoritmos de ordenamiento. El arreglo considerado como el peor valor de entrada es aquel que maximiza el número de comparaciones entre elementos al ser ordenado por Mergesort. Para lograr esto, el arreglo de entrada debe estar ordenado de forma tal que, los elementos de la mitad izquierda y los elementos de la mitad derecha estén intercalados de forma ordenada. Para hacer más clara la idea, si consideramos el arreglo ordenado {1,2,3,4,5,6,7,8}, para acomodar los elementos de forma que Mergesort maximice el número de comparaciones se permutan los elementos de forma que la mitad izquierda sea {1,3,5,7} y la mitad derecha {2,4,6,8}.\hl{ME PARECE QUE ASÍ ESTÁ BIEN, PERO DEJO EL AVISO AMARILLO JUST IN CASE.}
 
 \subsubsection{Quicksort}
 
