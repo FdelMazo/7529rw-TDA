@@ -1,11 +1,11 @@
 def selectionSort(array):
     l = len(array)
-    for i in range(l, 0, -1):
-        max_pos = obtenerMaxPosHasta(array, i)
-        array[max_pos], array[i - 1] = array[i - 1], array[max_pos]
+    for i in range(l):
+        min_pos = obtenerMinPosDesde(array, i, l)
+        array[min_pos], array[i] = array[i], array[min_pos]
 
-def obtenerMaxPosHasta(array, finArray):
-    max_pos = 0
-    for i in range(finArray):
-        if array[i] > array[max_pos]: max_pos = i
-    return max_pos
+def obtenerMinPosDesde(array, inicioArray, tam):
+    min_pos = inicioArray
+    for i in range(inicioArray,tam):
+        if array[i] < array[min_pos]: min_pos = i
+    return min_pos
