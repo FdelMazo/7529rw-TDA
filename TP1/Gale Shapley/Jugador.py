@@ -36,6 +36,9 @@ class Jugador(EntidadConPreferencias):
         self.asignado = False
         self.lugarAsignado = None
     
+    def getEquiposDescartados(self):
+        return self.preferencias[:self.preferencias.index(self.lugarAsignado.getNumero())]
+    
     def compararPreferencias(self, equipo1, equipo2):
         for preferencia in self.preferencias:
             if equipo1.getNumero() == preferencia: return 1
