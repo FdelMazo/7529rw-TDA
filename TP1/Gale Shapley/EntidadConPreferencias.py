@@ -24,7 +24,7 @@ class EntidadConPreferencias:
         return self.preferencias
     
     def getPosicionFavoritoActual(self):
-        return posicionFavoritoActual
+        return self.posicionFavoritoActual
     
     def setPosicionFavoritoActual(self, posicionFavoritoActual):
         self.posicionFavoritoActual = posicionFavoritoActual
