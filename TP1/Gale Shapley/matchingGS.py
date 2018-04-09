@@ -6,22 +6,21 @@ from generadorLigas import generarLiga
 JUGADORES = "jugador"
 EQUIPOS = "equipo"
 EXTENSION = ".prf"
-DIRECTORIO = "archivos"
 
-def cargaDeArchivos(cantidadJugadores, cantidadEquipos, vacantes):
-    '''Recibe la cantidad de jugadores y de equipos de una liga y las vacantes de cada equipo. Devuelve un diccJugadores/diccEquipos con los identificadores de cada jugador/equipo como clave y un objeto Jugador/Equipo que lo representa como valor'''
+def cargaDeArchivos(cantidadJugadores, cantidadEquipos, vacantesPorEquipo, directorio = "archivos"):
+    '''Recibe la cantidad de jugadores y de equipos de una liga y las vacantes de cada equipo asi como tambien el directorio donde se encuentran los archivos de dichos equipos y jugadores. Devuelve un diccJugadores/diccEquipos con los identificadores de cada jugador/equipo como clave y un objeto Jugador/Equipo que lo representa como valor'''
     diccJugadores = {}
     diccEquipos = {}
     for identificadorJugador in range(cantidadJugadores):
-        diccJugadores[identificadorJugador] = Jugador(identificadorJugador, leerPreferencias(identificadorJugador, JUGADORES))
+        diccJugadores[identificadorJugador] = Jugador(identificadorJugador, leerPreferencias(identificadorJugador, JUGADORES, directorio))
     for identificadorEquipo in range(cantidadEquipos):
-        diccEquipos[identificadorEquipo] = Equipo(identificadorEquipo, leerPreferencias(identificadorEquipo, EQUIPOS), vacantes)
+        diccEquipos[identificadorEquipo] = Equipo(identificadorEquipo, leerPreferencias(identificadorEquipo, EQUIPOS, directorio), vacantesPorEquipo)
     return diccJugadores, diccEquipos
 
-def leerPreferencias(identificador, tipo):
+def leerPreferencias(identificador, tipo, directorio):
     '''Recibe un identificador de un objeto y su tipo. Lee las preferencias de dicho identificador y devuelve una lista con sus preferencias del tipo contrario.'''
     listaAux = []
-    ruta = os.path.join(DIRECTORIO,"{}_{}{}".format(tipo, identificador, EXTENSION))
+    ruta = os.path.join(directorio,"{}_{}{}".format(tipo, identificador, EXTENSION))
     with open(ruta,"r") as archivo:
         for linea in archivo:
             listaAux.append(int(linea.rstrip('\n')))
@@ -55,13 +54,10 @@ def guardarAsignacion(diccEquipos, nombreArchivo):
             archivo.write('\n')
 
 
-def matchingGS(cantidadJugadores, cantidadEquipos, vacantesPorEquipo, archivoSalida, crearArchivos = True):
-    '''Aplica el algoritmo de Gale-Shapley a una liga de equipos de Basketball y sus jugadores disponibles. Escribe un archivo txt de nombre archivoSalida recibido por parametro con los matches finales.
+def matchingGS(diccJugadores, diccEquipos, vacantesTotales, archivoSalida):
+    '''Recibe dos diccionarios, uno con los nombres de los jugadores como clave y su objeto jugador correspondiente como valor y de forma analoga para los equipos. Aplica el algoritmo de Gale-Shapley a una liga de equipos de Basketball y sus jugadores disponibles. Escribe un archivo txt de nombre archivoSalida recibido por parametro con los matches finales.
     Los jugadores y equipos deben estar guardados en la carpeta archivos.
     Todos los equipos y jugadores empiezan desasignados.
-    Si no se le indica lo contrario, el algoritmo crea un set de prueba aleatorio de jugadores y equipos de cantidades recibidas por parametro.'''
-    if crearArchivos: generarLiga(cantidadJugadores, cantidadEquipos)
-    jugadores, equipos = cargaDeArchivos(cantidadJugadores, cantidadEquipos, vacantesPorEquipo)
-    asignacion(jugadores, equipos, cantidadEquipos * vacantesPorEquipo)
-    guardarAsignacion(equipos, archivoSalida)
-    return jugadores, equipos
+    '''
+    asignacion(diccJugadores, diccEquipos, vacantesTotales)
+    guardarAsignacion(diccEquipos, archivoSalida)
