@@ -69,7 +69,7 @@ El ordenamiento de selección es uno de los algoritmos de ordenamiento más faci
 
 De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: \url{https://wiki.python.org/moin/TimeComplexity}} del ordenamiento de selección, la complejidad teórica es:
 
-$\mbox{T Selección(n): } \mathcal O(2 + 1 + n * (1 + 1 + 1 + n * (1 + 1) + 1 + 2)) = \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$\\
+$\mbox{T Selección(n)} \in \mathcal O(2 + 1 + n * (1 + 1 + 1 + n * (1 + 1) + 1 + 2)) = \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$\\
 
 Esto viene de analizar linea por linea teniendo en cuenta:
 \begin{itemize}
@@ -91,7 +91,7 @@ Inicialmente, se tiene un solo elemento y se lo considera un conjunto ordenado. 
 
 Este ordenamiento usa las mismas herramientas del ordenamiento de selección. Por lo tanto, con las consideraciones anteriores tomadas, queda:
 
-$\mbox{T Inserción(n): } \mathcal O( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3)) = \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
+$\mbox{T Inserción(n)} \in \mathcal O( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3))) = \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$\\
 
 Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$ posibles distribuciones de los elementos, solo una estara ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.
 
@@ -110,7 +110,7 @@ En cuanto a código se introducen nuevos metodos:
 
 También es de notar que este es el primer algoritmo donde usamos llamadas recursivas, por su naturaleza de división y conquista.\\
 
-Aplicando el Teorema Maestro: $\mbox{T mergesort(n)} = a * \mbox{T mergesort}(\frac{n}{b}) + f(n^c)$
+Aplicando el Teorema Maestro: $\mbox{T Mergesort(n)} = a * \mbox{T mergesort}(\frac{n}{b}) + f(n^c)$
 
 La cantidad de llamadas recursivas (a) son dos. Cada llamada recursiva divide la entrada inicial a la mitad (b=2). Por último, el tiempo de las llamadas no recursivas es 
 
@@ -120,21 +120,19 @@ Asumiendo un n lo suficientemente grande como para que se requieran intercalar a
 
 $\mbox{T Mergesort(n): } 2 * \mbox{T Mergesort} (\frac{n}{2}) + f(n)$
 
-Como $(a = b^c)$, se tiene que: $\mbox{T Mergesort(n)} \in \mathcal O(n \log n)$
+Como $(a = b^c)$, se tiene que: $\mbox{T Mergesort(n)} \in \mathcal O(n \log n)$\\
 
 Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de n/2. El tiempo de las llamadas no recursivas es $\mathcal O(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \mathcal O(3n + 5)) \in \mathcal O(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \mathcal O(n \log n)$ 
 
 \subsubsection{Quicksort}
 
-Al igual que mergesort, quicksort utiliza la técnica de División y Conquista. Se elige un elemento del arreglo como pivote (en nuestra implementación se elige al primero) y a partir del pivote se arman tres arreglos: la de todos los elementos menores al pivote, la conformada solo por el pivote y los elementos iguales a este y la de todos los elementos mayores al pivote. Con esto se obtiene un orden relativo al pivote. El mecanismo antes descripto se repite recursivamente para cada parte. El arreglo final se obtiene concatenando lps subarreglos ordenados. Al igual que en Mergesort, siendo División y Conquista la técnica utlilizada, se usa el Teorema Maestro para calcular su complejidad.
+Al igual que mergesort, quicksort utiliza la técnica de División y Conquista. Se elige un elemento del arreglo como pivote (en nuestra implementación se elige al primero) y a partir del pivote se arman tres arreglos: la de todos los elementos menores al pivote, la conformada solo por el pivote y los elementos iguales a este y la de todos los elementos mayores al pivote. Con esto se obtiene un orden relativo al pivote. El mecanismo antes descripto se repite recursivamente para cada parte. El arreglo final se obtiene concatenando lps subarreglos ordenados. Al igual que en Mergesort, siendo División y Conquista la técnica utlilizada, se usa el Teorema Maestro para calcular su complejidad.\\
 
 Considerando las complejidades analizadas hasta ahora (en código no hay nada nuevo) y aplicando el Teorema Maestro se tiene:
 
 $\mbox{T Quicksort(n)} = a * \mbox{T Quicksort}(\frac{n}{b}) + f(n^c)$
 
-La cantidad de llamadas recursivas (a) son 2. El tiempo de las llamadas no recursivas es $\mathcal O(1 + 3 + 1 + n (1 + 2) + 1 + n) = \mathcal O(4n + 6) \in \mathcal O(n)$, por lo que c=1. 
-
-Para analizar b, se debe considerar dos casos. 
+La cantidad de llamadas recursivas (a) son 2. El tiempo de las llamadas no recursivas es $\mathcal O(1 + 3 + 1 + n (1 + 2) + 1 + n) = \mathcal O(4n + 6) \in \mathcal O(n)$, por lo que c=1.\\
 
 En el caso promedio, b será igual a 2, ya que en un arreglo arbitrariamente grande, es mucho más probable tomar en cualquier posición a un elemento alejado de las cotas superiores e inferiores que muy próximo a ellas, por lo que la recursión dividirá el problema en “dos partes iguales” (probablemente nunca sean exactamente iguales, pero con un n arbitrariamente grande, las diferencias que puedan existir son despreciables en tanto el pivote elegido no esté lo suficientemente próximo a una cota superior o inferior). Para este caso, como $(a = b^c)$, se tiene que: $\mbox{T Promedio Quicksort(n)} \in \mathcal O(n \log n))$
 
@@ -152,7 +150,7 @@ Los tiempos del heap de mínimos implementado son:
 
 Considerando todo esto queda: 
 
-$\mbox{T Promedio Heapsort(n)} \in \mathcal O(n + 1 + n + 1 + 1 + n (1 + \log n) = \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$ 
+$\mbox{T Promedio Heapsort(n)} \in \mathcal O(n + 1 + n + 1 + 1 + n (1 + \log n)) = \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$ 
 
 \subsection{Peores tiempos}
 
@@ -171,9 +169,9 @@ $\mbox{T Peor Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
 \subsubsection{Mergesort}
 
-Si bien tiene un promedio de tiempo logaritmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación pues el ultimo elemento no hay que compararlo contra nada. 
+Si bien tiene un promedio de tiempo logaritmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación pues el ultimo elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
 
-$\mbox{T Peor Mergesort(n)} \in \mathcal O((n-1) \log n) \in \mathcal O(n \log n)$. 
+$\mbox{T Peor Mergesort(n)} \in \mathcal O(n \log n)$. 
 
 \subsubsection{Quicksort}
 
@@ -190,7 +188,7 @@ $\mbox{T Peor Quicksort:} \sum_{i=0}^{n-2} O(6)  +  \sum_{i=0}^{n-2} \mathcal O(
 \mbox{T Peor Quicksort(n)} \in \mathcal O(6(n-1))  +  \mathcal O(4n(n-1)) - 4 * \sum_{i=0}^{n-2} \mathcal O(i) + \mathcal O(2) \\
 \mbox{T Peor Quicksort(n)} \in \mathcal O(6(n-1))  +  \mathcal O(4n(n-1)) - 4 * \mathcal O((n-1)*\frac n 2 + \mathcal O(2)$ \\
 
-$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \mathcal O(n^2)$\\
+$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \mathcal O(n^2)$
 
 \subsubsection{Heapsort}
 
@@ -212,7 +210,7 @@ $\mbox{T Promedio Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(
 
 $\mbox{T Promedio Mergesort(n)} \in \mathcal O(n \log n)$ 
 
-$\mbox{T Promedio Quicksort(n)} \in \mathcal O(n \log n))$\\
+$\mbox{T Promedio Quicksort(n)} \in \mathcal O(n \log n)$\\
 
 Para poder terminar de ubicar en la escala a quicksort y mergesort, se pone el foco en la complejidad de su parte no recursiva: por parte de quicksort es $\mathcal O(4n + 6)$, y en el caso de mergesort es $\mathcal O(3n + 5)$. Es decir, la diferencia fundamental entre estos dos algoritmos es que en el peor caso quicksort será menos eficiente.
 
@@ -226,21 +224,21 @@ $\mbox{T Peor Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
 
 $\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \mathcal O(n^2)$
 
-$\mbox{T Peor Mergesort(n)} \in \mathcal O((n-1) \log n) \in \mathcal O(n \log n) $
+$\mbox{T Peor Mergesort(n)} \in \mathcal O(n \log n) $
 
 $\mbox{T Peor Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$
 
 \subsection{Tiempos de ejecución}
 
-\makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoRandom}}
+\makebox[\textwidth][c]{\includegraphics[width=0.8\textwidth]{GraficoCasoRandom}}
 
 Se ve en la comparación que para pocos elementos el comportamiento de los ordenamientos es similar. Pasados los miles de elementos, empiezan a notarse las diferencias entre cada algoritmo. Para el caso con sets de valores aleatorios, se verifica en la práctica la diferencia entre los algoritmos de ordenamientos con órdenes cuadráticos (selectionSort e insertionSort) contra aquellos que eran de orden logarítmico. Las curvas de los ordenamientos cuadráticos en promedio crecen de forma mucho más abrupta que el resto a partir de los 500 elementos. Se puede ver, de acuerdo a lo analizado en los órdenes teóricos, como heapsort se comporta como el peor de los ordenamientos no cuadráticos.
 
-\makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoDescendente}}
+\makebox[\textwidth][c]{\includegraphics[width=0.8\textwidth]{GraficoCasoDescendente}}\\ \\
 
 Este es el peor caso analizado para los ordenamientos de inserción y de quicksort: el primero denota la peor eficiencia, mientras que el segundo toma un orden cuadrático que acelera mucho su crecimiento con respecto a heapsort y a mergesort. Estos últimos mantienen su tendencia, mostrando que no les afecta la distribución descendente y que mergesort nuevamente resulta el más eficiente.
 
-\makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoAntiMergeSort}}
+\makebox[\textwidth][c]{\includegraphics[width=0.7\textwidth]{GraficoCasoAntiMergeSort}}\\ \\
 
 Este es el peor caso analizado para mergesrot. El impacto práctico es virtualmente despreciable, mostrando que mergesort, incluso en su peor caso teórico, sigue siendo de los más eficientes. Esto se da porque este “peor caso” para mergesort, en realidad no está modificando su tiempo de ejecución a nivel asintótinco, por lo que en la práctica (ejecutado sobre el mismo ambiente) no se registran mayores diferencias. El resto de los algoritmos tienen un comportamiento similar al verificado con los sets aleatorios. 
 
@@ -293,7 +291,7 @@ Todo el trabajo fue codificado en Python 3.6.1.
 
 \subsection{Ordenamientos: Ejecución general}
 
-El programa principal es ejecutado desde el archivo main, especificando por linea de comando el caso a ejecutar, entre "Random" y "Peor", refiriendose a los sets por donde se ejecutaran los ordenamientos. La ejecución consiste de iterar sobre los sets generados previamente y en cada uno ejecutar cada ordenamiento estudiado sobre distintas cantidades del mismo elemento. Este archivo genera un 'SalidaRandom.csv' con las estadisticas necesarias para analizar.
+El programa principal es ejecutado desde el archivo main del directorio 'Ordenamientos', especificando por linea de comando el caso a ejecutar, entre 'Random' y 'Peor', refiriendose a los sets por donde se ejecutaran los ordenamientos. La ejecución consiste de iterar sobre los sets generados previamente y en cada uno ejecutar cada ordenamiento estudiado sobre distintas cantidades del mismo elemento. Este archivo genera un 'SalidaRandom.csv' con las estadisticas necesarias para analizar.
 
 \begin{minted}{shell}
 >>> python main.py Random
@@ -307,6 +305,10 @@ El programa principal es ejecutado desde el archivo main, especificando por line
 
 El script generarSets.py permite generar los sets aleatorios de n numeros (en este caso, n=10000) en un rango determinado. Este archivo también contiene la creación de los sets de peores casos.
 
+\begin{minted}{shell}
+>>> python generarSets.py
+\end{minted}
+
 \subsection{Pruebas de ordenamientos}
 Para verificar que los ordenamientos anden correctamente se realizaron varias pruebas unitarias que verfiquen distintos comportamientos desde los casos triviales hasta los casos borde y demás. Todas las pruebas son iguales, e incluyen asserts con ordenamientos aleatorios.
 
@@ -315,36 +317,9 @@ Para verificar que los ordenamientos anden correctamente se realizaron varias pr
 \end{minted}
 
 \subsection{Stable matching}
-Para generar un matching estable que cumpla con la consigna se utiliza el archivo main. Este importa el archivo matchinGS.py, ejecuta aplica el algoritmo Los parametros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad.
+Para generar un matching estable que cumpla con la consigna se utiliza el archivo main del directorio 'Gale Shapley'. Este importa el archivo matchinGS.py, ejecuta aplica el algoritmo Los parametros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad.
 
-El resultado de una de las ejecuciones fue:
-
-\begin{center}
-\begin{BVerbatim}
-1: 150 120 119 11 22 175 28 15 78 130
-2: 182 200 8 191 44 36 60 134 17 159
-3: 189 34 1 138 142 45 190 100 197 187
-4: 88 9 132 46 62 91 188 103 145 70
-5: 48 20 178 27 168 97 30 176 124 98
-6: 125 129 25 86 180 165 106 5 177 12
-7: 155 158 31 54 195 93 146 29 24 170
-8: 164 63 110 127 109 140 96 160 149 143
-9: 154 169 198 161 61 99 84 179 33 151
-10: 173 69 35 117 163 65 112 118 104 43
-11: 166 76 58 137 185 18 77 94 2 186
-12: 51 4 171 199 87 162 19 181 85 80
-13: 49 40 55 101 26 123 131 92 114 72
-14: 193 115 39 37 135 6 172 38 141 174
-15: 10 147 167 73 156 14 133 57 74 152
-16: 126 192 136 148 71 23 52 153 111 32
-17: 116 196 67 82 64 21 59 68 107 113
-18: 105 56 90 66 47 183 7 75 108 16
-19: 41 81 102 184 3 122 194 79 157 139
-20: 42 83 13 128 53 50 144 89 121 95
-\end{BVerbatim}
-\end{center}
-
-
+\newpage
 \section{Tablas de ejecución}
 
 \begin{table}[h]
