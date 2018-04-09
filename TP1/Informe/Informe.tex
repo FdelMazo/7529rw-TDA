@@ -229,15 +229,15 @@ $\mbox{T Peor Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \l
 
 \subsection{Tiempos de ejecución}
 
-\makebox[\textwidth][c]{\includegraphics[width=0.8\textwidth]{GraficoCasoRandom}}
+\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{GraficoCasoRandom}}
 
 Se ve en la comparación que para pocos elementos el comportamiento de los ordenamientos es similar. Pasados los miles de elementos, empiezan a notarse las diferencias entre cada algoritmo. Para el caso con sets de valores aleatorios, se verifica en la práctica la diferencia entre los algoritmos de ordenamientos con órdenes cuadráticos (selectionSort e insertionSort) contra aquellos que eran de orden logarítmico. Las curvas de los ordenamientos cuadráticos en promedio crecen de forma mucho más abrupta que el resto a partir de los 500 elementos. Se puede ver, de acuerdo a lo analizado en los órdenes teóricos, como heapsort se comporta como el peor de los ordenamientos no cuadráticos.\\
 
-\makebox[\textwidth][c]{\includegraphics[width=0.8\textwidth]{GraficoCasoDescendente}}\\ \\
+\makebox[\textwidth][c]{\includegraphics[width=0.9\textwidth]{GraficoCasoDescendente}}\\ \\
 
 Este es el peor caso analizado para los ordenamientos de inserción y de quicksort: el primero denota la peor eficiencia, mientras que el segundo toma un orden cuadrático que acelera mucho su crecimiento con respecto a heapsort y a mergesort. Estos últimos mantienen su tendencia, mostrando que no les afecta la distribución descendente y que mergesort nuevamente resulta el más eficiente.\\
 
-\makebox[\textwidth][c]{\includegraphics[width=0.8\textwidth]{GraficoCasoAntiMergeSort}}\\ \\
+\makebox[\textwidth][c]{\includegraphics[width=0.9\textwidth]{GraficoCasoAntiMergeSort}}\\ \\
 
 Este es el peor caso analizado para mergesrot. El impacto práctico es virtualmente despreciable, mostrando que mergesort, incluso en su peor caso teórico, sigue siendo de los más eficientes. Esto se da porque este “peor caso” para mergesort, en realidad no está modificando su tiempo de ejecución a nivel asintótinco, por lo que en la práctica (ejecutado sobre el mismo ambiente) no se registran mayores diferencias. El resto de los algoritmos tienen un comportamiento similar al verificado con los sets aleatorios. 
 
