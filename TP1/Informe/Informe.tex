@@ -1,10 +1,6 @@
 \documentclass[article,a4paper]{article}
 
 \usepackage{fancyvrb}
-\usepackage[T1]{fontenc}
-\usepackage{changepage}
-\usepackage{ragged2e, lipsum}
-\usepackage{tabularx, caption, booktabs}
 \usepackage{a4wide}
 \usepackage{amsmath}
 \usepackage{fancyhdr}
@@ -181,9 +177,20 @@ $\mbox{T Peor Mergesort(n)} \in \mathcal O((n-1) \log n) \in \mathcal O(n \log n
 
 \subsubsection{Quicksort}
 
-Quicksort presenta un caso en que su comportamiento resulta cuadrático, generando uno de las mayores discrepancias entre tiempo promedio y peor tiempo de los algoritmos analizados. Esto es cuando el pivote elegido es una cota menor o mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$. En nuestra implementación, Quicksort elige siempre al primer elemento del arreglo como pivote, por lo tanto, usamos como peor caso un arreglo ordenado descendentemente y tomando de pivote el primer elemento del arreglo. Para este peor caso se tiene que, segun el Teorema Maestro b=1, ya los elementos quedan “a la derecha o a la izquierda” del pivote. Pero al no haber División y Conquista propiamente dicho, no se puede aplicar el teorema del maestro. El analisis pasa a ser linea por linea: 
+Quicksort presenta un caso en que su comportamiento resulta cuadrático, generando uno de las mayores discrepancias entre tiempo promedio y peor tiempo de los algoritmos analizados. Esto es cuando el pivote elegido es una cota menor o mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$. En nuestra implementación, Quicksort elige siempre al primer elemento del arreglo como pivote, por lo tanto, usamos como peor caso un arreglo ordenado descendentemente y tomando de pivote el primer elemento del arreglo. Como en el caso promedio, para el peor caso se tiene que la primera iteración sin la llamada recursiva tiene un orden de $\mathcal O(4n + 6)$ (considerando como lineal lo que ocurre dentro del ciclo for, y sabiendo que al terminar la llamada recursiva se devolverá un nuevo arreglo de n elementos). 
 
-$\mbox{T Peor Quicksort(n)} \in \mathcal O(1 + 3 + 1 + n (1 + 2) + \sum_{i=0}^{n-1} 6+3n-i  = \mathcal O(  6+3n) \in \mathcal O(n^2)$
+Pero ahora, por ser el peor caso de quicksort, la llamada recursiva se hará con $n-1$ elementos (todos menos el pivote), y luego con $n-2$, y así sucesivamente hasta llegar al caso base cuyo orden complejidad es O(2). Pero al no haber División y Conquista propiamente dicho, no se puede aplicar el teorema del maestro. El analisis pasa a ser linea por linea:\\ 
+
+$\mbox{T Peor Quicksort - Llamada sobre n:} = \mathcal O(4n) + \mathcal O(6) + O(2) + \mbox{Llamada sobre n-1}\\
+\mbox{Llamada sobre n-1} = \mathcal O(4n-1) + \mathcal O(6) + \mbox{Llamada sobre n-2} \\
+\mbox{Llamada sobre n-2} = \mathcal O(4n-2) + \mathcal O(6) + \mbox{Llamada sobre n-3}$ \\
+
+
+$\mbox{T Peor Quicksort:} \sum_{i=0}^{n-2} O(6)  +  \sum_{i=0}^{n-2} \mathcal O(4(n-i)) + \mathcal O(2) \\
+\mbox{T Peor Quicksort(n)} \in \mathcal O(6(n-1))  +  \mathcal O(4n(n-1)) - 4 * \sum_{i=0}^{n-2} \mathcal O(i) + \mathcal O(2) \\
+\mbox{T Peor Quicksort(n)} \in \mathcal O(6(n-1))  +  \mathcal O(4n(n-1)) - 4 * \mathcal O((n-1)*\frac n 2 + \mathcal O(2)$ \\
+
+$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \mathcal O(n^2)$\\
 
 \subsubsection{Heapsort}
 
@@ -217,7 +224,7 @@ $\mbox{T Peor Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
 $\mbox{T Peor Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$ 
 
-Quick
+$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \mathcal O(n^2)$
 
 $\mbox{T Peor Mergesort(n)} \in \mathcal O((n-1) \log n) \in \mathcal O(n \log n) $
 
@@ -225,22 +232,17 @@ $\mbox{T Peor Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \l
 
 \subsection{Tiempos de ejecución}
 
-Se calcularon los promedios de cada tiempo para cada cantidad de elementos y cada algoritmo:
-
 \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoRandom}}
+
+Se ve en la comparación que para pocos elementos el comportamiento de los ordenamientos es similar. Pasados los miles de elementos, empiezan a notarse las diferencias entre cada algoritmo. Para el caso con sets de valores aleatorios, se verifica en la práctica la diferencia entre los algoritmos de ordenamientos con órdenes cuadráticos (selectionSort e insertionSort) contra aquellos que eran de orden logarítmico. Las curvas de los ordenamientos cuadráticos en promedio crecen de forma mucho más abrupta que el resto a partir de los 500 elementos. Se puede ver, de acuerdo a lo analizado en los órdenes teóricos, como heapsort se comporta como el peor de los ordenamientos no cuadráticos.
+
 \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoDescendente}}
+
+Este es el peor caso analizado para los ordenamientos de inserción y de quicksort: el primero denota la peor eficiencia, mientras que el segundo toma un orden cuadrático que acelera mucho su crecimiento con respecto a heapsort y a mergesort. Estos últimos mantienen su tendencia, mostrando que no les afecta la distribución descendente y que mergesort nuevamente resulta el más eficiente.
+
 \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{GraficoCasoAntiMergeSort}}
 
-Se ve en la comparación que para pocos elementos el comportamiento de los ordenamientos es similar. Pasando los mil elementos se ve como quicksort e insertsort empeoran notablemente. Para el set mayor, se ve que insertionSort tarda cuatro veces más, y quicksort tarda más de 200 veces lo que tardaba en promedio. El resto de los ordenamientos no se ve afectado notablemente.
-En el gráfico es más que notorio como quicksort tomó un orden cuadrático al igual que los ordenamientos por inserción y selección.
-
-En el siguiente gráfico se muestra la comparación explícita del insertion sort:
-y a continuación el análogo de quicksort
-
-
-Es claro que el caso de orden descendente solo afecta en quicksort e insertionsort.
-
-Las tablas enteras con todas las ejecuciones pueden verse en el anexo al final.
+Este es el peor caso analizado para mergesrot. El impacto práctico es virtualmente despreciable, mostrando que mergesort, incluso en su peor caso teórico, sigue siendo de los más eficientes. Esto se da porque este “peor caso” para mergesort, en realidad no está modificando su tiempo de ejecución a nivel asintótinco, por lo que en la práctica (ejecutado sobre el mismo ambiente) no se registran mayores diferencias. El resto de los algoritmos tienen un comportamiento similar al verificado con los sets aleatorios. 
 
 \subsection{Comparación con valores teóricos}
 
@@ -254,38 +256,32 @@ Con respecto al caso promedio, los tiempos se cumplieron de forma exactamente co
 
 \subsubsection{Tiempo polinómico}
 
-Para facilitar la notación de está sección, J será la cantidad de jugadores y E la cantidad de equipos. Para la justificación detallada de cada sentencia del algoritmo, ver los comentarios de la complejidad en el código.
+En el algoritmo implementado, primero se crea el archivo, con una complejidad $\mathcal O(E*J)$ (siendo J la cantidad de jugadores y E la cantidad de equipos), ya que por cada equipo se debe crear un archivo de longitud igual a la cantidad de jugadores, y lo análogo ocurre a la recíproca. La carga de archivos  naturalmente también es de orden $\mathcal O(J*E)$ ya que por cada jugador que se quiera crear, se debe recorrer un archivo cuya longitud es igual a la cantidad de equipos, y viceversa.
 
-En el algoritmo el primer método que se llama es jugadoresEquiposGS. En caso en que se especifique la creación de los archivos .rtf, el método generarArchivos tiene una complejidad es de orden O(E*J), ya que por cada equipo se debe crear un archivo de longitud igual a la cantidad de jugadores, y lo análogo ocurre a la recíproca.
+Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que no agregan un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\mathcal O(J)$). Como hay E equipos, el orden de la asignación también es $\mathcal O(J*E)$.
 
-La carga de archivos con el método cargaDeArchivos naturalmente también de orden O(J*E) ya que por cada jugador que se quiera crear, se debe recorrer un archivo cuya longitud es igual a la cantidad de equipos, y viceversa.
+Finalmente, se almacena en un archivo las asignaciones. Por cada equipo se guarda su número seguido de los sus jugadores, dejandolo en un orden lineal de $\mathcal O(J+E)$.
 
-La asignación, donde se genera el matching establece, tiene como condición de corte que no haya más vacantes en los equipos. Considerando esto, el hecho de que a continuación en el algoritmo se itere por cada equipo, y que se verifique para cada uno si todos tiene vacantes, es solo una especificación para lograr cubrir todas las vacantes, por lo que no agregan un orden diferente: simplemente es la forma de implementar que el algoritmo avance a partir de que se cubren distintas vacantes en distintas equipos. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es O(J). Como hay E equipos, el orden de la asignación también es O(J*E).
-
-Finalmente, almacenar el archivo de la asignación tiene un orden línea O(J+E). Esto se debe a que por cada equipo, se guarda su número seguido de los números de jugadores que tiene. La cantidad de jugadores que tiene un equipo es igual a sus vacantes (ver demostración en el próximo item de que cada equipo llena todas sus vacantes) y como la cantidad de vacantes totales es igual al número de jugadores, se tiene que se guardó un archivo con J + E números.
-
-El orden cuadrático del algoritmo, entonces, es evidente, ya que es el peor caso de complejidad a lo largo de las funciones del algoritmo. Como O(J*E) es un orden polinomial, el algoritmo es de orden polinomial.
+El orden cuadrático polinomial del algoritmo es evidente, ya que es el peor caso de complejidad a lo largo de las funciones del algoritmo.
 
 \subsubsection{Matching estable}
 
-Para está demostración, se simplificará la estructura original de la solución implementada. Considerando el primer método llamado "jugadoresEquiposGS", se excluyen las características de la generación de los archivos de perfil, su carga, y el correspondiente almacenamiento del archivo donde se guarda la asignación estable. Entonces, el método se reduce a la asignación propiamente dicha.
+Mientras haya un equipo con vacantes, el equipo actual ofrece una vacante a su jugador favorito actual. Si el jugador esta libre, acepta la vacante, si no esta libre, pero prefiere más al equipo actual, acepta la vacante y el otro equipo pierde a ese jugador.
 
-Mientras haya un equipo con vacantes, el equipo actual ofrece una vacante a su jugador favorito actual. Si el jugador esta libre, acepta la vacante, si no esta libre, pero prefiere más al equipo actual, acepta la vacantey el otro equipo pierde a ese jugador.
+Como hay igual cantidad de jugadores que de vacantes totales, se ve que todos los equipos podrán cubrir todos su puestos. Demostrandolo por el absurdo, suponemos un equipo $e$ que ya ha ofrecido una vacante a todos los jugadores de acuerdo con sus preferencias y ninguno la ha aceptado, lo cual implica que todos los jugadores ya han aceptado una vacante en un equipo previamente. Pero esto es una contradicción, porque existe la misma cantidad de jugadores que de vacantes totales, y por hipótesis hay una (al menos) vacante que $e$ no puede cubrir. La contradicción viene de suponer que un equipo no ha podido satisfacer una de sus vacantes ofreciéndole a todos los jugadores. Con esto se ve además que la máxima cantidad de proposiciones que un equipo puede hacer es igual a la cantidad de vacantes disponibles en total, es decir, la cantidad de jugadores.
 
-Como hay igual cantidad de jugadores que de vacantes totales, se ve que todos los equipos podrán cubrir todos su puestos. Supongamos que hubiera un equipo "a" que ya ha "ofrecido una vacante" a todos los jugadores de acuerdo con su favoritismo, y ninguno la hubiera aceptado. Esto es decir que todos los jugadores ya han aceptado una vacante en un equipo previamente. Pero esto es una contradicción, porque existe la misma cantidad de jugadores que de vacantes totales, y por hipótesis hay una (al menos) vacante que "a" no puede cubrir. Justamente, la contradicción viene de suponer que un equipo no ha podido satisfacer una de sus vacantes ofreciéndole a todos los jugadores, por lo que esto es falso. Con esto se ve además que la máxima cantidad de "proposiciones" que un equipo puede hacer es igual a la cantidad de vacantes disponibles en total, es decir, con la cantidad de jugadores.
+Para demostrar que una vez que cada equipo haya cubierto sus vacantes no habrá parejas conflictivas (inestabilidades). Suponiendo jugadores $j1$ y $j2$, y equipos $e1$, $e2$, asumimos un conflicto entre $(j1,e1)$ y $(j2,e2)$, con $j1$ queriendo estar en $e2$ y $j2$ queriendo estar en $e1$, $e1$ prefiriendo a $j2$ sobre $j1$ y $e2$ prefiriendo a $j1$ sobre $j2$.
 
-Ahora se demostrar que una vez que cada equipo haya cubierto sus vacantes, no habrá parejas conflictivas (inestabilidades). La misma podría darse entre (j1,a) y (j2,b), donde j1 es un jugador que quiere estar en el equipo b, j2 es un jugador que quiere estar en el equipo a, a es un equipo que prefiere más a j2 sobre j1 y b es un equipo que prefiere más a j1 sobre j2.
+Suponiendo que $e1$ es el primero en elegir, si $j1$ aceptó la vacante es porque estaba libre o porque prefería estar en $e1$ antes que en otro equipo $e3$ (donde no necesariamente $e3 = e2$).     
 
-Supongamos que a "elige primero". Si j1 aceptó la vacante en a, es porque j1 estaba libre, o bien, porque prefería estar en a que en otro equipo c (no necesariamente c = b).     
+\begin{itemize}
+\item{Si estaba solo: } Luego $e2$ prefiere más a $j2$ que a $j1$, porque le ofreció su vacante antes. Si esto no fuera así, $e2$ le hubiera ofrecido antes su vacante a $e1$, y el mismo se hubiera cambiado de equipo, pero esto no sucedió. En este caso se llega a un absurdo, porque por hipótesis $e2$ prefiere más a $j1$ (en otro caso la pareja no es conflictiva y no hay inestabilidad).
+\item{Si acepto estando en otro equipo: } Luego, se llega al mismo absurdo anterior, porque al fin y al cabo $e2$ termina con $j2$.
+\end{itemize}
 
-Supongamos que era porque estaba solo. Luego b prefiere más a j2 que a j1, porque le ofreció su vacante antes. Si esto no fuera así, b le hubiera ofrecido antes su vacante a j1, y el mismo se hubiera cambiado de equipo, pero esto no sucedió. En este caso se llega a un absurdo, porque por hipótesis b prefiere más a j1 (en otro caso la pareja no es conflictiva y no hay inestabilidad).
+Por ende, debe ser que $e2$ eligió primero. Si $j2$ aceptó la vacante en $e2$, es porque $j2$ estaba libre o porque prefería estar en $e2$ que en otro equipo $e4$ (no necesariamente $e4 = e1 o e4 = e3$). En cualquiera de los dos casos se llega a un absurdo similar al anterior.
 
-Entonces debemos suponer que j1 aceptó la vacante porque estaba en otro equipo c. Luego, se llega al mismo absurdo anterior, porque al fin y al cabo b termina con j2.
-
-Luego, debe ser que b "eligió primero". Si j2 aceptó la vacante en b, es porque j2 estaba libre, o bien, porque prefería estar en b que en otro equipo d (no necesariamente d = b o d = c). En cualquiera de los dos casos se llega a un absurdo similar al anterior.
-Todas los caminos a los que conduce la hipótesis "hay una inestabilidad en la asignación final" hacen llegar a una contradicción, por lo que queda probado que la asignación es estable.
-
-No existe posibilidad que quede un equipo con alguna vacante libre, o un jugador sólo, como se probó al principio.
+Todas los caminos a los que conduce la hipótesis donde hay una inestabilidad en la asignación final hacen llegar a una contradicción, por lo que queda probado que la asignación es estable.
 
 
 \newpage
@@ -319,7 +315,7 @@ Para verificar que los ordenamientos anden correctamente se realizaron varias pr
 \end{minted}
 
 \subsection{Stable matching}
-Para generar un matching estable que cumpla con la consigna se utiliza el archivo main. Este importa el archivo matchinGS.py, ejecuta aplica el algoritmo Los parametros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida, y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad.
+Para generar un matching estable que cumpla con la consigna se utiliza el archivo main. Este importa el archivo matchinGS.py, ejecuta aplica el algoritmo Los parametros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad.
 
 El resultado de una de las ejecuciones fue:
 
