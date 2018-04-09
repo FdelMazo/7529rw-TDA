@@ -316,9 +316,10 @@ Para verificar que los ordenamientos anden correctamente se realizaron varias pr
 \end{minted}
 
 \subsection{Stable matching}
-Para generar un matching estable que cumpla con la consigna se utiliza el archivo main del directorio 'Gale Shapley'. Este importa el archivo matchinGS.py, ejecuta aplica el algoritmo Los parametros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad.
+Para generar un matching estable que cumpla con la consigna se utiliza el archivo main del directorio 'Gale Shapley'. Este importa el archivo matchinGS.py y ejecuta el algoritmo. Los parametros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad. De faltar el directorio de la liga, se puede generar con un script.
 
 \begin{minted}{shell}
+>>> python generardorLigas.py
 >>> python main.py
 \end{minted}
 
