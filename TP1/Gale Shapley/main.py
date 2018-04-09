@@ -4,11 +4,15 @@ from Jugador import Jugador
 from Equipo import Equipo
 
 RUTA = "asignacion.txt"
+EQUIPOS = 20
+JUGADORES = 200
+VACANTES = 10
+
 
 def testPreferenciasGS():
     '''Prueba que dadas las asignaciones finales, ningún jugador este discontento con su equipo y que ninguno de sus equipos favoritos lo hubiese preferido'''
-    jugadores, equipos = cargaDeArchivos(200,20,10)
-    matchingGS(jugadores, equipos, 200, RUTA)
+    jugadores, equipos = cargaDeArchivos(JUGADORES,EQUIPOS,VACANTES)
+    matchingGS(jugadores, equipos, JUGADORES, RUTA)
     with open(RUTA) as archivo:
         for linea in archivo:
             print(linea)
@@ -25,8 +29,8 @@ def testInestabilidadesGS():
     Equipo2 tiene a Jugador2 asignado
     Equipo1 prefiere a Jugador2 antes que a Jugador1
     Equipo2 prefiere a Jugador1 antes que a Jugador2'''
-    jugadores, equipos = cargaDeArchivos(200,20,10)
-    matchingGS(jugadores, equipos, 200, RUTA)
+    jugadores, equipos = cargaDeArchivos(JUGADORES,EQUIPOS,VACANTES)
+    matchingGS(jugadores, equipos, JUGADORES, RUTA)
     with open(RUTA) as archivo:
         for linea in archivo:
             print(linea)
@@ -43,8 +47,8 @@ def testInestabilidadesGS():
 def main():
     ''' Llamada a la función de asignación.
     '''
-    jugadores, equipos = cargaDeArchivos(200,20,10)
-    matchingGS(jugadores, equipos, 200, RUTA) #Cambiar a True si se quieren usar nuevos sets aleatorios
+    jugadores, equipos = cargaDeArchivos(JUGADORES,EQUIPOS,VACANTES)
+    matchingGS(jugadores, equipos, JUGADORES, RUTA) #Cambiar a True si se quieren usar nuevos sets aleatorios
 
 main()
 testPreferenciasGS()
