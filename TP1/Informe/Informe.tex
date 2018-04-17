@@ -44,7 +44,7 @@
 	\hline
 	del Mazo, Federico & 100029 & delmazofederico@gmail.com\\
 	\hline
-    Djeordjian, Esteban Pedro & 100701 & edjeordjian@gmail.com\\	
+    Djeordjian, Esteban Pedro & 100701 & edjeordjian@gmail.com\\
 	\hline
 	Kristal, Juan Ignacio & 99779 & kristaljuanignacio@gmail.com\\
 	\hline
@@ -105,14 +105,14 @@ En cuanto a código se introducen nuevos metodos:
 
 \begin{itemize}
 \item \texttt{Append} y \texttt{pop}: $\mathcal O(1)$
-\item \texttt{Extend}: $\mathcal O(k)$ siendo k la cantidad de elementos agregados 
+\item \texttt{Extend}: $\mathcal O(k)$ siendo k la cantidad de elementos agregados
 \end{itemize}
 
 También es de notar que este es el primer algoritmo donde usamos llamadas recursivas, por su naturaleza de división y conquista.\\
 
 Aplicando el Teorema Maestro: $\mbox{T Mergesort(n)} = a * \mbox{T mergesort}(\frac{n}{b}) + f(n^c)$
 
-La cantidad de llamadas recursivas (a) son dos. Cada llamada recursiva divide la entrada inicial a la mitad (b=2). Por último, el tiempo de las llamadas no recursivas es 
+La cantidad de llamadas recursivas (a) son dos. Cada llamada recursiva divide la entrada inicial a la mitad (b=2). Por último, el tiempo de las llamadas no recursivas es
 
 $\mathcal O(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \mathcal O(3n + 5)) \in \mathcal O(n)$\\
 
@@ -122,7 +122,7 @@ $\mbox{T Mergesort(n): } 2 * \mbox{T Mergesort} (\frac{n}{2}) + f(n)$
 
 Como $(a = b^c)$, se tiene que: $\mbox{T Mergesort(n)} \in \mathcal O(n \log n)$\\
 
-Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de n/2. El tiempo de las llamadas no recursivas es $\mathcal O(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \mathcal O(3n + 5)) \in \mathcal O(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \mathcal O(n \log n)$ 
+Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de n/2. El tiempo de las llamadas no recursivas es $\mathcal O(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \mathcal O(3n + 5)) \in \mathcal O(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \mathcal O(n \log n)$
 
 \subsubsection{Quicksort}
 
@@ -148,9 +148,9 @@ Los tiempos del heap de mínimos implementado son:
 \item \texttt{Heapush}: $\mathcal O(\log n)$
 \end{itemize}
 
-Considerando todo esto queda: 
+Considerando todo esto queda:
 
-$\mbox{T Promedio Heapsort(n)} \in \mathcal O(n + 1 + n + 1 + 1 + n (1 + \log n)) = \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$ 
+$\mbox{T Promedio Heapsort(n)} \in \mathcal O(n + 1 + n + 1 + 1 + n (1 + \log n)) = \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$
 
 \subsection{Peores tiempos}
 
@@ -158,7 +158,7 @@ $\mbox{T Promedio Heapsort(n)} \in \mathcal O(n + 1 + n + 1 + 1 + n (1 + \log n)
 
 Como se ve en el análisis, el comportamiento de este algoritmo no depende de las características del arreglo. En términos más específicos, el algoritmo de selección no es un algoritmo “adaptativo”: su conducta no se ve afectada por ninguna característica del array, por lo cual realizará el mismo número de comparaciones e intercambios entre elementos tanto en el peor caso, en el caso promedio y en el mejor caso (considerando una longitud de arreglo arbitrariamente grande). Sin embargo, un arreglo considerado como el peor valor de entrada posible es un arreglo ordenado de forma descendente, debido a que nuestra implementación se busca el mínimo en cada iteración. Si bien asintóticamente no hay diferencia, diferirá en un valor constante el cual será mayor para un arreglo ordenado de esta forma.
 
-$\mbox{T Peor Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$ 
+$\mbox{T Peor Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
 
 
 \subsubsection{Inserción}
@@ -169,15 +169,15 @@ $\mbox{T Peor Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
 \subsubsection{Mergesort}
 
-Si bien tiene un promedio de tiempo logaritmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación pues el ultimo elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
+Si bien tiene un promedio de tiempo linearitmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación pues el ultimo elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
 
-$\mbox{T Peor Mergesort(n)} \in \mathcal O(n \log n)$. 
+$\mbox{T Peor Mergesort(n)} \in \mathcal O(n \log n)$.
 
 \subsubsection{Quicksort}
 
-Quicksort presenta un caso en que su comportamiento resulta cuadrático, generando uno de las mayores discrepancias entre tiempo promedio y peor tiempo de los algoritmos analizados. Esto es cuando el pivote elegido es una cota menor o mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$. En nuestra implementación, Quicksort elige siempre al primer elemento del arreglo como pivote, por lo tanto, usamos como peor caso un arreglo ordenado descendentemente y tomando de pivote el primer elemento del arreglo. Como en el caso promedio, para el peor caso se tiene que la primera iteración sin la llamada recursiva tiene un orden de $\mathcal O(4n + 6)$ (considerando como lineal lo que ocurre dentro del ciclo for, y sabiendo que al terminar la llamada recursiva se devolverá un nuevo arreglo de n elementos). 
+Quicksort presenta un caso en que su comportamiento resulta cuadrático, generando uno de las mayores discrepancias entre tiempo promedio y peor tiempo de los algoritmos analizados. Esto es cuando el pivote elegido es una cota menor o mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$. En nuestra implementación, Quicksort elige siempre al primer elemento del arreglo como pivote, por lo tanto, usamos como peor caso un arreglo ordenado descendentemente y tomando de pivote el primer elemento del arreglo. Como en el caso promedio, para el peor caso se tiene que la primera iteración sin la llamada recursiva tiene un orden de $\mathcal O(4n + 6)$ (considerando como lineal lo que ocurre dentro del ciclo for, y sabiendo que al terminar la llamada recursiva se devolverá un nuevo arreglo de n elementos).
 
-Pero ahora, por ser el peor caso de quicksort, la llamada recursiva se hará con $n-1$ elementos (todos menos el pivote), y luego con $n-2$, y así sucesivamente hasta llegar al caso base cuyo orden complejidad es O(2). Pero al no haber División y Conquista propiamente dicho, no se puede aplicar el teorema del maestro. El analisis pasa a ser linea por linea:\\ 
+Pero ahora, por ser el peor caso de quicksort, la llamada recursiva se hará con $n-1$ elementos (todos menos el pivote), y luego con $n-2$, y así sucesivamente hasta llegar al caso base cuyo orden complejidad es O(2). Pero al no haber División y Conquista propiamente dicho, no se puede aplicar el teorema del maestro. El analisis pasa a ser linea por linea:\\
 
 $\mbox{T Peor Quicksort - Llamada sobre n:} = \mathcal O(4n) + \mathcal O(6) + O(2) + \mbox{Llamada sobre n-1}\\
 \mbox{Llamada sobre n-1} = \mathcal O(4n-1) + \mathcal O(6) + \mbox{Llamada sobre n-2} \\
@@ -205,9 +205,9 @@ $\mbox{T Promedio Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^
 
 $\mbox{T Promedio Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
 
-$\mbox{T Promedio Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$ 
+$\mbox{T Promedio Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$
 
-$\mbox{T Promedio Mergesort(n)} \in \mathcal O(n \log n)$ 
+$\mbox{T Promedio Mergesort(n)} \in \mathcal O(n \log n)$
 
 $\mbox{T Promedio Quicksort(n)} \in \mathcal O(n \log n)$\\
 
@@ -219,9 +219,9 @@ En orden ascendiente de eficiencia:\\
 
 $\mbox{T Peor Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
-$\mbox{T Peor Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$ 
-
 $\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \mathcal O(n^2)$
+
+$\mbox{T Peor Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
 
 $\mbox{T Peor Mergesort(n)} \in \mathcal O(n \log n) $
 
@@ -239,7 +239,7 @@ Este es el peor caso analizado para los ordenamientos de inserción y de quickso
 
 \makebox[\textwidth][c]{\includegraphics[width=0.9\textwidth]{GraficoCasoAntiMergeSort}}\\ \\
 
-Este es el peor caso analizado para mergesrot. El impacto práctico es virtualmente despreciable, mostrando que mergesort, incluso en su peor caso teórico, sigue siendo de los más eficientes. Esto se da porque este “peor caso” para mergesort, en realidad no está modificando su tiempo de ejecución a nivel asintótinco, por lo que en la práctica (ejecutado sobre el mismo ambiente) no se registran mayores diferencias. El resto de los algoritmos tienen un comportamiento similar al verificado con los sets aleatorios. 
+Este es el peor caso analizado para mergesrot. El impacto práctico es virtualmente despreciable, mostrando que mergesort, incluso en su peor caso teórico, sigue siendo de los más eficientes. Esto se da porque este “peor caso” para mergesort, en realidad no está modificando su tiempo de ejecución a nivel asintótinco, por lo que en la práctica (ejecutado sobre el mismo ambiente) no se registran mayores diferencias. El resto de los algoritmos tienen un comportamiento similar al verificado con los sets aleatorios.
 
 \subsection{Comparación con valores teóricos}
 
@@ -269,7 +269,7 @@ Como hay igual cantidad de jugadores que de vacantes totales, se ve que todos lo
 
 Para demostrar que una vez que cada equipo haya cubierto sus vacantes no habrá parejas conflictivas (inestabilidades). Suponiendo jugadores $j1$ y $j2$, y equipos $e1$, $e2$, asumimos un conflicto entre $(j1,e1)$ y $(j2,e2)$, con $j1$ queriendo estar en $e2$ y $j2$ queriendo estar en $e1$, $e1$ prefiriendo a $j2$ sobre $j1$ y $e2$ prefiriendo a $j1$ sobre $j2$.
 
-Suponiendo que $e1$ es el primero en elegir, si $j1$ aceptó la vacante es porque estaba libre o porque prefería estar en $e1$ antes que en otro equipo $e3$ (donde no necesariamente $e3 = e2$).     
+Suponiendo que $e1$ es el primero en elegir, si $j1$ aceptó la vacante es porque estaba libre o porque prefería estar en $e1$ antes que en otro equipo $e3$ (donde no necesariamente $e3 = e2$).
 
 \begin{itemize}
 \item{Si estaba solo: } Luego $e2$ prefiere más a $j2$ que a $j1$, porque le ofreció su vacante antes. Si esto no fuera así, $e2$ le hubiera ofrecido antes su vacante a $e1$, y el mismo se hubiera cambiado de equipo, pero esto no sucedió. En este caso se llega a un absurdo, porque por hipótesis $e2$ prefiere más a $j1$ (en otro caso la pareja no es conflictiva y no hay inestabilidad).
@@ -286,7 +286,7 @@ Todas los caminos a los que conduce la hipótesis donde hay una inestabilidad en
 
 \section{Ejecución y compilación}
 
-Todo el trabajo fue codificado en Python 3.6.1. 
+Todo el trabajo fue codificado en Python 3.6.1.
 
 \subsection{Ordenamientos: Ejecución general}
 
@@ -398,7 +398,7 @@ heapSort        & 0.09234720  & 0.09180443  & 0.09170632  & 0.09235643  & 0.0923
 insertionSort   & 4.72838785  & 4.82092053  & 4.71846541  & 4.64045077  & 4.54181549  & 4.66178385  & 4.71195490  & 4.69176563  & 4.71393896  & 4.55890200  \\
 mergeSort       & 0.07408563  & 0.07491511  & 0.07442679  & 0.07556444  & 0.07424022  & 0.07440036  & 0.07488256  & 0.07554801  & 0.07454557  & 0.07566138  \\
 quickSort       & 0.02859854  & 0.02852403  & 0.02988460  & 0.02795936  & 0.02736539  & 0.03078863  & 0.03012384  & 0.03184481  & 0.02881059  & 0.03051086  \\
-selectionSort   & 4.39602486  & 4.53192356  & 4.42551569  & 4.38844704  & 4.39688216  & 4.38836099  & 4.37352012  & 4.36608303  & 4.38014397  & 4.41154632 
+selectionSort   & 4.39602486  & 4.53192356  & 4.42551569  & 4.38844704  & 4.39688216  & 4.38836099  & 4.37352012  & 4.36608303  & 4.38014397  & 4.41154632
 \end{tabular}}
 \end{table}
 
@@ -476,7 +476,7 @@ heapSort        & 0.08850804            & 0.09332258             & 0.09097488   
 insertionSort   & 0.93969506            & 8.90286811             & 4.92954869           \\
 mergeSort       & 0.05498279            & 0.05593248             & 0.07747910           \\
 quickSort       & 0.03932556            & 5.78526304             & 0.02463167           \\
-selectionSort   & 4.08425468            & 4.20178312             & 4.48006365           
+selectionSort   & 4.08425468            & 4.20178312             & 4.48006365
 \end{tabular}
 \end{adjustbox}
 \end{table}
