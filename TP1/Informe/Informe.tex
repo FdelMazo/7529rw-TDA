@@ -13,6 +13,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{minted}
+\newcommand{\bigO}{\mathcal{O}}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -69,7 +70,7 @@ El ordenamiento de selección es uno de los algoritmos de ordenamiento más faci
 
 De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: \url{https://wiki.python.org/moin/TimeComplexity}} del ordenamiento de selección, la complejidad teórica es:
 
-$\mbox{T Selección(n)} \in \mathcal O(2 + 1 + n * (1 + 1 + 1 + n * (1 + 1) + 1 + 2)) = \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
+$\mbox{T Selección(n)} \in \bigO(2 + 1 + n * (1 + 1 + 1 + n * (1 + 1) + 1 + 2)) = \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
 Esto viene de analizar linea por linea teniendo en cuenta:
 \begin{itemize}
@@ -82,7 +83,7 @@ Esto viene de analizar linea por linea teniendo en cuenta:
 
 Este ordenamiento itera siempre por el arreglo sin importar su disposicion inicial. Por lo tanto su caso promedio es iguales al tiempo analizado:
 
-$\mbox{T Promedio Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
+$\mbox{T Promedio Seleccción(n)} \in \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
 
 \subsubsection{Inserción}
@@ -91,11 +92,11 @@ Inicialmente, se tiene un solo elemento y se lo considera un conjunto ordenado. 
 
 Este ordenamiento usa las mismas herramientas del ordenamiento de selección. Por lo tanto, con las consideraciones anteriores tomadas, queda:
 
-$\mbox{T Inserción(n)} \in \mathcal O( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3))) = \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$\\
+$\mbox{T Inserción(n)} \in \bigO( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3))) = \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$\\
 
 Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$ posibles distribuciones de los elementos, solo una estará ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.
 
-$\mbox{T Promedio Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
+$\mbox{T Promedio Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
 \subsubsection{Mergesort}
 
@@ -104,8 +105,8 @@ El algoritmo de mergesort es un ordenamiento que utiliza la técnica de Divisió
 En cuanto a código se introducen nuevos metodos:
 
 \begin{itemize}
-\item \texttt{Append} y \texttt{pop}: $\mathcal O(1)$
-\item \texttt{Extend}: $\mathcal O(k)$ siendo k la cantidad de elementos agregados
+\item \texttt{Append} y \texttt{pop}: $\bigO(1)$
+\item \texttt{Extend}: $\bigO(k)$ siendo k la cantidad de elementos agregados
 \end{itemize}
 
 También es de notar que este es el primer algoritmo donde usamos llamadas recursivas, por su naturaleza de división y conquista.\\
@@ -114,15 +115,15 @@ Aplicando el Teorema Maestro: $\mbox{T Mergesort(n)} = a * \mbox{T mergesort}(\f
 
 La cantidad de llamadas recursivas (a) son dos. Cada llamada recursiva divide la entrada inicial a la mitad (b=2). Por último, el tiempo de las llamadas no recursivas es
 
-$\mathcal O(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \mathcal O(3n + 5)) \in \mathcal O(n)$\\
+$\bigO(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \bigO(3n + 5)) \in \bigO(n)$\\
 
 Asumiendo un n lo suficientemente grande como para que se requieran intercalar aproximadamente n elementos la mayoría de las veces, por lo que c=1. Se tiene entonces:
 
 $\mbox{T Mergesort(n): } 2 * \mbox{T Mergesort} (\frac{n}{2}) + f(n)$
 
-Como $(a = b^c)$, se tiene que: $\mbox{T Mergesort(n)} \in \mathcal O(n \log n)$\\
+Como $(a = b^c)$, se tiene que: $\mbox{T Mergesort(n)} \in \bigO(n \log n)$\\
 
-Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de n/2. El tiempo de las llamadas no recursivas es $\mathcal O(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \mathcal O(3n + 5)) \in \mathcal O(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \mathcal O(n \log n)$
+Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de n/2. El tiempo de las llamadas no recursivas es $\bigO(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \bigO(3n + 5)) \in \bigO(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \bigO(n \log n)$
 
 \subsubsection{Quicksort}
 
@@ -132,9 +133,9 @@ Considerando las complejidades analizadas hasta ahora (en código no hay nada nu
 
 $\mbox{T Quicksort(n)} = a * \mbox{T Quicksort}(\frac{n}{b}) + f(n^c)$
 
-La cantidad de llamadas recursivas (a) son 2. El tiempo de las llamadas no recursivas es $\mathcal O(1 + 3 + 1 + n (1 + 2) + 1 + n) = \mathcal O(4n + 6) \in \mathcal O(n)$, por lo que c=1.\\
+La cantidad de llamadas recursivas (a) son 2. El tiempo de las llamadas no recursivas es $\bigO(1 + 3 + 1 + n (1 + 2) + 1 + n) = \bigO(4n + 6) \in \bigO(n)$, por lo que c=1.\\
 
-En el caso promedio, b será aproximadamente 2, ya que en un arreglo arbitrariamente grande, con una distribución aleatoria de elementos, es mucho más probable tomar en cualquier posición a un elemento más alejado de las cotas superiores que de la media, por lo que la recursión dividirá el problema en “dos partes iguales” (probablemente nunca sean exactamente iguales, pero con un n arbitrariamente grande, las diferencias que puedan existir son despreciables en tanto el pivote elegido no esté lo suficientemente próximo a una cota superior o inferior). Para este caso, como $(a = b^c)$, se tiene que: $\mbox{T Promedio Quicksort(n)} \in \mathcal O(n \log n))$
+En el caso promedio, b será aproximadamente 2, ya que en un arreglo arbitrariamente grande, con una distribución aleatoria de elementos, es mucho más probable tomar en cualquier posición a un elemento más alejado de las cotas superiores que de la media, por lo que la recursión dividirá el problema en “dos partes iguales” (probablemente nunca sean exactamente iguales, pero con un n arbitrariamente grande, las diferencias que puedan existir son despreciables en tanto el pivote elegido no esté lo suficientemente próximo a una cota superior o inferior). Para este caso, como $(a = b^c)$, se tiene que: $\mbox{T Promedio Quicksort(n)} \in \bigO(n \log n))$
 
 \subsubsection{Heapsort}
 
@@ -143,14 +144,14 @@ En el heapsort se utiliza la estructura de cola de prioridad (heap). Se construy
 Los tiempos del heap de mínimos implementado son:
 
 \begin{itemize}
-\item \texttt{Heapify}: $\mathcal O(n)$
-\item \texttt{Heappop}: $\mathcal O(\log n)$
-\item \texttt{Heapush}: $\mathcal O(\log n)$
+\item \texttt{Heapify}: $\bigO(n)$
+\item \texttt{Heappop}: $\bigO(\log n)$
+\item \texttt{Heapush}: $\bigO(\log n)$
 \end{itemize}
 
 Considerando todo esto queda:
 
-$\mbox{T Promedio Heapsort(n)} \in \mathcal O(n + 1 + n + 1 + 1 + n (1 + \log n)) = \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$
+$\mbox{T Promedio Heapsort(n)} \in \bigO(n + 1 + n + 1 + 1 + n (1 + \log n)) = \bigO(3n + n \log n + 3) \in \bigO(n \log n)$
 
 \subsection{Peores tiempos}
 
@@ -158,42 +159,42 @@ $\mbox{T Promedio Heapsort(n)} \in \mathcal O(n + 1 + n + 1 + 1 + n (1 + \log n)
 
 Como se ve en el análisis, el comportamiento de este algoritmo no depende de las características del arreglo. En términos más específicos, el algoritmo de selección no es un algoritmo “adaptativo”: su conducta no se ve afectada por ninguna característica del array, por lo cual realizará el mismo número de comparaciones e intercambios entre elementos tanto en el peor caso, en el caso promedio y en el mejor caso (considerando una longitud de arreglo arbitrariamente grande). Sin embargo, un arreglo considerado como el peor valor de entrada posible es un arreglo ordenado de forma descendente, debido a que nuestra implementación se busca el mínimo en cada iteración. Si bien asintóticamente no hay diferencia, diferirá en un valor constante el cual será mayor para un arreglo ordenado de esta forma.
 
-$\mbox{T Peor Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
+$\mbox{T Peor Seleccción(n)} \in \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
 
 \subsubsection{Inserción}
 
-Este algoritmo sí presenta un peor caso: cuando el arreglo inicial se encuentra ordenado de forma descendente (y no al revés, según la implementación dada). El bucle interno del algoritmo deberá comparar cada elemento hasta llegar a la primera posición del conjunto, con lo cual realizará el máximo número de comparaciones posibles entre elementos y el ciclo se ejecutara sin cortes. Esto también está contemplado dentro de su comportamiento en promedio: se destaca el caso en que, si el arreglo estuviera ordenado al revés, el algoritmo terminaría en un orden de $\mathcal O(n)$ (siendo, para este caso trivial, mejor que cualquier ordenamiento).
+Este algoritmo sí presenta un peor caso: cuando el arreglo inicial se encuentra ordenado de forma descendente (y no al revés, según la implementación dada). El bucle interno del algoritmo deberá comparar cada elemento hasta llegar a la primera posición del conjunto, con lo cual realizará el máximo número de comparaciones posibles entre elementos y el ciclo se ejecutara sin cortes. Esto también está contemplado dentro de su comportamiento en promedio: se destaca el caso en que, si el arreglo estuviera ordenado al revés, el algoritmo terminaría en un orden de $\bigO(n)$ (siendo, para este caso trivial, mejor que cualquier ordenamiento).
 
-$\mbox{T Peor Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
+$\mbox{T Peor Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
 \subsubsection{Mergesort}
 
 Si bien tiene un promedio de tiempo linearítmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación pues el ultimo elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
 
-$\mbox{T Peor Mergesort(n)} \in \mathcal O(n \log n)$.
+$\mbox{T Peor Mergesort(n)} \in \bigO(n \log n)$.
 
 \subsubsection{Quicksort}
 
-Quicksort presenta un caso en que su comportamiento resulta cuadrático, generando uno de las mayores discrepancias entre tiempo promedio y peor tiempo de los algoritmos analizados. Esto es cuando el pivote elegido es una cota menor o mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$. En nuestra implementación, Quicksort elige siempre al primer elemento del arreglo como pivote, por lo tanto, usamos como peor caso un arreglo ordenado descendentemente y tomando de pivote el primer elemento del arreglo. Como en el caso promedio, para el peor caso se tiene que la primera iteración sin la llamada recursiva tiene un orden de $\mathcal O(4n + 6)$ (considerando como lineal lo que ocurre dentro del ciclo for, y sabiendo que al terminar la llamada recursiva se devolverá un nuevo arreglo de n elementos).
+Quicksort presenta un caso en que su comportamiento resulta cuadrático, generando uno de las mayores discrepancias entre tiempo promedio y peor tiempo de los algoritmos analizados. Esto es cuando el pivote elegido es una cota menor o mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$. En nuestra implementación, Quicksort elige siempre al primer elemento del arreglo como pivote, por lo tanto, usamos como peor caso un arreglo ordenado descendentemente y tomando de pivote el primer elemento del arreglo. Como en el caso promedio, para el peor caso se tiene que la primera iteración sin la llamada recursiva tiene un orden de $\bigO(4n + 6)$ (considerando como lineal lo que ocurre dentro del ciclo for, y sabiendo que al terminar la llamada recursiva se devolverá un nuevo arreglo de n elementos).
 
 Pero ahora, por ser el peor caso de quicksort, la llamada recursiva se hará con $n-1$ elementos (todos menos el pivote), y luego con $n-2$, y así sucesivamente hasta llegar al caso base cuyo orden complejidad es O(2). Pero al no haber División y Conquista propiamente dicho, no se puede aplicar el teorema del maestro. El analisis pasa a ser linea por linea:\\
 
-$\mbox{T Peor Quicksort - Llamada sobre n:} = \mathcal O(4n) + \mathcal O(6) + O(2) + \mbox{Llamada sobre n-1}\\
-\mbox{Llamada sobre n-1} = \mathcal O(4n-1) + \mathcal O(6) + \mbox{Llamada sobre n-2} \\
-\mbox{Llamada sobre n-2} = \mathcal O(4n-2) + \mathcal O(6) + \mbox{Llamada sobre n-3}$ \\
+$\mbox{T Peor Quicksort - Llamada sobre n:} = \bigO(4n) + \bigO(6) + O(2) + \mbox{Llamada sobre n-1}\\
+\mbox{Llamada sobre n-1} = \bigO(4n-1) + \bigO(6) + \mbox{Llamada sobre n-2} \\
+\mbox{Llamada sobre n-2} = \bigO(4n-2) + \bigO(6) + \mbox{Llamada sobre n-3}$ \\
 
-$\mbox{T Peor Quicksort:} \sum_{i=0}^{n-2} O(6)  +  \sum_{i=0}^{n-2} \mathcal O(4(n-i)) + \mathcal O(2) \\
-\mbox{T Peor Quicksort(n)} \in \mathcal O(6(n-1))  +  \mathcal O(4n(n-1)) - 4 * \sum_{i=0}^{n-2} \mathcal O(i) + \mathcal O(2) \\
-\mbox{T Peor Quicksort(n)} \in \mathcal O(6(n-1))  +  \mathcal O(4n(n-1)) - 4 * \mathcal O((n-1)*\frac n 2 + \mathcal O(2)$ \\
+$\mbox{T Peor Quicksort:} \sum_{i=0}^{n-2} O(6)  +  \sum_{i=0}^{n-2} \bigO(4(n-i)) + \bigO(2) \\
+\mbox{T Peor Quicksort(n)} \in \bigO(6(n-1))  +  \bigO(4n(n-1)) - 4 * \sum_{i=0}^{n-2} \bigO(i) + \bigO(2) \\
+\mbox{T Peor Quicksort(n)} \in \bigO(6(n-1))  +  \bigO(4n(n-1)) - 4 * \bigO((n-1)*\frac n 2 + \bigO(2)$ \\
 
-$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \mathcal O(n^2)$
+$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \bigO(n^2)$
 
 \subsubsection{Heapsort}
 
 Para este algoritmo, el numero de comparaciones entre los elementos del arreglo puede variar en poca proporción dependiendo orden en que se presentan los mismos (según su ubicación en el heap).
 
-$\mbox{T Peor Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$
+$\mbox{T Peor Heapsort(n)} \in \bigO(3n + n \log n + 3) \in \bigO(n \log n)$
 
 \subsection{Comparación}
 
@@ -201,31 +202,31 @@ $\mbox{T Peor Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \l
 
 En orden ascendiente de eficiencia:\\
 
-$\mbox{T Promedio Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
+$\mbox{T Promedio Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
-$\mbox{T Promedio Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
+$\mbox{T Promedio Seleccción(n)} \in \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
-$\mbox{T Promedio Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$
+$\mbox{T Promedio Heapsort(n)} \in \bigO(3n + n \log n + 3) \in \bigO(n \log n)$
 
-$\mbox{T Promedio Mergesort(n)} \in \mathcal O(n \log n)$
+$\mbox{T Promedio Mergesort(n)} \in \bigO(n \log n)$
 
-$\mbox{T Promedio Quicksort(n)} \in \mathcal O(n \log n)$\\
+$\mbox{T Promedio Quicksort(n)} \in \bigO(n \log n)$\\
 
-Para poder terminar de ubicar en la escala a quicksort y mergesort, se pone el foco en la complejidad de su parte no recursiva: por parte de quicksort es $\mathcal O(4n + 6)$, y en el caso de mergesort es $\mathcal O(3n + 5)$. Es decir, la diferencia fundamental entre estos dos algoritmos es que en el peor caso quicksort será menos eficiente.
+Para poder terminar de ubicar en la escala a quicksort y mergesort, se pone el foco en la complejidad de su parte no recursiva: por parte de quicksort es $\bigO(4n + 6)$, y en el caso de mergesort es $\bigO(3n + 5)$. Es decir, la diferencia fundamental entre estos dos algoritmos es que en el peor caso quicksort será menos eficiente.
 
 \subsubsection{Peores tiempos}
 
 En orden ascendiente de eficiencia:\\
 
-$\mbox{T Peor Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
+$\mbox{T Peor Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
-$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \mathcal O(n^2)$
+$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \bigO(n^2)$
 
-$\mbox{T Peor Seleccción(n)} \in \mathcal O(n^2 + 6n + n) \in \mathcal O(n^2)$
+$\mbox{T Peor Seleccción(n)} \in \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
-$\mbox{T Peor Mergesort(n)} \in \mathcal O(n \log n) $
+$\mbox{T Peor Mergesort(n)} \in \bigO(n \log n) $
 
-$\mbox{T Peor Heapsort(n)} \in \mathcal O(3n + n \log n + 3) \in \mathcal O(n \log n)$
+$\mbox{T Peor Heapsort(n)} \in \bigO(3n + n \log n + 3) \in \bigO(n \log n)$
 
 \subsection{Tiempos de ejecución}
 
@@ -253,11 +254,11 @@ Con respecto al caso promedio, los tiempos se cumplieron de forma exactamente co
 
 \subsubsection{Tiempo polinómico}
 
-En el algoritmo implementado, primero se crea el archivo, con una complejidad $\mathcal O(E*J)$ (siendo J la cantidad de jugadores y E la cantidad de equipos), ya que por cada equipo se debe crear un archivo de longitud igual a la cantidad de jugadores, y lo análogo ocurre a la recíproca. La carga de archivos  naturalmente también es de orden $\mathcal O(J*E)$ ya que por cada jugador que se quiera crear, se debe recorrer un archivo cuya longitud es igual a la cantidad de equipos, y viceversa.
+En el algoritmo implementado, primero se crea el archivo, con una complejidad $\bigO(E*J)$ (siendo J la cantidad de jugadores y E la cantidad de equipos), ya que por cada equipo se debe crear un archivo de longitud igual a la cantidad de jugadores, y lo análogo ocurre a la recíproca. La carga de archivos  naturalmente también es de orden $\bigO(J*E)$ ya que por cada jugador que se quiera crear, se debe recorrer un archivo cuya longitud es igual a la cantidad de equipos, y viceversa.
 
-Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que no agregan un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\mathcal O(J)$). Como hay E equipos, el orden de la asignación también es $\mathcal O(J*E)$.
+Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que no agregan un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\bigO(J)$). Como hay E equipos, el orden de la asignación también es $\bigO(J*E)$.
 
-Finalmente, se almacena en un archivo las asignaciones. Por cada equipo se guarda su número seguido de los sus jugadores, dejandolo en un orden lineal de $\mathcal O(J+E)$.
+Finalmente, se almacena en un archivo las asignaciones. Por cada equipo se guarda su número seguido de los sus jugadores, dejandolo en un orden lineal de $\bigO(J+E)$.
 
 El orden cuadrático polinomial del algoritmo es evidente, ya que es el peor caso de complejidad a lo largo de las funciones del algoritmo.
 
