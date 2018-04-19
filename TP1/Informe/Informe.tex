@@ -93,7 +93,7 @@ Este ordenamiento usa las mismas herramientas del ordenamiento de selección. Po
 
 $\mbox{T Inserción(n)} \in \mathcal O( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3))) = \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$\\
 
-Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$ posibles distribuciones de los elementos, solo una estara ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.
+Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$ posibles distribuciones de los elementos, solo una estará ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.
 
 $\mbox{T Promedio Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
@@ -134,7 +134,7 @@ $\mbox{T Quicksort(n)} = a * \mbox{T Quicksort}(\frac{n}{b}) + f(n^c)$
 
 La cantidad de llamadas recursivas (a) son 2. El tiempo de las llamadas no recursivas es $\mathcal O(1 + 3 + 1 + n (1 + 2) + 1 + n) = \mathcal O(4n + 6) \in \mathcal O(n)$, por lo que c=1.\\
 
-En el caso promedio, b será igual a 2, ya que en un arreglo arbitrariamente grande, es mucho más probable tomar en cualquier posición a un elemento alejado de las cotas superiores e inferiores que muy próximo a ellas, por lo que la recursión dividirá el problema en “dos partes iguales” (probablemente nunca sean exactamente iguales, pero con un n arbitrariamente grande, las diferencias que puedan existir son despreciables en tanto el pivote elegido no esté lo suficientemente próximo a una cota superior o inferior). Para este caso, como $(a = b^c)$, se tiene que: $\mbox{T Promedio Quicksort(n)} \in \mathcal O(n \log n))$
+En el caso promedio, b será aproximadamente 2, ya que en un arreglo arbitrariamente grande, con una distribución aleatoria de elementos, es mucho más probable tomar en cualquier posición a un elemento más alejado de las cotas superiores que de la media, por lo que la recursión dividirá el problema en “dos partes iguales” (probablemente nunca sean exactamente iguales, pero con un n arbitrariamente grande, las diferencias que puedan existir son despreciables en tanto el pivote elegido no esté lo suficientemente próximo a una cota superior o inferior). Para este caso, como $(a = b^c)$, se tiene que: $\mbox{T Promedio Quicksort(n)} \in \mathcal O(n \log n))$
 
 \subsubsection{Heapsort}
 
@@ -169,7 +169,7 @@ $\mbox{T Peor Inserción(n)} \in \mathcal O(4n^2 + 8n + 3) \in \mathcal O(n^2)$
 
 \subsubsection{Mergesort}
 
-Si bien tiene un promedio de tiempo linearitmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación pues el ultimo elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
+Si bien tiene un promedio de tiempo linearítmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación pues el ultimo elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
 
 $\mbox{T Peor Mergesort(n)} \in \mathcal O(n \log n)$.
 
