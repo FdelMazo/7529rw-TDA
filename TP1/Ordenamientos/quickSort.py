@@ -1,10 +1,10 @@
 def quickSort(array):
     if len(array) < 2 : return array
     pivote = array[0]
-    menores, pivotes, mayores = [], [], []
-    for elemento in array:
-        if elemento < pivote:
-            menores.append(elemento)
+    menores, mayores = [], []
+    for x in range(1, len(array)):
+        if array[x] < pivote:
+            menores.append(array[x])
         else:
-            pivotes.append(elemento) if (elemento == pivote) else mayores.append(elemento)            
-    return quickSort(menores) + pivotes + quickSort(mayores)
+            mayores.append(array[x])         
+    return quickSort(menores) + [pivote] + quickSort(mayores)
