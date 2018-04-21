@@ -9,7 +9,7 @@ class Equipo(EntidadConPreferencias):
         Post: se creo el equipo.'''
         EntidadConPreferencias.__init__(self,numeroEquipo, preferenciasEquipo)
         self.vacantes = vacantesInicialEquipo
-        self.jugadores = []
+        self.jugadores = {}
 
     def getVacantes(self):
         return self.vacantes
@@ -30,11 +30,11 @@ class Equipo(EntidadConPreferencias):
         self.posicionFavoritoActual += 1 #Nunca deberia salirse del límite de la lista
 
     def agregarJugador(self, jugador):
-        self.jugadores.append(jugador)
+        self.jugadores[jugador.getNumero()] = jugador
         jugador.asignar(self)
         self.vacantes -= 1
 
     def quitarJugador(self, jugador):
-        self.jugadores.remove(jugador)
+        self.jugadores.pop(jugador.getNumero())
         jugador.desasignar()
         self.vacantes +=1

@@ -14,7 +14,7 @@ def testPreferenciasGS():
     jugadores, equipos = cargaDeArchivos(JUGADORES,EQUIPOS,VACANTES)
     matchingGS(jugadores, equipos, JUGADORES, RUTA)
     for equipo in equipos.values():
-        for jugador in equipo.getJugadores():
+        for jugador in equipo.getJugadores().values():
             descartados = jugador.getEquiposDescartados()
             for equipo_descartado in descartados:
                 assert(equipos[equipo_descartado].getPosicionFavoritoActual() <= equipos[equipo_descartado].getPreferencias().index(jugador.getNumero()))
@@ -29,11 +29,11 @@ def testInestabilidadesGS():
     jugadores, equipos = cargaDeArchivos(JUGADORES,EQUIPOS,VACANTES)
     matchingGS(jugadores, equipos, JUGADORES, RUTA)
     for equipo_original in equipos.values():
-        for jugador_original in equipo_original.getJugadores():
+        for jugador_original in equipo_original.getJugadores().values():
             descartados = jugador_original.getEquiposDescartados()
             for equipo_descartado in descartados:
                 for jugador_externo in equipos[equipo_descartado].getJugadores():
-                    condicion1 = equipo_original.getPosicionFavoritoActual() <= equipo_original.getPreferencias().index(jugador_externo.getNumero())
+                    condicion1 = equipo_original.getPosicionFavoritoActual() <= equipo_original.getPreferencias().index(jugador_externo)
                     condicion2 = equipos[equipo_descartado].getPosicionFavoritoActual() <= equipos[equipo_descartado].getPreferencias().index(jugador_original.getNumero())
                     assert(condicion1 or condicion2)
     print("OK\n")
@@ -45,7 +45,7 @@ def imprimirResultado(ruta):
 
 def main():
     jugadores, equipos = cargaDeArchivos(JUGADORES,EQUIPOS,VACANTES)
-    matchingGS(jugadores, equipos, JUGADORES, RUTA) #Cambiar a True si se quieren usar nuevos sets aleatorios
+    matchingGS(jugadores, equipos, JUGADORES, RUTA)
     imprimirResultado(RUTA)
 
 main()
