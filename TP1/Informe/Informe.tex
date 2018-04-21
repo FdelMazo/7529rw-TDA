@@ -105,7 +105,7 @@ El algoritmo de mergesort es un ordenamiento que utiliza la técnica de Divisió
 En cuanto a código se introducen nuevos metodos:
 
 \begin{itemize}
-\item \texttt{Append} y \texttt{pop}: $\bigO(1)$
+\item \texttt{Append} y \texttt{pop}\footnote{El pop fue removido en la re-entrega. De todas formas, pop es $\bigO(1)$ solo cuando es respecto al último elemento}: $\bigO(1)$
 \item \texttt{Extend}: $\bigO(k)$ siendo k la cantidad de elementos agregados
 \end{itemize}
 
@@ -115,7 +115,7 @@ Aplicando el Teorema Maestro: $\mbox{T Mergesort(n)} = a * \mbox{T mergesort}(\f
 
 La cantidad de llamadas recursivas (a) son dos. Cada llamada recursiva divide la entrada inicial a la mitad (b=2). Por último, el tiempo de las llamadas no recursivas es
 
-$\bigO(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \bigO(3n + 5)) \in \bigO(n)$\\
+$\bigO(2 + 4 + 1 + 2 + (n-1) * 3 + 1 + 1 + 1) = \bigO(3n + 9)) \in \bigO(n)$\\
 
 Asumiendo un n lo suficientemente grande como para que se requieran intercalar aproximadamente n elementos la mayoría de las veces, por lo que c=1. Se tiene entonces:
 
@@ -123,7 +123,7 @@ $\mbox{T Mergesort(n): } 2 * \mbox{T Mergesort} (\frac{n}{2}) + f(n)$
 
 Como $(a = b^c)$, se tiene que: $\mbox{T Mergesort(n)} \in \bigO(n \log n)$\\
 
-Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de n/2. El tiempo de las llamadas no recursivas es $\bigO(2 + 2 + 1 + 1 + (n-1) 3 + 1 + 1) = \bigO(3n + 5)) \in \bigO(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \bigO(n \log n)$
+Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro\footnote{Discutible. No disponemos de las herramientas para una justificación más solida.} (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de $\frac{n}{2}$. El tiempo de las llamadas no recursivas es $\bigO(2 + 4 + 1 + 2 + \frac{n}{2}) * 3 + 1 + \frac{n}{2} + 1) = \bigO(2n + 11)) \in \bigO(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \bigO(n \log n)$
 
 \subsubsection{Quicksort}
 
@@ -133,7 +133,7 @@ Considerando las complejidades analizadas hasta ahora (en código no hay nada nu
 
 $\mbox{T Quicksort(n)} = a * \mbox{T Quicksort}(\frac{n}{b}) + f(n^c)$
 
-La cantidad de llamadas recursivas (a) son 2. El tiempo de las llamadas no recursivas es $\bigO(1 + 3 + 1 + n (1 + 2) + 1 + n) = \bigO(4n + 6) \in \bigO(n)$, por lo que c=1.\\
+La cantidad de llamadas recursivas (a) son 2. El tiempo de las llamadas no recursivas es $\bigO(1 + 3 + 1 + n (1 + 1) + 1 + n) = \bigO(4n + 5) \in \bigO(n)$, por lo que c=1.\\
 
 En el caso promedio, b será aproximadamente 2, ya que en un arreglo arbitrariamente grande, con una distribución aleatoria de elementos, es mucho más probable tomar en cualquier posición a un elemento más alejado de las cotas superiores que de la media, por lo que la recursión dividirá el problema en “dos partes iguales” (probablemente nunca sean exactamente iguales, pero con un n arbitrariamente grande, las diferencias que puedan existir son despreciables en tanto el pivote elegido no esté lo suficientemente próximo a una cota superior o inferior). Para este caso, como $(a = b^c)$, se tiene que: $\mbox{T Promedio Quicksort(n)} \in \bigO(n \log n))$
 
@@ -176,7 +176,7 @@ $\mbox{T Peor Mergesort(n)} \in \bigO(n \log n)$.
 
 \subsubsection{Quicksort}
 
-Quicksort presenta un caso en que su comportamiento resulta cuadrático, generando uno de las mayores discrepancias entre tiempo promedio y peor tiempo de los algoritmos analizados. Esto es cuando el pivote elegido es una cota menor o mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$. En nuestra implementación, Quicksort elige siempre al primer elemento del arreglo como pivote, por lo tanto, usamos como peor caso un arreglo ordenado descendentemente y tomando de pivote el primer elemento del arreglo. Como en el caso promedio, para el peor caso se tiene que la primera iteración sin la llamada recursiva tiene un orden de $\bigO(4n + 6)$ (considerando como lineal lo que ocurre dentro del ciclo for, y sabiendo que al terminar la llamada recursiva se devolverá un nuevo arreglo de n elementos).
+Quicksort presenta un caso en que su comportamiento resulta cuadrático, generando uno de las mayores discrepancias entre tiempo promedio y peor tiempo de los algoritmos analizados. Esto es cuando el pivote elegido es una cota menor o mayor elemento del arreglo, dividiendo el arreglo en dos partes de $1$ y $n-1$. En nuestra implementación, Quicksort elige siempre al primer elemento del arreglo como pivote, por lo tanto, usamos como peor caso un arreglo ordenado descendentemente y tomando de pivote el primer elemento del arreglo. Como en el caso promedio, para el peor caso se tiene que la primera iteración sin la llamada recursiva tiene un orden de $\bigO(4n + 5)$ (considerando como lineal lo que ocurre dentro del ciclo for, y sabiendo que al terminar la llamada recursiva se devolverá un nuevo arreglo de n elementos).
 
 Pero ahora, por ser el peor caso de quicksort, la llamada recursiva se hará con $n-1$ elementos (todos menos el pivote), y luego con $n-2$, y así sucesivamente hasta llegar al caso base cuyo orden complejidad es O(2). Pero al no haber División y Conquista propiamente dicho, no se puede aplicar el teorema del maestro. El analisis pasa a ser linea por linea:\\
 
@@ -212,7 +212,7 @@ $\mbox{T Promedio Mergesort(n)} \in \bigO(n \log n)$
 
 $\mbox{T Promedio Quicksort(n)} \in \bigO(n \log n)$\\
 
-Para poder terminar de ubicar en la escala a quicksort y mergesort, se pone el foco en la complejidad de su parte no recursiva: por parte de quicksort es $\bigO(4n + 6)$, y en el caso de mergesort es $\bigO(3n + 5)$. Es decir, la diferencia fundamental entre estos dos algoritmos es que en el peor caso quicksort será menos eficiente.
+Para poder terminar de ubicar en la escala a quicksort y mergesort, se pone el foco en la complejidad de su parte no recursiva: por parte de quicksort es $\bigO(4n + 5)$, y en el caso de mergesort es $\bigO(2n + 11)$. Es decir, la diferencia fundamental entre estos dos algoritmos es que en el peor caso quicksort será menos eficiente.
 
 \subsubsection{Peores tiempos}
 
@@ -256,7 +256,9 @@ Con respecto al caso promedio, los tiempos se cumplieron de forma exactamente co
 
 En el algoritmo implementado, primero se crea el archivo, con una complejidad $\bigO(E*J)$ (siendo J la cantidad de jugadores y E la cantidad de equipos), ya que por cada equipo se debe crear un archivo de longitud igual a la cantidad de jugadores, y lo análogo ocurre a la recíproca. La carga de archivos  naturalmente también es de orden $\bigO(J*E)$ ya que por cada jugador que se quiera crear, se debe recorrer un archivo cuya longitud es igual a la cantidad de equipos, y viceversa.
 
-Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que no agregan un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\bigO(J)$). Como hay E equipos, el orden de la asignación también es $\bigO(J*E)$.
+Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que no agregan un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\bigO(J)$). Como hay E equipos, el orden de la asignación también es $\bigO(J*E)$. Este orden está garantizado porque todas las operaciones dentro del ciclo son de orden constante.
+
+
 
 Finalmente, se almacena en un archivo las asignaciones. Por cada equipo se guarda su número seguido de los sus jugadores, dejandolo en un orden lineal de $\bigO(J+E)$.
 

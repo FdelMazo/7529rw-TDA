@@ -41,21 +41,21 @@ class TestListaDe500Elementos(unittest.TestCase):
 		self.assertEqual(result, arrayOrdenado)
 
 
-class TestListaDe1000Elementos(unittest.TestCase):
+# class TestListaDe1000Elementos(unittest.TestCase):
+#
+# 	def test001OrdenarListaDe1000ElementosSort(self):
+# 		array = generarArrayRandom(1000, 0, 10000)
+# 		result = sorted(array)
+# 		arrayOrdenado = mergeSort(array)
+# 		self.assertEqual(result, arrayOrdenado)
 
-	def test001OrdenarListaDe1000ElementosSort(self):
-		array = generarArrayRandom(1000, 0, 10000)
-		result = sorted(array)
-		arrayOrdenado = mergeSort(array)
-		self.assertEqual(result, arrayOrdenado)
-
-class TestListaDe10000Elementos(unittest.TestCase):
-
-	def test001OrdenarListaDe10000ElementosSort(self):
-		array = generarArrayRandom(10000, 0, 10000)
-		result = sorted(array)
-		arrayOrdenado = mergeSort(array)
-		self.assertEqual(result, arrayOrdenado)
+# class TestListaDe10000Elementos(unittest.TestCase):
+#
+# 	def test001OrdenarListaDe10000ElementosSort(self):
+# 		array = generarArrayRandom(10000, 0, 10000)
+# 		result = sorted(array)
+# 		arrayOrdenado = mergeSort(array)
+# 		self.assertEqual(result, arrayOrdenado)
 
 class TestListaOrdenada(unittest.TestCase):
 
