@@ -20,4 +20,4 @@ def generarLiga(cantidadJugadores, cantidadEquipos):
     for contador in range(cantidadEquipos):
         generarArchivoPrioridades(os.path.join(DIRECTORIO, "{}_{}{}".format(EQUIPO, contador, EXTENSION)), cantidadJugadores)
 
-generarLiga(200, 20)
+#generarLiga(200, 20)
