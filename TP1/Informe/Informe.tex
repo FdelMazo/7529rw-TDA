@@ -127,7 +127,7 @@ Para el caso promedio, se puede considerar que no es lo más probable una distri
 
 \subsubsection{Quicksort}
 
-Al igual que mergesort, quicksort utiliza la técnica de División y Conquista. Se elige un elemento del arreglo como pivote (en nuestra implementación se elige al primero) y a partir del pivote se arman tres arreglos: la de todos los elementos menores al pivote, la conformada solo por el pivote y los elementos iguales a este y la de todos los elementos mayores al pivote. Con esto se obtiene un orden relativo al pivote. El mecanismo antes descripto se repite recursivamente para cada parte. El arreglo final se obtiene concatenando lps subarreglos ordenados. Al igual que en Mergesort, siendo División y Conquista la técnica utlilizada, se usa el Teorema Maestro para calcular su complejidad.\\
+Al igual que mergesort, quicksort utiliza la técnica de División y Conquista. Se elige un elemento del arreglo como pivote (en nuestra implementación se elige al primero) y a partir del pivote se arman dos arreglos: la de todos los elementos menores al pivote y la de todos los elementos mayores o iguales al pivote. El pivote se toma como el elemento inicial del arreglo. Con esto se obtiene un orden relativo al pivote. El mecanismo antes descripto se repite recursivamente para cada parte. El arreglo final se obtiene concatenando lps subarreglos ordenados. Al igual que en Mergesort, siendo División y Conquista la técnica utlilizada, se usa el Teorema Maestro para calcular su complejidad.\\
 
 Considerando las complejidades analizadas hasta ahora (en código no hay nada nuevo) y aplicando el Teorema Maestro se tiene:
 
@@ -180,15 +180,15 @@ Quicksort presenta un caso en que su comportamiento resulta cuadrático, generan
 
 Pero ahora, por ser el peor caso de quicksort, la llamada recursiva se hará con $n-1$ elementos (todos menos el pivote), y luego con $n-2$, y así sucesivamente hasta llegar al caso base cuyo orden complejidad es O(2). Pero al no haber División y Conquista propiamente dicho, no se puede aplicar el teorema del maestro. El analisis pasa a ser linea por linea:\\
 
-$\mbox{T Peor Quicksort - Llamada sobre n:} = \bigO(4n) + \bigO(6) + O(2) + \mbox{Llamada sobre n-1}\\
-\mbox{Llamada sobre n-1} = \bigO(4n-1) + \bigO(6) + \mbox{Llamada sobre n-2} \\
-\mbox{Llamada sobre n-2} = \bigO(4n-2) + \bigO(6) + \mbox{Llamada sobre n-3}$ \\
+$\mbox{T Peor Quicksort - Llamada sobre n:} = \bigO(4n) + \bigO(5) + O(2) + \mbox{Llamada sobre n-1}\\
+\mbox{Llamada sobre n-1} = \bigO(4n-1) + \bigO(5) + \mbox{Llamada sobre n-2} \\
+\mbox{Llamada sobre n-2} = \bigO(4n-2) + \bigO(5) + \mbox{Llamada sobre n-3}$ \\
 
-$\mbox{T Peor Quicksort:} \sum_{i=0}^{n-2} O(6)  +  \sum_{i=0}^{n-2} \bigO(4(n-i)) + \bigO(2) \\
-\mbox{T Peor Quicksort(n)} \in \bigO(6(n-1))  +  \bigO(4n(n-1)) - 4 * \sum_{i=0}^{n-2} \bigO(i) + \bigO(2) \\
+$\mbox{T Peor Quicksort:} \sum_{i=0}^{n-2} O(5)  +  \sum_{i=0}^{n-2} \bigO(4(n-i)) + \bigO(2) \\
+\mbox{T Peor Quicksort(n)} \in \bigO(5(n-1))  +  \bigO(4n(n-1)) - 4 * \sum_{i=0}^{n-2} \bigO(i) + \bigO(2) \\
 \mbox{T Peor Quicksort(n)} \in \bigO(6(n-1))  +  \bigO(4n(n-1)) - 4 * \bigO((n-1)*\frac n 2 + \bigO(2)$ \\
 
-$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 4n - 4) \in \bigO(n^2)$
+$\mbox{T Peor Quicksort(n)} \in O(2 n ^2 + 3n - 4) \in \bigO(n^2)$
 
 \subsubsection{Heapsort}
 
