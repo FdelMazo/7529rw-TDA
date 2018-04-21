@@ -94,7 +94,7 @@ Este ordenamiento usa las mismas herramientas del ordenamiento de selección. Po
 
 $\mbox{T Inserción(n)} \in \bigO( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3))) = \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$\\
 
-Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de n elementos, de las $n!$ posibles distribuciones de los elementos, solo una estará ordenada, y con un n no demasiado grande, se cumple que $n!-1 \approx n$). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.
+Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de $n$ elementos, de las $n!$ posibles distribuciones, sólo una estará  ordenada,  por lo que esa posibilidad se desprecia para el caso promedio). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.
 
 $\mbox{T Promedio Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
@@ -256,7 +256,7 @@ Con respecto al caso promedio, los tiempos se cumplieron de forma exactamente co
 
 En el algoritmo implementado, primero se crea el archivo, con una complejidad $\bigO(E*J)$ (siendo J la cantidad de jugadores y E la cantidad de equipos), ya que por cada equipo se debe crear un archivo de longitud igual a la cantidad de jugadores, y lo análogo ocurre a la recíproca. La carga de archivos  naturalmente también es de orden $\bigO(J*E)$ ya que por cada jugador que se quiera crear, se debe recorrer un archivo cuya longitud es igual a la cantidad de equipos, y viceversa.
 
-Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que no agregan un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\bigO(J)$). Como hay E equipos, el orden de la asignación también es $\bigO(J*E)$. Este orden está garantizado porque todas las operaciones dentro del ciclo son de orden constante.
+Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que no agregan un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\bigO(J)$). Como hay E equipos, el orden de la asignación también es $\bigO(J*E)$. Este orden está garantizado porque todas las operaciones dentro del ciclo son de orden constante.\footnote{Esto fue logrado en la re-entrega, al cambiar una \textbf{lista} de jugadores por un \textbf{diccionario} de jugadores, entre otros.}
 
 
 

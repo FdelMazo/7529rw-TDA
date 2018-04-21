@@ -18,7 +18,7 @@ def testPreferenciasGS():
             descartados = jugador.getEquiposDescartados()
             for equipo_descartado in descartados:
                 assert(equipos[equipo_descartado].getPosicionFavoritoActual() <= equipos[equipo_descartado].getPreferencias().index(jugador.getNumero()))
-    print("OK\n")
+    print("Test 1: OK\n")
 
 def testInestabilidadesGS():
     '''Prueba que nunca se dara en las asignaciones finales:
@@ -36,7 +36,7 @@ def testInestabilidadesGS():
                     condicion1 = equipo_original.getPosicionFavoritoActual() <= equipo_original.getPreferencias().index(jugador_externo)
                     condicion2 = equipos[equipo_descartado].getPosicionFavoritoActual() <= equipos[equipo_descartado].getPreferencias().index(jugador_original.getNumero())
                     assert(condicion1 or condicion2)
-    print("OK\n")
+    print("Test 2: OK\n")
 
 def imprimirResultado(ruta):
     with open(ruta) as archivo:

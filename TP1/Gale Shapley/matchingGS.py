@@ -36,7 +36,6 @@ def asignacion(diccJugadores, diccEquipos, vacantesDisponibles):
                 if not jugadorActual.estaAsignado():
                     equipo.agregarJugador(jugadorActual)
                     vacantesDisponibles -=1
-
                 else:
                     equipoActual = jugadorActual.getLugarAsignado()
                     if jugadorActual.compararPreferencias(equipo, equipoActual) > 0:

@@ -47,7 +47,3 @@ class Jugador(EntidadConPreferencias):
 
     def compararPreferencias(self, equipo1, equipo2):
         return self.preferencias[equipo1.getNumero()] > self.preferencias[equipo2.getNumero()]
-        '''for preferencia in self.preferencias:
-            if equipo1.getNumero() == preferencia: return 1
-            elif equipo2.getNumero() == preferencia: return -1
-         #Nunca debería ser cero'''
