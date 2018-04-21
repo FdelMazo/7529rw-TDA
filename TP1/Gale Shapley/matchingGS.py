@@ -28,19 +28,20 @@ def leerPreferencias(identificador, tipo, directorio):
 
 def asignacion(diccJugadores, diccEquipos, vacantesDisponibles):
     '''Recibe un diccionario de jugadores y uno de equipos con sus respectivos objetos como valor y sus identificadores como clave y recibe la cantidad de vacantes totales disponibles entre todos los equipos. Asigna a cada objeto equipo a sus respectivos jugadores usando el algoritmo de Gale-Shapley.'''
-    for equipo in diccEquipos.values():
-        while equipo.getVacantes() and vacantesDisponibles:
-            favorito = equipo.getFavorito()
-            jugadorActual = diccJugadores[favorito]
-            if not jugadorActual.estaAsignado():
-                equipo.agregarJugador(jugadorActual)
-                vacantesDisponibles -=1
-            else:
-                equipoActual = jugadorActual.getLugarAsignado()
-                if jugadorActual.compararPreferencias(equipo, equipoActual) > 0:
-                    equipoActual.quitarJugador(jugadorActual)
+    while vacantesDisponibles:
+        for equipo in diccEquipos.values():
+            while equipo.getVacantes():
+                favorito = equipo.getFavorito()
+                jugadorActual = diccJugadores[favorito]
+                if not jugadorActual.estaAsignado():
                     equipo.agregarJugador(jugadorActual)
-            equipo.setearProximoFavorito()
+                    vacantesDisponibles -=1
+                else:
+                    equipoActual = jugadorActual.getLugarAsignado()
+                    if jugadorActual.compararPreferencias(equipo, equipoActual) > 0:
+                        equipoActual.quitarJugador(jugadorActual)
+                        equipo.agregarJugador(jugadorActual)
+                equipo.setearProximoFavorito()
 
 def guardarAsignacion(diccEquipos, nombreArchivo):
     '''Recibe un diccionario de equipos con sus jugadores y un nombre de archivo. Escribe las asignaciones de los jugadores a dichos equipos en un archivo .txt de nombre recibido por parametro.'''
