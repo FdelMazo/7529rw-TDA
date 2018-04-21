@@ -50,7 +50,7 @@ def guardarAsignacion(diccEquipos, nombreArchivo):
         for numeroEquipo in diccEquipos.keys():
             archivo.write("{}:".format(numeroEquipo))
             for jugador in diccEquipos[numeroEquipo].getJugadores():
-                archivo.write(" {}".format(jugador.getNumero()))
+                archivo.write(" {}".format(jugador))
             archivo.write('\n')
 
 
