@@ -11,9 +11,9 @@ def cargaDeArchivos(cantidadJugadores, cantidadEquipos, vacantesPorEquipo, direc
     '''Recibe la cantidad de jugadores y de equipos de una liga y las vacantes de cada equipo asi como tambien el directorio donde se encuentran los archivos de dichos equipos y jugadores. Devuelve un diccJugadores/diccEquipos con los identificadores de cada jugador/equipo como clave y un objeto Jugador/Equipo que lo representa como valor'''
     diccJugadores = {}
     diccEquipos = {}
-    for identificadorJugador in range(cantidadJugadores):
+    for identificadorJugador in range(1, cantidadJugadores + 1):
         diccJugadores[identificadorJugador] = Jugador(identificadorJugador, leerPreferencias(identificadorJugador, JUGADORES, directorio))
-    for identificadorEquipo in range(cantidadEquipos):
+    for identificadorEquipo in range(1, cantidadEquipos + 1):
         diccEquipos[identificadorEquipo] = Equipo(identificadorEquipo, leerPreferencias(identificadorEquipo, EQUIPOS, directorio), vacantesPorEquipo)
     return diccJugadores, diccEquipos
 
