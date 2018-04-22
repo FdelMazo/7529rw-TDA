@@ -66,7 +66,7 @@
 \subsection{Complejidad Teórica}
 \subsubsection{Selección}
 
-El ordenamiento de selección es uno de los algoritmos de ordenamiento más faciles de implementar. En cada iteracion, se halla el mínimo elemento de la sección del arreglo desordenado y se intercambian las posiciones de este valor y el último elemento. Se reduce en una unidad la sección del arreglo desordenado y al resto se lo considera ordenado.
+El ordenamiento de selección es uno de los algoritmos de ordenamiento más fáciles de implementar. En cada iteracion, se halla el mínimo elemento de la sección del arreglo desordenado y se intercambian las posiciones de este valor y el último elemento. Se reduce en una unidad la sección del arreglo desordenado y al resto se lo considera ordenado.
 
 De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos nativos de las listas de Python 3 fueron sacadas de: \url{https://wiki.python.org/moin/TimeComplexity}} del ordenamiento de selección, la complejidad teórica es:
 
@@ -88,21 +88,21 @@ $\mbox{T Promedio Seleccción(n)} \in \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
 \subsubsection{Inserción}
 
-Inicialmente se tiene un solo elemento y se lo considera un conjunto ordenado. En cada iteración, se compara al siguiente elemento del conjunto ordenado con su predecesor y se intercambia en caso de ser menor a este. Se itera de esta forma hasta que la condición anterior no se cumpla. Al igual que el de selección, el algoritmo tiene dos ciclos anidados que recorren el arreglo entero, por lo tanto, el tiempo esperado será cuadrático.
+Inicialmente se tiene un sólo elemento y se lo considera un conjunto ordenado. En cada iteración, se compara al siguiente elemento del conjunto ordenado con su predecesor y se intercambia en caso de ser menor a este. Se itera de esta forma hasta que la condición anterior no se cumpla. Al igual que el de selección, el algoritmo tiene dos ciclos anidados que recorren el arreglo entero, por lo tanto, el tiempo esperado será cuadrático.
 
 Este ordenamiento usa las mismas herramientas del ordenamiento de selección. Por lo tanto, con las consideraciones anteriores tomadas, queda:
 
 $\mbox{T Inserción(n)} \in \bigO( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3))) = \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$\\
 
-Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de $n$ elementos, de las $n!$ posibles distribuciones, sólo una estará  ordenada,  por lo que esa posibilidad se desprecia para el caso promedio). Luego, en el caso promedio se tiene que el algoritmo también tiene orden cuadratico.
+Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de $n$ elementos, de las $n!$ posibles distribuciones, sólo una estará  ordenada,  por lo que esa posibilidad se desprecia para el caso promedio). Luego, en el caso promedio se tiene que el algoritmo también tiene orden cuadrático.
 
 $\mbox{T Promedio Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
 \subsubsection{Mergesort}
 
-El algoritmo de mergesort es un ordenamiento que utiliza la técnica de División y Conquista, y por lo tanto, para calcular su complejidad teórica va a ser utilizado el Teorema Maestro. Si el arreglo sólo tiene un elemento o ninguno se considera ordenado. En otro caso, el arreglo se subdivide por la mitad creando dos nuevos arreglos. Cada uno de estos arreglos se vuelve a subdividir de forma recursiva hasta que queda un elemento o dos en cada subarreglo. A partir de aqui, cada mitad creada se une de forma ordenada en un nuevo arreglo hasta que queda un único arreglo ordenado.
+El algoritmo de mergesort es un ordenamiento que utiliza la técnica de División y Conquista, y por lo tanto, para calcular su complejidad teórica va a ser utilizado el Teorema Maestro. Si el arreglo sólo tiene un elemento o ninguno se considera ordenado. En otro caso, el arreglo se subdivide por la mitad creando dos nuevos arreglos. Cada uno de estos arreglos se vuelve a subdividir de forma recursiva hasta que queda un elemento o dos en cada subarreglo. A partir de aquí, cada mitad creada se une de forma ordenada en un nuevo arreglo hasta que queda un único arreglo ordenado.
 
-En cuanto a código se introducen nuevos metodos:
+En cuanto a código se introducen nuevos métodos:
 
 \begin{itemize}
 \item \texttt{Append} y \texttt{pop}\footnote{El pop fue removido en la re-entrega. De todas formas, pop es $\bigO(1)$ solo cuando es respecto al último elemento}: $\bigO(1)$
@@ -123,7 +123,7 @@ $\mbox{T Mergesort(n): } 2 * \mbox{T Mergesort} (\frac{n}{2}) + f(n)$
 
 Como $(a = b^c)$, se tiene que: $\mbox{T Mergesort(n)} \in \bigO(n \log n)$\\
 
-Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro\footnote{Discutible. No disponemos de las herramientas para una justificación más solida.} (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de $\frac{n}{2}$. El tiempo de las llamadas no recursivas es $\bigO(2 + 4 + 1 + 2 + \frac{n}{2}) * 3 + 1 + \frac{n}{2} + 1) = \bigO(2n + 11)) \in \bigO(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \bigO(n \log n)$
+Para el caso promedio, se puede considerar que no es lo más probable una distribución de los elementos en cada mitad de modo tal que las mismas pierdan elementos uniformemente (agregándose al sub arreglo ordenado), sino que es más probable que uno de los arreglos termine el ciclo con muchos más elementos que el otro\footnote{Discutible. No disponemos de las herramientas para una justificación más sólida.} (que termina sin ninguno). Podríamos decir que para las comparaciones, uno de los arreglos resulta con varios elementos mayores a la propia mayoría del otro, y por ende, este último terminará con una longitud considerable al terminar el ciclo, que en promedio se podría decir de $\frac{n}{2}$. El tiempo de las llamadas no recursivas es $\bigO(2 + 4 + 1 + 2 + \frac{n}{2}) * 3 + 1 + \frac{n}{2} + 1) = \bigO(2n + 11)) \in \bigO(n)$, nuevamente dejando: $\mbox{T Promedio Mergesort(n)} \in \bigO(n \log n)$
 
 \subsubsection{Quicksort}
 
@@ -164,13 +164,13 @@ $\mbox{T Peor Seleccción(n)} \in \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
 \subsubsection{Inserción}
 
-Este algoritmo sí presenta un peor caso: cuando el arreglo inicial se encuentra ordenado de forma descendente (y no al revés, según la implementación dada). El bucle interno del algoritmo deberá comparar cada elemento hasta llegar a la primera posición del conjunto, con lo cual realizará el máximo número de comparaciones posibles entre elementos y el ciclo se ejecutara sin cortes. Esto también está contemplado dentro de su comportamiento en promedio: se destaca el caso en que, si el arreglo estuviera ordenado al revés, el algoritmo terminaría en un orden de $\bigO(n)$ (siendo, para este caso trivial, mejor que cualquier ordenamiento).
+Este algoritmo sí presenta un peor caso: cuando el arreglo inicial se encuentra ordenado de forma descendente (y no al revés, según la implementación dada). El bucle interno del algoritmo deberá comparar cada elemento hasta llegar a la primera posición del conjunto, con lo cual realizará el máximo número de comparaciones posibles entre elementos y el ciclo se ejecutará sin cortes. Esto también está contemplado dentro de su comportamiento en promedio: se destaca el caso en que, si el arreglo estuviera ordenado al revés, el algoritmo terminaría en un orden de $\bigO(n)$ (siendo, para este caso trivial, mejor que cualquier ordenamiento).
 
 $\mbox{T Peor Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
 \subsubsection{Mergesort}
 
-Si bien tiene un promedio de tiempo linearítmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación, pues el último elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
+Si bien tiene un promedio de tiempo linearítmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación, pues el último elemento no hay que compararlo contra nada. De todas formas, esto sólo cambia la variable c del teorema del maestro, manteniendo la misma cota asintótica.
 
 $\mbox{T Peor Mergesort(n)} \in \bigO(n \log n)$.
 
@@ -293,7 +293,7 @@ Todo el trabajo fue codificado en Python 3.6.1.
 
 \subsection{Ordenamientos: Ejecución general}
 
-El programa principal es ejecutado desde el archivo main del directorio 'Ordenamientos', especificando por linea de comando el caso a ejecutar, entre 'Random' y 'Peor', refiriendose a los sets por donde se ejecutaran los ordenamientos. La ejecución consiste de iterar sobre los sets generados previamente y en cada uno ejecutar cada ordenamiento estudiado sobre distintas cantidades del mismo elemento. Este archivo genera un 'SalidaRandom.csv' con las estadisticas necesarias para analizar.
+El programa principal es ejecutado desde el archivo main del directorio 'Ordenamientos', especificando por línea de comando el caso a ejecutar, entre 'Random' y 'Peor', refiriéndose a los sets por donde se ejecutarán los ordenamientos. La ejecución consiste de iterar sobre los sets generados previamente y en cada uno ejecutar cada ordenamiento estudiado sobre distintas cantidades del mismo elemento. Este archivo genera un 'SalidaRandom.csv' con las estadísticas necesarias para analizar.
 
 \begin{minted}{shell}
 >>> python main.py Random
@@ -319,7 +319,7 @@ Para verificar que los ordenamientos anden correctamente se realizaron varias pr
 \end{minted}
 
 \subsection{Stable matching}
-Para generar un matching estable que cumpla con la consigna se utiliza el archivo main del directorio 'Gale Shapley'. Este importa el archivo matchinGS.py y ejecuta el algoritmo. Los parametros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad. De faltar el directorio de la liga, se puede generar con un script.
+Para generar un matching estable que cumpla con la consigna se utiliza el archivo main del directorio 'Gale Shapley'. Este importa el archivo matchinGS.py y ejecuta el algoritmo. Los parámetros recibidos por el algoritmo son la cantidad de jugadores, la cantidad de equipos, las vacantes por equipo, el nombre del archivo de salida y si es necesario crear el archivo. Luego, ejecuta un test sobre el algoritmo para verificar la estabilidad. De faltar el directorio de la liga, se puede generar con un script.
 
 \begin{minted}{shell}
 >>> python generardorLigas.py
