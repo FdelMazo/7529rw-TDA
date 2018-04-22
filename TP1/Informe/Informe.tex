@@ -72,29 +72,29 @@ De acuerdo a nuestra implementación\footnote{Las complejidades de los métodos 
 
 $\mbox{T Selección(n)} \in \bigO(2 + 1 + n * (1 + 1 + 1 + n * (1 + 1) + 1 + 2)) = \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
-Esto viene de analizar linea por linea teniendo en cuenta:
+Esto viene de analizar línea por línea teniendo en cuenta:
 \begin{itemize}
 \item Hacer una asignación y comparar variables: $O(1)$
 \item Operadores aritméticos básicos: $O(1)$
 \item Sacar la longitud de un arreglo: $O(1)$
 \item Hacer un ciclo definido que itera por todo el arreglo: $O(n * f(n))$ siendo $f(n)$ lo que hay dentro del ciclo.
-\item Hallar el indice de un elemento: $O(n)$
+\item Hallar el índice de un elemento: $O(n)$
 \end{itemize}
 
-Este ordenamiento itera siempre por el arreglo sin importar su disposicion inicial. Por lo tanto su caso promedio es iguales al tiempo analizado:
+Este ordenamiento itera siempre por el arreglo sin importar su disposición inicial. Por lo tanto, su caso promedio es igual al tiempo analizado:
 
 $\mbox{T Promedio Seleccción(n)} \in \bigO(n^2 + 6n + n) \in \bigO(n^2)$
 
 
 \subsubsection{Inserción}
 
-Inicialmente, se tiene un solo elemento y se lo considera un conjunto ordenado. En cada iteración, se compara al siguiente elemento del conjunto ordenado con su predecesor y se intercambia en caso de ser menor a este. Se itera de esta forma hasta que la condicion anterior no se cumpla. Al igual que el de seleccion, el algoritmo consiste de dos ciclos anidados que recorren el arreglo entero, por lo tanto, el tiempo esperado sera cuadrático.
+Inicialmente se tiene un solo elemento y se lo considera un conjunto ordenado. En cada iteración, se compara al siguiente elemento del conjunto ordenado con su predecesor y se intercambia en caso de ser menor a este. Se itera de esta forma hasta que la condición anterior no se cumpla. Al igual que el de selección, el algoritmo tiene dos ciclos anidados que recorren el arreglo entero, por lo tanto, el tiempo esperado será cuadrático.
 
 Este ordenamiento usa las mismas herramientas del ordenamiento de selección. Por lo tanto, con las consideraciones anteriores tomadas, queda:
 
 $\mbox{T Inserción(n)} \in \bigO( 2 + 1 + n * (2 + 1 + 2 + 2 + 1 + n * (1 + 3))) = \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$\\
 
-Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de $n$ elementos, de las $n!$ posibles distribuciones, sólo una estará  ordenada,  por lo que esa posibilidad se desprecia para el caso promedio). Luego, en el caso promedio se tiene que el algoritmo tambien tiene orden cuadratico.
+Como es claro que encontrar en un arreglo un intervalo ordenado (suficientemente grande) es mucho menos probable que no hacerlo (es decir, para un arreglo de $n$ elementos, de las $n!$ posibles distribuciones, sólo una estará  ordenada,  por lo que esa posibilidad se desprecia para el caso promedio). Luego, en el caso promedio se tiene que el algoritmo también tiene orden cuadratico.
 
 $\mbox{T Promedio Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
@@ -117,7 +117,7 @@ La cantidad de llamadas recursivas (a) son dos. Cada llamada recursiva divide la
 
 $\bigO(2 + 4 + 1 + 2 + (n-1) * 3 + 1 + 1 + 1) = \bigO(3n + 9) \in \bigO(n)$\\
 
-Asumiendo un n lo suficientemente grande como para que se requieran intercalar aproximadamente n elementos la mayoría de las veces, por lo que c=1. Se tiene entonces:
+Asumiendo un n lo suficientemente grande como para que se requieran intercalar aproximadamente n elementos la mayoría de las veces, c=1. Se tiene entonces:
 
 $\mbox{T Mergesort(n): } 2 * \mbox{T Mergesort} (\frac{n}{2}) + f(n)$
 
@@ -127,7 +127,7 @@ Para el caso promedio, se puede considerar que no es lo más probable una distri
 
 \subsubsection{Quicksort}
 
-Al igual que mergesort, quicksort utiliza la técnica de División y Conquista. Se elige un elemento del arreglo como pivote (en nuestra implementación se elige al primero) y a partir del pivote se arman dos arreglos: la de todos los elementos menores al pivote y la de todos los elementos mayores o iguales al pivote. El pivote se toma como el elemento inicial del arreglo. Con esto se obtiene un orden relativo al pivote. El mecanismo antes descripto se repite recursivamente para cada parte. El arreglo final se obtiene concatenando lps subarreglos ordenados. Al igual que en Mergesort, siendo División y Conquista la técnica utlilizada, se usa el Teorema Maestro para calcular su complejidad.\\
+Al igual que mergesort, quicksort utiliza la técnica de División y Conquista. Se elige un elemento del arreglo como pivote (en nuestra implementación se elige al primero) y a partir del pivote se arman dos arreglos: el de todos los elementos menores al pivote y el de todos los elementos mayores o iguales al pivote. Con esto se obtiene un orden relativo al pivote. El mecanismo antes descripto se repite recursivamente para cada parte. El arreglo final se obtiene concatenando los subarreglos ordenados. Al igual que en Mergesort, siendo División y Conquista la técnica utlilizada, se usa el Teorema Maestro para calcular su complejidad.\\
 
 Considerando las complejidades analizadas hasta ahora (en código no hay nada nuevo) y aplicando el Teorema Maestro se tiene:
 
@@ -139,7 +139,7 @@ En el caso promedio, b será aproximadamente 2, ya que en un arreglo arbitrariam
 
 \subsubsection{Heapsort}
 
-En el heapsort se utiliza la estructura de cola de prioridad (heap). Se construye un heap de mínimos con los elementos del arreglo. Al ser la raiz el menor elemento, se extrae la raiz y se la guarda en la primera posición del arreglo. De esta forma, se extrae en sucesivas iteraciones la raiz y el elemento es guardado en la siguiente posición hasta vaciar el heap.
+En el heapsort se utiliza la estructura de cola de prioridad (heap). Se construye un heap de mínimos con los elementos del arreglo. Al ser la raíz el menor elemento, se extrae la raíz y se la guarda en la primera posición del arreglo. De esta forma, se extrae en sucesivas iteraciones la raíz y el elemento es guardado en la siguiente posición hasta vaciar el heap.
 
 Los tiempos del heap de mínimos implementado son:
 
@@ -170,7 +170,7 @@ $\mbox{T Peor Inserción(n)} \in \bigO(4n^2 + 8n + 3) \in \bigO(n^2)$
 
 \subsubsection{Mergesort}
 
-Si bien tiene un promedio de tiempo linearítmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación pues el ultimo elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
+Si bien tiene un promedio de tiempo linearítmico, tiene casos en los que realiza una mayor cantidad de comparaciones. El algoritmo se comporta de manera recursiva, dividiendo el arreglo en mitades cada vez mas pequeñas y realizando comparaciones entre ellas una vez alcanzado sub-arreglos de tamaño 1. Estas comparaciones serán, como máximo, de cantidad $n-1$ siendo $n$ la cantidad de elementos involucrados en cada comparación, pues el último elemento no hay que compararlo contra nada. De todas formas,  esto solo cambia la variable c del teorema del maestro, manteniendo la misma cota asintotica.
 
 $\mbox{T Peor Mergesort(n)} \in \bigO(n \log n)$.
 
@@ -236,11 +236,11 @@ Se ve en la comparación que para pocos elementos el comportamiento de los orden
 
 \makebox[\textwidth][c]{\includegraphics[width=0.9\textwidth]{GraficoCasoDescendente}}\\ \\
 
-Este es el peor caso analizado para los ordenamientos de inserción y de quicksort: el primero denota la peor eficiencia, mientras que el segundo toma un orden cuadrático que acelera mucho su crecimiento con respecto a heapsort y a mergesort. Estos últimos mantienen su tendencia, mostrando que no les afecta la distribución descendente y que mergesort nuevamente resulta el más eficiente.\\
+Este es el peor caso analizado para los ordenamientos de inserción y de quicksort: el primero denota la peor eficiencia, mientras que el segundo toma un orden cuadrático que acelera mucho su crecimiento con respecto a heapsort y a mergesort. Estos últimos mantienen su tendencia, mostrando que no les afecta la distribución descendente y que mergesort nuevamente resulta más eficiente.\\
 
 \makebox[\textwidth][c]{\includegraphics[width=0.9\textwidth]{GraficoCasoAntiMergeSort}}\\ \\
 
-Este es el peor caso analizado para mergesrot. El impacto práctico es virtualmente despreciable, mostrando que mergesort, incluso en su peor caso teórico, sigue siendo de los más eficientes. Esto se da porque este “peor caso” para mergesort, en realidad no está modificando su tiempo de ejecución a nivel asintótinco, por lo que en la práctica (ejecutado sobre el mismo ambiente) no se registran mayores diferencias. El resto de los algoritmos tienen un comportamiento similar al verificado con los sets aleatorios.
+Este es el peor caso analizado para mergesort. El impacto práctico es virtualmente despreciable, mostrando que mergesort, incluso en su peor caso teórico, sigue siendo de los más eficientes. Esto se da porque este “peor caso” para mergesort, en realidad no está modificando su tiempo de ejecución a nivel asintótinco, por lo que en la práctica (ejecutado sobre el mismo ambiente) no se registran mayores diferencias. El resto de los algoritmos tienen un comportamiento similar al verificado con los sets aleatorios.
 
 \subsection{Comparación con valores teóricos}
 
@@ -256,7 +256,7 @@ Con respecto al caso promedio, los tiempos se cumplieron de forma exactamente co
 
 En el algoritmo implementado, primero se crea el archivo, con una complejidad $\bigO(E*J)$ (siendo J la cantidad de jugadores y E la cantidad de equipos), ya que por cada equipo se debe crear un archivo de longitud igual a la cantidad de jugadores, y lo análogo ocurre a la recíproca. La carga de archivos  naturalmente también es de orden $\bigO(J*E)$ ya que por cada jugador que se quiera crear, se debe recorrer un archivo cuya longitud es igual a la cantidad de equipos, y viceversa.
 
-Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que no agregan un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\bigO(J)$). Como hay E equipos, el orden de la asignación también es $\bigO(J*E)$. Este orden está garantizado porque todas las operaciones dentro del ciclo son de orden constante.\footnote{Esto fue logrado en la re-entrega, al cambiar una \textbf{lista} de jugadores por un \textbf{diccionario} de jugadores, entre otros.}
+Luego, en la asignación se genera el matching estable. La condición de corte es que no haya más vacantes en los equipos. En el algoritmo se itera por cada equipo y se verifica para cada uno si todos tiene vacantes, por lo que esto no agrega un orden diferente. Esto implica que cada equipo deberá completar todos sus lugares libres, y como hay igual cantidad de jugadores que de vacantes, el peor caso se considera cuando cada equipo debe preguntarle a todos los jugadores si desean ocupar una vacante: esto es $\bigO(J)$. Como hay E equipos, el orden de la asignación también es $\bigO(J*E)$. Este orden está garantizado porque todas las operaciones dentro del ciclo son de orden constante.\footnote{Esto fue logrado en la re-entrega, al cambiar una \textbf{lista} de jugadores por un \textbf{diccionario} de jugadores, entre otros.}
 
 
 
@@ -268,18 +268,18 @@ El orden cuadrático polinomial del algoritmo es evidente, ya que es el peor cas
 
 Mientras haya un equipo con vacantes, el equipo actual ofrece una vacante a su jugador favorito actual. Si el jugador esta libre, acepta la vacante, si no esta libre, pero prefiere más al equipo actual, acepta la vacante y el otro equipo pierde a ese jugador.
 
-Como hay igual cantidad de jugadores que de vacantes totales, se ve que todos los equipos podrán cubrir todos su puestos. Demostrandolo por el absurdo, suponemos un equipo $e$ que ya ha ofrecido una vacante a todos los jugadores de acuerdo con sus preferencias y ninguno la ha aceptado, lo cual implica que todos los jugadores ya han aceptado una vacante en un equipo previamente. Pero esto es una contradicción, porque existe la misma cantidad de jugadores que de vacantes totales, y por hipótesis hay una (al menos) vacante que $e$ no puede cubrir. La contradicción viene de suponer que un equipo no ha podido satisfacer una de sus vacantes ofreciéndole a todos los jugadores. Con esto se ve además que la máxima cantidad de proposiciones que un equipo puede hacer es igual a la cantidad de vacantes disponibles en total, es decir, la cantidad de jugadores.
+Como hay igual cantidad de jugadores que de vacantes totales, se ve que todos los equipos podrán cubrir todos su puestos. Esto se demuestra por el absurdo, suponemos un equipo $e$ que ha ofrecido una vacante a todos los jugadores de acuerdo con sus preferencias y ninguno la ha aceptado, lo cual implica que todos los jugadores ya han aceptado una vacante en un equipo previamente. Pero esto es una contradicción, porque existe la misma cantidad de jugadores que de vacantes totales, y por hipótesis hay una (al menos) vacante que $e$ no puede cubrir. La contradicción viene de suponer que un equipo no ha podido satisfacer una de sus vacantes ofreciéndolas a todos los jugadores. Con esto se ve además que la máxima cantidad de proposiciones que un equipo puede hacer es igual a la cantidad de vacantes disponibles en total, es decir, la cantidad de jugadores.
 
-Para demostrar que una vez que cada equipo haya cubierto sus vacantes no habrá parejas conflictivas (inestabilidades). Suponiendo jugadores $j1$ y $j2$, y equipos $e1$, $e2$, asumimos un conflicto entre $(j1,e1)$ y $(j2,e2)$, con $j1$ queriendo estar en $e2$ y $j2$ queriendo estar en $e1$, $e1$ prefiriendo a $j2$ sobre $j1$ y $e2$ prefiriendo a $j1$ sobre $j2$.
+A continuación se demostrará que una vez que cada equipo haya cubierto sus vacantes no habrá parejas conflictivas (inestabilidades). Suponiendo jugadores $j1$ y $j2$, y equipos $e1$, $e2$, asumimos un conflicto entre $(j1,e1)$ y $(j2,e2)$, con $j1$ queriendo estar en $e2$ y $j2$ queriendo estar en $e1$, $e1$ prefiriendo a $j2$ sobre $j1$ y $e2$ prefiriendo a $j1$ sobre $j2$.
 
 Suponiendo que $e1$ es el primero en elegir, si $j1$ aceptó la vacante es porque estaba libre o porque prefería estar en $e1$ antes que en otro equipo $e3$ (donde no necesariamente $e3 = e2$).
 
 \begin{itemize}
-\item{Si estaba solo: } Luego $e2$ prefiere más a $j2$ que a $j1$, porque le ofreció su vacante antes. Si esto no fuera así, $e2$ le hubiera ofrecido antes su vacante a $e1$, y el mismo se hubiera cambiado de equipo, pero esto no sucedió. En este caso se llega a un absurdo, porque por hipótesis $e2$ prefiere más a $j1$ (en otro caso la pareja no es conflictiva y no hay inestabilidad).
-\item{Si acepto estando en otro equipo: } Luego, se llega al mismo absurdo anterior, porque al fin y al cabo $e2$ termina con $j2$.
+\item{Si estaba sólo: } luego $e2$ prefiere más a $j2$ que a $j1$, porque le ofreció su vacante antes. Si esto no fuera así, $e2$ le hubiera ofrecido antes su vacante a $e1$, y el mismo se hubiera cambiado de equipo, pero esto no sucedió. En este caso se llega a un absurdo, porque por hipótesis $e2$ prefiere más a $j1$ (en otro caso la pareja no es conflictiva y no hay inestabilidad).
+\item{Si acepto estando en otro equipo: } luego, se llega al mismo absurdo anterior, porque al fin y al cabo $e2$ termina con $j2$.
 \end{itemize}
 
-Por ende, debe ser que $e2$ eligió primero. Si $j2$ aceptó la vacante en $e2$, es porque $j2$ estaba libre o porque prefería estar en $e2$ que en otro equipo $e4$ (no necesariamente $e4 = e1 o e4 = e3$). En cualquiera de los dos casos se llega a un absurdo similar al anterior.
+Por ende, debe ser que $e2$ eligió primero. Si $j2$ aceptó la vacante en $e2$, es porque $j2$ estaba libre o porque prefería estar en $e2$ que en otro equipo $e4$ (no necesariamente $e4 = e3$). En cualquiera de los dos casos se llega a un absurdo similar al anterior.
 
 Todas los caminos a los que conduce la hipótesis donde hay una inestabilidad en la asignación final hacen llegar a una contradicción, por lo que queda probado que la asignación es estable.
 
@@ -305,14 +305,14 @@ El programa principal es ejecutado desde el archivo main del directorio 'Ordenam
 
 \subsection{Generación de sets aleatorios}
 
-El script generarSets.py permite generar los sets aleatorios de n numeros (en este caso, n=10000) en un rango determinado. Este archivo también contiene la creación de los sets de peores casos.
+El script generarSets.py permite generar los sets aleatorios de n números (en este caso, n=10000) en un rango determinado. Este archivo también contiene la creación de los sets de peores casos.
 
 \begin{minted}{shell}
 >>> python generarSets.py
 \end{minted}
 
 \subsection{Pruebas de ordenamientos}
-Para verificar que los ordenamientos anden correctamente se realizaron varias pruebas unitarias que verfiquen distintos comportamientos desde los casos triviales hasta los casos borde y demás. Todas las pruebas son iguales, e incluyen asserts con ordenamientos aleatorios.
+Para verificar que los ordenamientos anden correctamente se realizaron varias pruebas unitarias que verifiquen distintos comportamientos desde los casos triviales hasta los casos borde y demás. Todas las pruebas son iguales, e incluyen asserts con ordenamientos aleatorios.
 
 \begin{minted}{shell}
 >>> python heapTest.py -v
