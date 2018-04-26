@@ -4,7 +4,7 @@ class Grafo:
     def __init__(self):
         self.grafo = {}
 
-    def existeVertice(self):
+    def existeVertice(self, vertice):
         return vertice in self.grafo.keys()
 
     def agregarVertice(self, elemento):
@@ -13,7 +13,7 @@ class Grafo:
     def agregarArista(self, elemento1, elemento2):
         distancia = self.calcularDistancia(elemento1, elemento2)
         self.grafo[elemento1][elemento2] = distancia
-        self.grafo[elemento1][elemento2] = distancia
+        self.grafo[elemento2][elemento1] = distancia
 
     def getAdyacentes(self, elemento):
         return self.grafo[elemento]

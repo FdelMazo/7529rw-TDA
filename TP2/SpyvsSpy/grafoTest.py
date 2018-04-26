@@ -11,7 +11,8 @@ class testSonAdyacentes(unittest.TestCase):
         grafo.agregarVertice(vertice2)
         grafo.agregarArista(vertice1, vertice2)
         adyacentes1 = grafo.getAdyacentes(vertice1)
-        self.assertTrue(vertice2 in adyacentes1.keys())
+        adyacentes2 = grafo.getAdyacentes(vertice2)
+        self.assertTrue(vertice2 in adyacentes1.keys() and vertice1 in adyacentes2.keys())
 
 class testLaDistanciaEs2(unittest.TestCase):
     def testLaDistanciaEs2(self):
