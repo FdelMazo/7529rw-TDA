@@ -25,16 +25,11 @@ def _dijkstra(grafo, origen, visitados, padre, distancia):
         if v not in visitados:
             visitados[v] = True
             adyacentes = grafo.getAdyacentes(v)
-            print(v)
-            print(adyacentes)
             if v == origen:
                 distancia[v] = 0
                 padre[v] = None
             for w in adyacentes:
-                if w not in distancia:
-                    distancia[w] = distancia[v] + adyacentes[w]
-                    padre[w] = v
-                elif distancia[w] > (distancia[v] + adyacentes[w]): #Si llegue al vertice por un camino con una distancia mayor, lo camino por el nuevo camino
+                if w not in distancia or distancia[w] > distancia[v] + adyacentes[w]:
                     distancia[w] = distancia[v] + adyacentes[w]
                     padre[w] = v
                 heappush(heap, (float(distancia[w]), w))
