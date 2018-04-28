@@ -12,8 +12,9 @@ class Grafo:
 
     def agregarArista(self, elemento1, elemento2):
         distancia = self.calcularDistancia(elemento1, elemento2)
-        self.grafo[elemento1][elemento2] = distancia
-        self.grafo[elemento2][elemento1] = distancia
+        if self.existeVertice(elemento1) and self.existeVertice(elemento2):
+            self.grafo[elemento1][elemento2] = float(distancia)
+            self.grafo[elemento2][elemento1] = float(distancia)
 
     def getAdyacentes(self, elemento):
         return self.grafo[elemento]
