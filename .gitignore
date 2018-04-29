@@ -23,3 +23,4 @@
 *.synctex.gz
 *__pycache__
 *_minted*
+.vscode/

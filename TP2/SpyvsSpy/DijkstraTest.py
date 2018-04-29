@@ -88,3 +88,6 @@ class testMinimoCaminoConPeso(unittest.TestCase):
         final = (20, 20)
         camino = minimoCaminoConPeso(grafo1, origen, final)
         self.assertEqual([(1, 1), (2, 2), (5, 5), (6, 6), (20, 20)], camino)
+    
+if __name__ == '__main__':
+	unittest.main()

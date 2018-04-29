@@ -69,3 +69,6 @@ class testObtenerUnoDeLosDosCaminosPosibles(unittest.TestCase):
         final = (17, 18)
         camino = minimoCaminoSinPesos(grafo, origen, final)
         self.assertEqual([(5, 6), (9, 10), (11, 12), (17, 18)] or [(5, 6), (7, 8), (11, 12), (17, 18)], camino)
+
+if __name__ == '__main__':
+	unittest.main()

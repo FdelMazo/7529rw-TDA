@@ -11,7 +11,7 @@ def minimoCaminoSinPesos(grafo, origen, final):
             if w in nivel[i]:
                 v = w
                 break
-    camino.append(origen) #Odio tener que hacer esto, pero no encuentro otra manera
+    camino.append(origen)
     return camino[::-1]
 
 def bfs(grafo, origen, final):
