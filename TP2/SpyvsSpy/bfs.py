@@ -1,13 +1,14 @@
 from queue import Queue
 
 def minimoCaminoSinPesos(grafo, origen, final):
+    if origen not in grafo or final not in grafo:
+        return []
     orden, nivel = bfs(grafo, origen, final)
     camino = []
-    ordenFinal = orden[final]
     v = final
-    for i in range(ordenFinal - 1, -1, -1):
+    for i in range(orden[v] - 1, -1, -1):
         camino.append(v)
-        for w in grafo.getAdyacentes(v):
+        for w in grafo.adyacentes(v):
             if w in nivel[i]:
                 v = w
                 break
@@ -15,14 +16,11 @@ def minimoCaminoSinPesos(grafo, origen, final):
     return camino[::-1]
 
 def bfs(grafo, origen, final):
-    visitados = {}
-    orden = {}
-    nivel = {}
-    if grafo.existeVertice(origen):
-        visitados[origen] = True
-        nivel[0] = origen
-        orden[origen] = 0
-        _bfs(grafo, origen, final, visitados, orden, nivel)
+    visitados, orden, nivel = {}, {}, {}
+    visitados[origen] = True
+    nivel[0] = origen
+    orden[origen] = 0
+    _bfs(grafo, origen, final, visitados, orden, nivel)
     return orden, nivel
 
 def _bfs(grafo, origen, final, visitados, orden, nivel):
@@ -32,7 +30,7 @@ def _bfs(grafo, origen, final, visitados, orden, nivel):
         v = q.get()
         if v == final:
             break
-        for w in grafo.getAdyacentes(v):
+        for w in grafo.adyacentes(v):
             if w not in visitados:
                 visitados[w] = True
                 nivel[orden[v] + 1] = nivel.get(orden[v] + 1, []) + [w]

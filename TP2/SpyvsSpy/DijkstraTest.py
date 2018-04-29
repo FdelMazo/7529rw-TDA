@@ -1,56 +1,63 @@
 import unittest
 import random
 
-from grafo import *
+from Grafo import *
 from Dijkstra import *
 
 def crearGrafo1():
+    grafo = GrafoPesado()
     vertices = [(1, 2), (3, 4), (5, 6), (7, 8), (9, 10), (11, 12), (13, 14), (15, 16), (17, 18), (19, 20)]
-    grafo = Grafo()
+    aristas = [
+        ( (1, 2), (3, 4) ),
+        ( (1, 2), (5, 6) ),
+        ( (5, 6), (7, 8) ),
+        ( (5, 6), (9, 10) ),
+        ( (7, 8), (11, 12) ),
+        ( (9, 10), (11, 12) ),
+        ( (11, 12), (17, 18) ),
+        ( (17, 18), (15, 16) ),
+        ( (9, 10), (13, 14) ),
+        ( (13, 14), (15, 16) )
+    ]
     for v in vertices:
-        grafo.agregarVertice(v)
-    grafo.agregarArista((1, 2), (3, 4))
-    grafo.agregarArista((1, 2), (5, 6))
-    grafo.agregarArista((5, 6), (7, 8))
-    grafo.agregarArista((5, 6), (9, 10))
-    grafo.agregarArista((7, 8), (11, 12))
-    grafo.agregarArista((9, 10), (11, 12))
-    grafo.agregarArista((11, 12), (17, 18))
-    grafo.agregarArista((17, 18), (15, 16))
-    grafo.agregarArista((9, 10), (13, 14))
-    grafo.agregarArista((13, 14), (15, 16))
+        grafo.add(v)
+    for v1,v2 in aristas:
+        grafo.agregarArista(v1,v2)
     return grafo
 
 def crearGrafo2():
+    grafo = GrafoPesado()
     vertices = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (10, 10), (20, 20), (30, 30), (40, 40), (50, 50)]
-    grafo = Grafo()
+    aristas = [
+        ( (1, 1), (2, 2) ),
+        ( (1, 1), (3, 3) ),
+        ( (1, 1), (4, 4) ),
+        ( (1, 1), (5, 5) ),
+        ( (2, 2), (10, 10) ),
+        ( (3, 3), (10, 10) ),
+        ( (2, 2), (5, 5) ),
+        ( (5, 5), (6, 6) ),
+        ( (10, 10), (6, 6) ),
+        ( (6, 6), (7, 7) ),
+        ( (6, 6), (20, 20) ),
+        ( (4, 4), (40, 40) ),
+        ( (50, 50), (20, 20) ),
+        ( (50, 50), (40, 40) ),
+        ( (20, 20), (40, 40) ),
+        ( (10, 10), (20, 20) )
+    ]
     for v in vertices:
-        grafo.agregarVertice(v)
-    grafo.agregarArista((1, 1), (2, 2))
-    grafo.agregarArista((1, 1), (3, 3))
-    grafo.agregarArista((1, 1), (4, 4))
-    grafo.agregarArista((1, 1), (5, 5))
-    grafo.agregarArista((2, 2), (10, 10))
-    grafo.agregarArista((3, 3), (10, 10))
-    grafo.agregarArista((2, 2), (5, 5))
-    grafo.agregarArista((5, 5), (6, 6))
-    grafo.agregarArista((10, 10), (6, 6))
-    grafo.agregarArista((6, 6), (7, 7))
-    grafo.agregarArista((6, 6), (20, 20))
-    grafo.agregarArista((4, 4), (40, 40))
-    grafo.agregarArista((50, 50), (7, 7))
-    grafo.agregarArista((50, 50), (20, 20))
-    grafo.agregarArista((50, 50), (40, 40))
-    grafo.agregarArista((20, 20), (40, 40))
-    grafo.agregarArista((10, 10), (20, 20))
+        grafo.add(v)
+    for v1,v2 in aristas:
+        grafo.agregarArista(v1,v2)
     return grafo
-
 
 class testMinimoCaminoConPeso(unittest.TestCase):
     def test01MinimoCaminoConPesosOrigenYFinalIguales(self):
-        grafo = crearGrafo1()
+        grafo = GrafoPesado()
         origen = (1, 2)
         final = (1, 2)
+        grafo.agregarArista((1,2),(1,2))
         camino = minimoCaminoConPeso(grafo, origen, final)
         self.assertEqual([(1, 2)], camino)
 
