@@ -45,4 +45,5 @@ def main():
         imprimirTiempoEjecucion(diccionarioSets, set, resultados)
     exportCSV(resultados, sets, args.caso)
 
-main()
+if __name__ == '__main__':
+	main()

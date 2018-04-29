@@ -48,6 +48,7 @@ def main():
     matchingGS(jugadores, equipos, JUGADORES, RUTA)
     imprimirResultado(RUTA)
 
-main()
-testPreferenciasGS()
-testInestabilidadesGS()
+if __name__ == '__main__':
+	main()
+    testPreferenciasGS()
+    testInestabilidadesGS()
