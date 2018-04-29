@@ -13,7 +13,8 @@ def minimoCaminoSinPesos(grafo, origen, final):
                 v = w
                 break
     camino.append(origen)
-    return camino[::-1]
+    camino.reverse()
+    return camino
 
 def bfs(grafo, origen, final):
     visitados, orden, nivel = {}, {}, {}
