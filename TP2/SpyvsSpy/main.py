@@ -30,20 +30,25 @@ def main():
         raise ValueError("Las coordenadas introducidas no corresponden a 3 puntos del mapa")
 
     if args.pesado:
-        caminoBlanco = minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
-        caminoNegro = minimoCaminoConPeso(grafo, espiaNegro, espiaBlanco)
+        caminoBlanco, distanciaBlanco = minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
+        caminoNegro, distanciaNegro = minimoCaminoConPeso(grafo, espiaNegro, espiaBlanco)
     else:
-        caminoBlanco = minimoCaminoSinPesos(grafo, espiaBlanco, aeropuerto)
-        caminoNegro = minimoCaminoSinPesos(grafo, espiaNegro, espiaBlanco)
+        caminoBlanco, distanciaBlanco = minimoCaminoSinPesos(grafo, espiaBlanco, aeropuerto), []
+        caminoNegro, distanciaNegro = minimoCaminoSinPesos(grafo, espiaNegro, espiaBlanco), []
 
     ganador = "Blanco" if len(caminoBlanco) < len(caminoNegro) else "Negro"
 
     if ganador == "Blanco":
-        print("Gano el Espia Blanco! Llego a escaparse del pais antes de que lo atrape ese sucio Espia Negro")
+        print("Gano el Espia Blanco! Llego a escaparse del pais antes de que lo atrape ese sucio Espia Negro.")
         print("Su camino fue: {}".format(' -> '.join([str(x) for x in caminoBlanco])))
+        if distanciaBlanco: 
+            print("Con pesos: {}".format(' -> '.join([str(x) for x in distanciaBlanco])))
+
     elif ganador == "Negro":
-        print("Gano el Espia Negro! Obtuvo los documentos antes de que esa zarigüella blanca logre escaparse")
+        print("Gano el Espia Negro! Obtuvo los documentos antes de que esa zarigüella blanca logre escaparse.")
         print("Su camino fue: {}".format(' -> '.join([str(x) for x in caminoNegro])))
+        if distanciaNegro: 
+            print("Con pesos: {}".format(' -> '.join([str(round(x,2)) for x in distanciaNegro])))
 
     print("feed me more code")
 

@@ -9,12 +9,16 @@ class Grafo:
         return self.grafo[vertice]
     
     def __str__(self):
-        return str(self.grafo)
+        string = ""
+        for k,v in self.grafo.items():
+            string += "{}: {}\n".format(k, ' , '.join([str(x) for x in v]))
+        return string
 
     def adyacentes(self, vertice):
         return list(self.grafo[vertice].keys())
     
     def add(self, elemento):
+        if elemento in self.grafo: return
         self.grafo[elemento] = {}
     
     def agregarArista(self, vertice1, vertice2):
