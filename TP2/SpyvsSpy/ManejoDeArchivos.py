@@ -52,4 +52,3 @@ def stringADosVertices(linea):
 if __name__ == '__main__':
 	generarArchivo(3,3,10)
 	print(crearGrafoDesdeArchivo('mapa.coords'))
-	print(crearGrafoDesdeArchivo('mapa.coords', True))

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from Grafo import *
 from GrafoPesado import *
 import os
@@ -8,9 +7,7 @@ import ManejoDeArchivos
 import argparse
 
 def main():
-    """Programa que evalua que espia llega antes a su objetivo.
-    El espia blanco tiene que llegar con los documentos hasta el aeropuerto
-    El espia negro tiene que llegar a robarle los documentos al blanco
+    """Programa que dados dos espias y un objetivo final (aeropuerto), decide el que llega primero.
     ¿Quien recorre el camino mas corto?"""
     parser = argparse.ArgumentParser()
     parser.add_argument('coordenadas',help='Lista de 6 posiciones de los espias y el aerouperto.', nargs='*', action = 'store')
@@ -25,18 +22,23 @@ def main():
 
     grafo = ManejoDeArchivos.crearGrafoDesdeArchivo(pesado=args.pesado)
     espiaBlanco, espiaNegro, aeropuerto = tuple(args.coordenadas[:2]), tuple(args.coordenadas[2:4]), tuple(args.coordenadas[4:6])
-
+    
     if espiaBlanco not in grafo or espiaNegro not in grafo or aeropuerto not in grafo:
         raise ValueError("Las coordenadas introducidas no corresponden a 3 puntos del mapa")
 
     if args.pesado:
         caminoBlanco, distanciaBlanco = minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
-        caminoNegro, distanciaNegro = minimoCaminoConPeso(grafo, espiaNegro, espiaBlanco)
+        caminoNegro, distanciaNegro = minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
     else:
         caminoBlanco, distanciaBlanco = minimoCaminoSinPesos(grafo, espiaBlanco, aeropuerto), []
-        caminoNegro, distanciaNegro = minimoCaminoSinPesos(grafo, espiaNegro, espiaBlanco), []
+        caminoNegro, distanciaNegro = minimoCaminoSinPesos(grafo, espiaNegro, aeropuerto), []
 
-    ganador = "Blanco" if len(caminoBlanco) < len(caminoNegro) else "Negro"
+    if len(caminoBlanco) < len(caminoNegro):
+        ganador = "Blanco"
+    elif len(caminoNegro) < len(caminoBlanco):
+        ganador = "Negro"
+    else:
+        ganador = "Empate"
 
     if ganador == "Blanco":
         print("Gano el Espia Blanco! Llego a escaparse del pais antes de que lo atrape ese sucio Espia Negro.")
@@ -49,6 +51,9 @@ def main():
         print("Su camino fue: {}".format(' -> '.join([str(x) for x in caminoNegro])))
         if distanciaNegro: 
             print("Con pesos: {}".format(' -> '.join([str(round(x,2)) for x in distanciaNegro])))
+     
+    elif ganador == "Empate":
+        print("Empataron! El espía blanco llego tan rápido al aeropuerto como el espía negro. Su unica opción fue agarrarse a las trompadas hasta que no se dieron cuenta y los documentos se volaron!")
 
     print("feed me more code")
 
