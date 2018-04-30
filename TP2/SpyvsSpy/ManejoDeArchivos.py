@@ -27,7 +27,7 @@ def generarArchivo(dimensionX, dimensionY, cantidadPuntos):
             linea = "{} {} - {} {}\n".format(*p1, *p2)
             file.write(linea)
 
-def crearGrafoDesdeArchivo(archivo, pesado=False):
+def crearGrafoDesdeArchivo(archivo='mapa.coords', pesado=False):
     """Recibe un archivo de texto.
     El archivo de texto debe tener en cada linea las coordenadas en la formax1 y1 - x2 y2 representando
     la union de dos vertices.
@@ -50,6 +50,6 @@ def stringADosVertices(linea):
 
 
 if __name__ == '__main__':
-	generarArchivo(2,2,10)
+	generarArchivo(10,10,10)
 	print(crearGrafoDesdeArchivo('mapa.coords'))
 	print(crearGrafoDesdeArchivo('mapa.coords', True))

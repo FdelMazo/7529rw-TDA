@@ -9,7 +9,8 @@ def minimoCaminoConPeso(grafo, origen, final):
     while v is not None:
         camino.append(v)
         v = padre[v]
-    return camino[::-1]
+    camino.reverse()
+    return camino
 
 def dijkstra(grafo, origen):
     visitados, padre, distancia = {}, {}, {}
