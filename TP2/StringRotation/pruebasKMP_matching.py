@@ -1,5 +1,5 @@
 import unittest
-from KMP import *
+from KMP_matching import *
 
 class PruebaKRP(unittest.TestCase):
 	
