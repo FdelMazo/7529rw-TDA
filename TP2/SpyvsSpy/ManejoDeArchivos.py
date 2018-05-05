@@ -3,6 +3,27 @@ from GrafoPesado import *
 from math import factorial
 import random
 
+def lineasToVertices(numeros_de_linea):
+    vertices = []
+    numeros_de_linea = sorted([int(x) for x in numeros_de_linea])
+    with open('mapa.coords') as file:
+        lineas_file = file.readlines()
+        for linea in numeros_de_linea:
+            vertice = lineas_file[linea].split('-')[0]
+            vertice = vertice.strip()
+            vertice = tuple([int(x) for x in vertice.split()])
+            vertices.append(vertice)
+    return vertices
+
+def cantidad_lineas():
+    with open('mapa.coords') as file:
+        n = len(file.readlines())
+    return n
+
+def elegirTresLineasAlAzar():
+    n = cantidad_lineas()
+    return [random.randint(0,n-1) for x in range(3)]
+    
 def combinacionesPosibles(n, r):
     numerador = factorial(n)
     divisor = factorial(r) * factorial(n - r)
@@ -50,5 +71,5 @@ def stringADosVertices(linea):
 
 
 if __name__ == '__main__':
-	generarArchivo(3,3,10)
+	generarArchivo(10,10,0.7*10*10)
 	print(crearGrafoDesdeArchivo('mapa.coords'))
