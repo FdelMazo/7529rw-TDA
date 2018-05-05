@@ -6,6 +6,8 @@ def minimoCaminoSinPesos(grafo, origen, final):
     orden, nivel = bfs(grafo, origen, final)
     camino = []
     v = final
+    if v not in orden: #Esto pasa si el grafo no es conexo
+        return []
     for i in range(orden[v] - 1, -1, -1):
         camino.append(v)
         for w in grafo.adyacentes(v):

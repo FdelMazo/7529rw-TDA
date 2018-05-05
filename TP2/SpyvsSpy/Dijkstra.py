@@ -4,6 +4,8 @@ def minimoCaminoConPeso(grafo, origen, final):
     if origen not in grafo or final not in grafo:
         return []
     padre, distancia = dijkstra(grafo, origen)
+    if final not in distancia: #Si el grafo no es conexo, puede pasar esto
+        return [], []
     camino, caminoDistancia = [], []
     v = final
     while v is not None:
