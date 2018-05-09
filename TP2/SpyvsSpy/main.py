@@ -90,7 +90,7 @@ def imprimirGanador(args):
     ganador, datosEspias = definirGanador(args)
 
     if ganador != None:
-        if ganador == "Blando":
+        if ganador == "Blanco":
             print("Gano el Espia Blanco! Llego a escaparse del pais antes de que lo atrape ese sucio Espia Negro.")
         else:
             print("Gano el Espia Negro! Obtuvo los documentos antes de que esa zarigüella blanca logre escaparse.")
