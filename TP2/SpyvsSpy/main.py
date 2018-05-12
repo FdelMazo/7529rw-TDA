@@ -5,11 +5,40 @@ from bfs import *
 from Dijkstra import *
 import ManejoDeArchivos
 import argparse
+import random
 
-DIMENSION_DEFAULT = 10
-VERTICES_DEFAULT = 0.7
+DIMENSION_DEFAULT = 50
+PORCENTAJE_CARGA_DEFAULT = 70
 
-def pedirParametros():
+def definirGanador(grafo, posiciones, pesado, sin_camino):
+    espiaBlanco, espiaNegro, aeropuerto = posiciones
+    
+    if pesado:
+        if sin_camino:
+            distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
+            distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
+            return 'Negro' if distanciaNegro<distanciaBlanco else 'Blanco', []
+        else:
+            caminoBlanco = minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
+            caminoNegro = minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
+            if len(caminoNegro)<len(caminoBlanco):
+                return 'Negro', caminoNegro
+            else:
+                return 'Blanco', caminoBlanco
+    else:
+        if sin_camino:
+            distanciaBlanco = distanciaSinPeso(grafo, espiaBlanco, aeropuerto)
+            distanciaNegro = distanciaSinPeso(grafo, espiaNegro, aeropuerto)
+            return 'Negro' if distanciaNegro<distanciaBlanco else 'Blanco', []
+        else:
+            caminoBlanco = minimoCaminoSinPeso(grafo, espiaBlanco, aeropuerto)
+            caminoNegro = minimoCaminoSinPeso(grafo, espiaNegro, aeropuerto)
+            if len(caminoNegro)<len(caminoBlanco):
+                return 'Negro', caminoNegro
+            else:
+                return 'Blanco', caminoBlanco
+                
+def main():
     """Programa que dados dos espias y un objetivo final (aeropuerto), decide el que llega primero.
     ¿Quien recorre el camino mas corto?"""
     parser = argparse.ArgumentParser()
@@ -17,93 +46,30 @@ def pedirParametros():
                         help='Lista de 3 numeros de linea de mapa.coords donde el primer vertice es la posicion del espia blanco, espia negro y el aeropuerto respectivamente.',
                         nargs='*', action='store')
     parser.add_argument('--pesado', help='Intercalar entre grafo pesado y no pesado', action='store_true')
+    parser.add_argument('--sin-camino', help='Calcular y devolver el camino o solamente anunciar al ganador', action='store_true')
     args = parser.parse_args()
 
     if not os.path.isfile('mapa.coords'):
-        print("Mapa no presente! Se genera el mapa default, de dimension {}x{}, con {} vertices\n".format(
-            DIMENSION_DEFAULT, DIMENSION_DEFAULT, VERTICES_DEFAULT * (DIMENSION_DEFAULT ** 2)))
-        ManejoDeArchivos.generarArchivo(DIMENSION_DEFAULT, DIMENSION_DEFAULT,
-                                        VERTICES_DEFAULT * (DIMENSION_DEFAULT ** 2))
+        print("Mapa no presente! Se genera el mapa default, de dimension {}x{}, un {} cargado".format(DIMENSION_DEFAULT, DIMENSION_DEFAULT, PORCENTAJE_CARGA_DEFAULT))
+        ManejoDeArchivos.generarArchivo(DIMENSION_DEFAULT, DIMENSION_DEFAULT,PORCENTAJE_CARGA_DEFAULT)
 
-    if not args.coordenadas:
-        print("Programa corrido sin parametros. Posiciones elegidas al azar\n")
-        args.coordenadas = ManejoDeArchivos.elegirTresLineasAlAzar()
-
-    args.coordenadas = ManejoDeArchivos.lineasToVertices(args.coordenadas)
-
-    if len(args.coordenadas) != 3:
-        raise ValueError("3 numeros de linea deben ser dados deben ser dadas")
-
-    return args
-
-def definirGanador(args):
     grafo = ManejoDeArchivos.crearGrafoDesdeArchivo(pesado=args.pesado)
-    espiaBlanco, espiaNegro, aeropuerto = args.coordenadas
-    espias = {}
-    espias["Blanco"] = {}
-    espias["Negro"] = {}
-
-    if args.pesado:
-        caminoBlanco, distanciaBlanco = minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
-        caminoNegro, distanciaNegro = minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
-    else:
-        caminoBlanco, distanciaBlanco = minimoCaminoSinPesos(grafo, espiaBlanco, aeropuerto), 0
-        caminoNegro, distanciaNegro = minimoCaminoSinPesos(grafo, espiaNegro, aeropuerto), 0
-    espias["Blanco"]["Camino"] = caminoBlanco
-    espias["Blanco"]["Distancia"] = distanciaBlanco
-    espias["Negro"]["Camino"] = caminoNegro
-    espias["Negro"]["Distancia"] = distanciaNegro
-    if args.pesado:
-        return decidirMinimoCaminoPesado(espias), espias
-    else:
-        return decidirMinimoCaminoSinPeso(espias), espias
-
-
-def decidirMinimoCaminoPesado(espias):
-    if espias["Blanco"]["Distancia"] > espias["Negro"]["Distancia"]:
-        return "Blanco"
-    elif espias["Blanco"]["Distancia"] < espias["Negro"]["Distancia"]:
-        return "Negro"
-    else:
-        return None
-
-def decidirMinimoCaminoSinPeso(espias):
-
-    if len(espias["Blanco"]["Camino"]) > len(espias["Negro"]["Camino"]):
-        return "Blanco"
-    elif len(espias["Blanco"]["Camino"]) < len(espias["Negro"]["Camino"]):
-        return "Negro"
-    else:
-        return None
-
-def imprimirGanador(args):
-
-    espiaBlanco, espiaNegro, aeropuerto = args.coordenadas
+    posiciones = ManejoDeArchivos.obtener_vertices(args.coordenadas)
 
     print(
-        "En una ciudad con {} puntos habiles para moverse\n".format(ManejoDeArchivos.cantidad_lineas()) +
-        "Un espia blanco intenta escaparse desde {}\n".format(espiaBlanco) +
-        "Mientras que un espia negro intenta agarrarlo desde {}\n".format(espiaNegro) +
-        "¿Quien llegara antes al aeropuerto ubicado en {}?\n".format(aeropuerto)
+        "Un espia blanco intenta escaparse desde {}\n".format(posiciones[0]) + 
+        "Mientras que un espia negro intenta agarrarlo desde {}\n".format(posiciones[1]) +
+        "¿Quien llegara antes al aeropuerto ubicado en {}?\n".format(posiciones[2])
     )
 
-    ganador, datosEspias = definirGanador(args)
+    ganador, camino = definirGanador(grafo, posiciones,args.pesado, args.sin_camino)
 
-    if ganador != None:
-        if ganador == "Blanco":
-            print("Gano el Espia Blanco! Llego a escaparse del pais antes de que lo atrape ese sucio Espia Negro.")
-        else:
-            print("Gano el Espia Negro! Obtuvo los documentos antes de que esa zarigüella blanca logre escaparse.")
-        print("Su camino fue: {}".format(' -> '.join([str(x) for x in datosEspias[ganador]["Camino"]])))
-        if datosEspias[ganador]["Distancia"] > 0:
-            print("Recorrio una distancia de {} km para llegar al aeropuerto".format(datosEspias[ganador]["Distancia"]))
+    if ganador == "Blanco":
+        print("Gano el Espia Blanco! Llego a escaparse del pais antes de que lo atrape ese sucio Espia Negro.")
     else:
-        print(
-            "Empataron! El espía blanco llego tan rápido al aeropuerto como el espía negro. Su unica opción fue agarrarse a las trompadas hasta que no se dieron cuenta y los documentos se volaron!")
-
-def main():
-    args = pedirParametros()
-    imprimirGanador(args)
+        print("Gano el Espia Negro! Obtuvo los documentos antes de que esa zarigüella blanca logre escaparse.")
+    if camino: print("Su camino fue: {}".format(' -> '.join([str(x) for x in camino])))
+    
 
 if __name__ == '__main__':
     main()

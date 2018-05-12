@@ -3,38 +3,40 @@ from GrafoPesado import *
 from math import factorial
 import random
 
-def lineasToVertices(numeros_de_linea):
+
+def obtener_vertices(numeros_de_linea):  
+    if len(numeros_de_linea) < 3:
+        print("No todas las posiciones fueron dadas. Se completa con lineas elegidas al azar")
+        with open('mapa.coords') as f:
+            cant_lineas = len(f.readlines())
+        while len(numeros_de_linea) < 3:
+            numeros_de_linea.append(random.randint(0,cant_lineas-1))
+    return lineas_a_vertices(numeros_de_linea)
+
+def lineas_a_vertices(numeros_de_linea):
     vertices = []
     numeros_de_linea = sorted([int(x) for x in numeros_de_linea])
     with open('mapa.coords') as file:
         lineas_file = file.readlines()
-        for linea in numeros_de_linea:
-            vertice = lineas_file[linea].split('-')[0]
-            vertice = vertice.strip()
-            vertice = tuple([int(x) for x in vertice.split()])
-            vertices.append(vertice)
+        for i in numeros_de_linea:
+            linea = lineas_file[i]
+            v1,_ = stringADosVertices(linea)
+            vertices.append(v1)
     return vertices
 
-def cantidad_lineas():
-    with open('mapa.coords') as file:
-        n = len(file.readlines())
-    return n
+def stringADosVertices(linea):
+    datos = linea.split()
+    datos.pop(2) #Sacar el guion
+    datos = [int (x) for x in datos]
+    x1,y1,x2,y2 = datos
+    return ( (x1, y1) , (x2,y2) )
 
-def elegirTresLineasAlAzar():
-    n = cantidad_lineas()
-    return [random.randint(0,n-1) for x in range(3)]
-    
-def combinacionesPosibles(n, r):
-    numerador = factorial(n)
-    divisor = factorial(r) * factorial(n - r)
-    return numerador/divisor
-
-def generarArchivo(dimensionX, dimensionY, cantidadPuntos):
+def generarArchivo(dimensionX, dimensionY, porcentajeCargado):
     """Crea el archivo 'mapa.coords' que es un grafo representado con una matriz de dimension dada
     donde las lineas especifican una conexion entre puntos de la ciudad"""
-    n,r = dimensionX*dimensionY, 2
-    if cantidadPuntos > combinacionesPosibles(n,r):
-        cantidadPuntos = combinacionesPosibles(n,r)
+    if porcentajeCargado > 100:
+        porcentajeCargado = 100
+    cantidadPuntos = porcentajeCargado/100 * dimensionX*dimensionY
     conexiones = set()
     while len(conexiones) < cantidadPuntos:
         punto1 = ( random.randint(0,dimensionX-1) , random.randint(0,dimensionY-1) )
@@ -50,7 +52,7 @@ def generarArchivo(dimensionX, dimensionY, cantidadPuntos):
 
 def crearGrafoDesdeArchivo(archivo='mapa.coords', pesado=False):
     """Recibe un archivo de texto.
-    El archivo de texto debe tener en cada linea las coordenadas en la formax1 y1 - x2 y2 representando
+    El archivo de texto debe tener en cada linea las coordenadas en la forma 'x1 y1 - x2 y2' representando
     la union de dos vertices.
     Devuelve un grafo"""
     grafo = GrafoPesado() if pesado else Grafo()
@@ -62,14 +64,5 @@ def crearGrafoDesdeArchivo(archivo='mapa.coords', pesado=False):
             grafo.agregarArista(v1, v2)
     return grafo
 
-def stringADosVertices(linea):
-    datos = linea.split()
-    datos.pop(2) #Sacar el guion
-    datos = [int (x) for x in datos]
-    x1,y1,x2,y2 = datos
-    return ( (x1, y1) , (x2,y2) )
-
-
 if __name__ == '__main__':
-	generarArchivo(10,10,0.7*10*10)
-	print(crearGrafoDesdeArchivo('mapa.coords'))
+	generarArchivo(50,50,70)

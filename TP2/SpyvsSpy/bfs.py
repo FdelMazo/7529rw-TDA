@@ -1,25 +1,28 @@
 from queue import Queue
 import sys
 
-def minimoCaminoSinPesos(grafo, origen, final):
+def minimoCaminoSinPeso(grafo, origen, final):
     if origen not in grafo or final not in grafo:
         return []
     orden, nivel = bfs(grafo, origen, final)
     camino = []
     v = final
-    try:
-        for i in range(orden[v] - 1, -1, -1):
-            camino.append(v)
-            for w in grafo.adyacentes(v):
-                if w in nivel[i]:
-                    v = w
-                    break
-    except KeyError:
-        print("Los caminos estan clausurados! Es imposible llegar al aeropuerto para los espias.")
-        sys.exit()
+    if v not in orden: return []
+    for i in range(orden[v] - 1, -1, -1):
+        camino.append(v)
+        for w in grafo.adyacentes(v):
+            if w in nivel[i]:
+                v = w
+                break
     camino.append(origen)
     camino.reverse()
     return camino
+
+def distanciaSinPeso(grafo, origen, final):
+    if origen not in grafo or final not in grafo:
+        return []
+    orden, _ = bfs(grafo, origen, final)
+    return orden[final] if final in orden else 0
 
 def bfs(grafo, origen, final):
     visitados, orden, nivel = {}, {}, {}

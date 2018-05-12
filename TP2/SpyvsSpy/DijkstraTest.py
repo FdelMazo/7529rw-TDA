@@ -58,42 +58,42 @@ class testMinimoCaminoConPeso(unittest.TestCase):
         origen = (1, 2)
         final = (1, 2)
         grafo.agregarArista((1,2),(1,2))
-        camino,d = minimoCaminoConPeso(grafo, origen, final)
+        camino = minimoCaminoConPeso(grafo, origen, final)
         self.assertEqual([(1, 2)], camino)
 
     def test02MinimoCaminoConPesosCorrecto(self):
         grafo = crearGrafo1()
         origen = (1, 2)
         final = (11, 12)
-        camino,d = minimoCaminoConPeso(grafo, origen, final)
+        camino = minimoCaminoConPeso(grafo, origen, final)
         self.assertEqual([(1, 2), (5, 6), (7, 8), (11, 12)], camino)
 
     def test03MinimoCaminoConPesosCorrecto(self):
         grafo = crearGrafo1()
         origen = (1, 2)
         final = (15, 16)
-        camino,d = minimoCaminoConPeso(grafo, origen, final)
+        camino = minimoCaminoConPeso(grafo, origen, final)
         self.assertEqual([(1, 2), (5, 6), (9, 10), (13, 14), (15, 16)], camino)
 
     def test04MinimoCaminoConPesosCorrecto(self):
         grafo = crearGrafo2()
         origen = (1, 1)
         final = (6, 6)
-        camino,d = minimoCaminoConPeso(grafo, origen, final)
+        camino = minimoCaminoConPeso(grafo, origen, final)
         self.assertEqual([(1, 1), (2, 2), (5, 5), (6, 6)], camino)
 
     def test05MinimoCaminoConPesosCorrecto(self):
         grafo = crearGrafo2()
         origen = (1, 1)
         final = (40, 40)
-        camino,d = minimoCaminoConPeso(grafo, origen, final)
+        camino = minimoCaminoConPeso(grafo, origen, final)
         self.assertEqual([(1, 1), (4, 4), (40, 40)], camino)
 
     def test06MinimoCaminoConPesosCorrecto(self):
         grafo1 = crearGrafo2()
         origen = (1, 1)
         final = (20, 20)
-        camino,d = minimoCaminoConPeso(grafo1, origen, final)
+        camino = minimoCaminoConPeso(grafo1, origen, final)
         self.assertEqual([(1, 1), (2, 2), (5, 5), (6, 6), (20, 20)], camino)
     
 if __name__ == '__main__':

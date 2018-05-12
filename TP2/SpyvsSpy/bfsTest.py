@@ -25,12 +25,12 @@ def crearGrafo():
         grafo.agregarArista(v1,v2)
     return grafo
 
-class testminimoCaminoSinPesos(unittest.TestCase):
+class testminimoCaminoSinPeso(unittest.TestCase):
     def test01MinimoCaminoConPesosOrigenYFinalIguales(self):
         grafo = crearGrafo()
         origen = (1, 2)
         final = (1, 2)
-        camino = minimoCaminoSinPesos(grafo, origen, final)
+        camino = minimoCaminoSinPeso(grafo, origen, final)
         self.assertEqual([(1, 2)], camino)
 
     def testNivel0HayUnUnicoVerticeYEsElCorrecto(self):
@@ -51,21 +51,21 @@ class testminimoCaminoSinPesos(unittest.TestCase):
         grafo = crearGrafo()
         origen = (1, 2)
         final = (15, 16)
-        camino = minimoCaminoSinPesos(grafo, origen, final)
+        camino = minimoCaminoSinPeso(grafo, origen, final)
         self.assertEqual([(1, 2), (5, 6), (9, 10), (13, 14), (15, 16)], camino)
 
     def testUnicoCaminoMinimoCorrecto2(self):
         grafo = crearGrafo()
         origen = (9, 10)
         final = (15, 16)
-        camino = minimoCaminoSinPesos(grafo, origen, final)
+        camino = minimoCaminoSinPeso(grafo, origen, final)
         self.assertEqual([(9, 10), (13, 14), (15, 16)], camino)
 
     def testObtenerUnoDeLosDosCaminosPosibles(self):
         grafo = crearGrafo()
         origen = (5, 6)
         final = (17, 18)
-        camino = minimoCaminoSinPesos(grafo, origen, final)
+        camino = minimoCaminoSinPeso(grafo, origen, final)
         self.assertTrue(
             [(5, 6), (9, 10), (11, 12), (17, 18)] == camino
             or [(5, 6), (7, 8), (11, 12), (17, 18)] == camino
