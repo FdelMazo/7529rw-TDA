@@ -36,32 +36,32 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
 
 def imprimirGanador(ganador, blanco, negro):
     if not ganador:
-        print("No gano nadie :( \nAmbos espias no tienen camino al aeropuerto.")
+        print("No ganó nadie \nNingún espía no tienen camino al aeropuerto.")
         return
     if ganador == "Blanco":
-        print("¡Ganó el Espía Blanco! Llego a escaparse del país antes de que lo atrape el Espia Negro.")
+        print("¡Ganó el Espía Blanco! Llegó a escaparse del país antes de que lo atrape el Espía Negro.")
     else:
-        print("¡Ganó el Espia Negro! Obtuvo los documentos antes de que el espía blanco logre escaparse.")
+        print("¡Ganó el Espía Negro! Obtuvo los documentos antes de que el espía blanco logre escaparse.")
     if isinstance(blanco, list):
         if len(blanco) == 0:
-            print("El espia blanco no tiene camino al aeropuerto")
+            print("El espía blanco no tiene camino al aeropuerto")
         else:
-            print("El camino del espia blanco fue: {}".format(' -> '.join([str(x) for x in blanco])))
+            print("El camino del espía blanco fue: {}".format(' -> '.join([str(x) for x in blanco])))
     if isinstance(negro, list):
         if len(negro) == 0:
-            print("El espia negro no tiene camino al aeropuerto")
+            print("El espía negro no tiene camino al aeropuerto")
         else:
             print("El camino del espia negro fue: {}".format(' -> '.join([str(x) for x in negro])))
     if isinstance(blanco,(int,float)):
         if blanco >= 0:
             print("La distancia recorrida del espia blanco fue de: {:.2}".format(float(blanco)))
         else:
-            print("El espia blanco no tiene camino al aeropuerto")
+            print("El espía blanco no tiene camino al aeropuerto")
     if isinstance(negro,(int,float)):
         if negro >= 0:
-            print("La distancia recorrida del espia negro fue de: {:.2}".format(float(negro)))
+            print("La distancia recorrida del espaa negro fue de: {:.2}".format(float(negro)))
         else:
-            print("El espia negro no tiene camino al aeropuerto")
+            print("El espía negro no tiene camino al aeropuerto")
 
 def main():
     """Programa que dados dos espias y un objetivo final (aeropuerto), decide el que llega primero.
