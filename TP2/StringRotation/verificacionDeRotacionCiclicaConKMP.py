@@ -26,11 +26,12 @@ def hayRotacionCiclicaConKMP(unaCadena, otraCadena):
 	1 (asignar una variable) +
 	2 (asignar una variable y hallar la longitud de un arreglo) +
 	1 sentencia del while
-	1 (la primera comparación del while)
-	1 (and del while)
-	n (complejidad de KMP_matching)
-	1 de hacer una operación matemática
+	n
 	(
+		1 (la primera comparación del while)
+		1 (and del while)
+		n (complejidad de KMP_matching)
+		1 de hacer una operación matemática
 		1 sumar de 1 a una variable
 	)
 	En el peor caso, el while se itera la mayor cantidad de veces, es
@@ -40,7 +41,7 @@ def hayRotacionCiclicaConKMP(unaCadena, otraCadena):
 	2n de comparar dos cadenas de cantidad de caracteres n
 	1 return del if
 	
-	TOTAL: 1 + 2 + 1 + 2 + 1 (1 + 1 + n + 1).(1) + 2n + 1 =
-	3n + 11
+	TOTAL: 1 + 2 + 1 + 2 + 1 + n(1 + 1 + n + 1 + 1) + 2n + 1 =
+	n^2 + 6n + 8
 	'''
 	
