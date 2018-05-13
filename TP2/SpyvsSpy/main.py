@@ -7,9 +7,6 @@ import ManejoDeArchivos
 import argparse
 import random
 
-DIMENSION_DEFAULT = 50
-PORCENTAJE_CARGA_DEFAULT = 70
-
 def definirGanador(grafo, posiciones, pesado, sin_camino):
     espiaBlanco, espiaNegro, aeropuerto = posiciones
     
@@ -44,18 +41,21 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('coordenadas',
                         help='Lista de 3 numeros de linea de mapa.coords donde el primer vertice es la posicion del espia blanco, espia negro y el aeropuerto respectivamente.',
-                        nargs='*', action='store')
+                        nargs='+', action='store')
     parser.add_argument('--pesado', help='Intercalar entre grafo pesado y no pesado', action='store_true')
     parser.add_argument('--sin-camino', help='Calcular y devolver el camino o solamente anunciar al ganador', action='store_true')
     args = parser.parse_args()
 
     if not os.path.isfile('mapa.coords'):
-        print("Mapa no presente! Se genera el mapa default, de dimension {}x{}, un {} cargado".format(DIMENSION_DEFAULT, DIMENSION_DEFAULT, PORCENTAJE_CARGA_DEFAULT))
-        ManejoDeArchivos.generarArchivo(DIMENSION_DEFAULT, DIMENSION_DEFAULT,PORCENTAJE_CARGA_DEFAULT)
+        raise IOError("Mapa no presente! Crear un mapa con el archivo ManejoDeArchivos.py")
+
+    if len(args.coordenadas) < 3:
+        raise ValueError("3 numeros de linea deben ser dados. Ni más ni menos.")
 
     grafo = ManejoDeArchivos.crearGrafoDesdeArchivo(pesado=args.pesado)
-    posiciones = ManejoDeArchivos.obtener_vertices(args.coordenadas)
-
+    args.coordenadas = sorted([int(x) for x in args.coordenadas])
+    posiciones = ManejoDeArchivos.lineas_a_vertices(args.coordenadas)
+    
     print(
         "Un espia blanco intenta escaparse desde {}\n".format(posiciones[0]) + 
         "Mientras que un espia negro intenta agarrarlo desde {}\n".format(posiciones[1]) +

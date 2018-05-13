@@ -3,19 +3,8 @@ from GrafoPesado import *
 from math import factorial
 import random
 
-
-def obtener_vertices(numeros_de_linea):  
-    if len(numeros_de_linea) < 3:
-        print("No todas las posiciones fueron dadas. Se completa con lineas elegidas al azar")
-        with open('mapa.coords') as f:
-            cant_lineas = len(f.readlines())
-        while len(numeros_de_linea) < 3:
-            numeros_de_linea.append(random.randint(0,cant_lineas-1))
-    return lineas_a_vertices(numeros_de_linea)
-
 def lineas_a_vertices(numeros_de_linea):
     vertices = []
-    numeros_de_linea = sorted([int(x) for x in numeros_de_linea])
     with open('mapa.coords') as file:
         lineas_file = file.readlines()
         for i in numeros_de_linea:
@@ -65,4 +54,4 @@ def crearGrafoDesdeArchivo(archivo='mapa.coords', pesado=False):
     return grafo
 
 if __name__ == '__main__':
-	generarArchivo(50,50,70)
+	generarArchivo(3,3,70)
