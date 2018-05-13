@@ -54,12 +54,12 @@ def imprimirGanador(ganador, blanco, negro):
             print("El camino del espia negro fue: {}".format(' -> '.join([str(x) for x in negro])))
     if isinstance(blanco,(int,float)):
         if blanco >= 0:
-            print("La distancia recorrida del espia blanco fue de: {:.2}".format(float(blanco)))
+            print("La distancia recorrida del espía blanco fue de: {:.2}".format(float(blanco)))
         else:
             print("El espía blanco no tiene camino al aeropuerto")
     if isinstance(negro,(int,float)):
         if negro >= 0:
-            print("La distancia recorrida del espaa negro fue de: {:.2}".format(float(negro)))
+            print("La distancia recorrida del espía negro fue de: {:.2}".format(float(negro)))
         else:
             print("El espía negro no tiene camino al aeropuerto")
 
