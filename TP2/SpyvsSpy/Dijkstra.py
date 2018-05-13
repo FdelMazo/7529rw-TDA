@@ -15,7 +15,7 @@ def minimoCaminoConPeso(grafo, origen,final):
 
 def distanciaConPeso(grafo, origen, final):
     if origen not in grafo or final not in grafo:
-        return 0
+        return -1
     _, distancia = dijkstra(grafo, origen)
     return distancia[final] if final in distancia else 0
 

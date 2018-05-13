@@ -20,7 +20,7 @@ def minimoCaminoSinPeso(grafo, origen, final):
 
 def distanciaSinPeso(grafo, origen, final):
     if origen not in grafo or final not in grafo:
-        return []
+        return -1
     orden, _ = bfs(grafo, origen, final)
     return orden[final] if final in orden else 0
 

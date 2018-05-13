@@ -14,6 +14,9 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
         if sin_camino:
             distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
             distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
+            if distanciaBlanco == -1 and distanciaNegro == -1: return '', 0
+            elif distanciaBlanco == -1: return 'Negro', distanciaNegro
+            elif distanciaNegro == -1: return 'Blanco', distanciaBlanco
             if distanciaNegro < distanciaBlanco:
                 return 'Negro', distanciaNegro
             else:
@@ -21,6 +24,9 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
         else:
             distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
             distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
+            if distanciaBlanco == -1 and distanciaNegro == -1: return '', []
+            elif distanciaBlanco == -1: return 'Negro', minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
+            elif distanciaNegro == -1: return 'Blanco', minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
             if distanciaNegro < distanciaBlanco:
                 return 'Negro', minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
             else:
@@ -29,6 +35,9 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
         if sin_camino:
             distanciaBlanco = distanciaSinPeso(grafo, espiaBlanco, aeropuerto)
             distanciaNegro = distanciaSinPeso(grafo, espiaNegro, aeropuerto)
+            if distanciaBlanco == -1 and distanciaNegro == -1: return '', 0
+            elif distanciaBlanco == -1: return 'Negro', distanciaNegro
+            elif distanciaNegro == -1: return 'Blanco', distanciaBlanco
             if distanciaNegro < distanciaBlanco:
                 return 'Negro', distanciaNegro
             else:
@@ -36,6 +45,9 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
         else:
             caminoBlanco = minimoCaminoSinPeso(grafo, espiaBlanco, aeropuerto)
             caminoNegro = minimoCaminoSinPeso(grafo, espiaNegro, aeropuerto)
+            if not caminoBlanco and not caminoNegro: return '', []
+            elif not caminoBlanco: return 'Negro', caminoNegro
+            elif not caminoNegro: return 'Blanco', caminoBlanco
             if len(caminoNegro)<len(caminoBlanco):
                 return 'Negro', caminoNegro
             else:
@@ -69,6 +81,9 @@ def main():
     )
 
     ganador, camino_o_distancia = definirGanador(grafo, posiciones,args.pesado, args.sin_camino)
+    if not ganador:
+        print("No gano nadie :( \nAmbos espias no tienen camino al aeropuerto.")  
+        return 
     if ganador == "Blanco":
         print("¡Ganó el Espía Blanco! Llego a escaparse del país antes de que lo atrape el Espia Negro.")
     else:
@@ -76,7 +91,7 @@ def main():
     if isinstance(camino_o_distancia,list):
         print("Su camino fue: {}".format(' -> '.join([str(x) for x in camino_o_distancia])))
     elif isinstance(camino_o_distancia,(int,float)):
-        print("Su distancia recorrida fue de: {:.2}".format(camino_o_distancia))
+        print("Su distancia recorrida fue de: {:.2}".format(float(camino_o_distancia)))
 
 if __name__ == '__main__':
     main()
