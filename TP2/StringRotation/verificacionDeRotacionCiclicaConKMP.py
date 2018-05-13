@@ -37,10 +37,10 @@ def hayRotacionCiclicaConKMP(unaCadena, otraCadena):
 	decir, n (la cantidad de dígitos de la cadena), lo cual se da cuando
 	las cadenas son iguales.
 	
-	n de comparar dos cadenas de cantidad de caracteres n
+	2n de comparar dos cadenas de cantidad de caracteres n
 	1 return del if
 	
-	TOTAL: 1 + 2 + 1 + 2 + 1 (1 + 1 + n + 1).(1) + n + 1 =
-	2n + 11
+	TOTAL: 1 + 2 + 1 + 2 + 1 (1 + 1 + n + 1).(1) + 2n + 1 =
+	3n + 11
 	'''
 	
