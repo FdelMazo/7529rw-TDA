@@ -11,48 +11,30 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
     espiaBlanco, espiaNegro, aeropuerto = posiciones
     
     if pesado:
-        if sin_camino:
-            distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
-            distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
-            if distanciaBlanco == -1 and distanciaNegro == -1: return '', 0
-            elif distanciaBlanco == -1: return 'Negro', distanciaNegro
-            elif distanciaNegro == -1: return 'Blanco', distanciaBlanco
-            if distanciaNegro < distanciaBlanco:
-                return 'Negro', distanciaNegro
-            else:
-                return 'Blanco', distanciaBlanco
-        else:
-            distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
-            distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
-            if distanciaBlanco == -1 and distanciaNegro == -1: return '', []
-            elif distanciaBlanco == -1: return 'Negro', minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
-            elif distanciaNegro == -1: return 'Blanco', minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
-            if distanciaNegro < distanciaBlanco:
-                return 'Negro', minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
-            else:
-                return 'Blanco', minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
+        distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
+        distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
     else:
-        if sin_camino:
-            distanciaBlanco = distanciaSinPeso(grafo, espiaBlanco, aeropuerto)
-            distanciaNegro = distanciaSinPeso(grafo, espiaNegro, aeropuerto)
-            if distanciaBlanco == -1 and distanciaNegro == -1: return '', 0
-            elif distanciaBlanco == -1: return 'Negro', distanciaNegro
-            elif distanciaNegro == -1: return 'Blanco', distanciaBlanco
-            if distanciaNegro < distanciaBlanco:
-                return 'Negro', distanciaNegro
-            else:
-                return 'Blanco', distanciaBlanco
+        distanciaBlanco = distanciaSinPeso(grafo, espiaBlanco, aeropuerto)
+        distanciaNegro = distanciaSinPeso(grafo, espiaNegro, aeropuerto)
+
+    if distanciaBlanco == -1 and distanciaNegro == -1: return '', None
+
+    if distanciaBlanco == -1: ganador = 'Negro'
+    elif distanciaNegro == -1: ganador = 'Blanco'
+    else: ganador = 'Negro' if distanciaNegro < distanciaBlanco else 'Blanco'
+
+    if sin_camino:
+        if ganador=='Negro': return ganador,distanciaNegro
+        else: return ganador,distanciaBlanco
+    else:
+        if pesado:
+            if ganador=='Negro': return ganador,minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
+            else: return ganador,minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
         else:
-            caminoBlanco = minimoCaminoSinPeso(grafo, espiaBlanco, aeropuerto)
-            caminoNegro = minimoCaminoSinPeso(grafo, espiaNegro, aeropuerto)
-            if not caminoBlanco and not caminoNegro: return '', []
-            elif not caminoBlanco: return 'Negro', caminoNegro
-            elif not caminoNegro: return 'Blanco', caminoBlanco
-            if len(caminoNegro)<len(caminoBlanco):
-                return 'Negro', caminoNegro
-            else:
-                return 'Blanco', caminoBlanco
-                
+            if ganador=='Negro': return ganador,minimoCaminoSinPeso(grafo, espiaNegro, aeropuerto)
+            else: return ganador,minimoCaminoSinPeso(grafo, espiaBlanco, aeropuerto)
+
+
 def main():
     """Programa que dados dos espias y un objetivo final (aeropuerto), decide el que llega primero.
     ¿Quien recorre el camino mas corto?"""

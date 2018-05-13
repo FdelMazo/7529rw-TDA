@@ -2,7 +2,7 @@ from heapq import *
 
 def minimoCaminoConPeso(grafo, origen,final):
     if origen not in grafo or final not in grafo:
-        return 0
+        return None
     padre, distancia = dijkstra(grafo, origen)
     camino = []
     v = final
@@ -17,7 +17,7 @@ def distanciaConPeso(grafo, origen, final):
     if origen not in grafo or final not in grafo:
         return -1
     _, distancia = dijkstra(grafo, origen)
-    return distancia[final] if final in distancia else 0
+    return distancia[final] if final in distancia else -1
 
 def dijkstra(grafo, origen):
     visitados, padre, distancia = {}, {}, {}

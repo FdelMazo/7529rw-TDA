@@ -3,7 +3,7 @@ import sys
 
 def minimoCaminoSinPeso(grafo, origen, final):
     if origen not in grafo or final not in grafo:
-        return []
+        return None
     orden, nivel = bfs(grafo, origen, final)
     camino = []
     v = final
@@ -22,7 +22,7 @@ def distanciaSinPeso(grafo, origen, final):
     if origen not in grafo or final not in grafo:
         return -1
     orden, _ = bfs(grafo, origen, final)
-    return orden[final] if final in orden else 0
+    return orden[final] if final in orden else -1
 
 def bfs(grafo, origen, final):
     visitados, orden, nivel = {}, {}, {}
