@@ -19,12 +19,12 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
             else:
                 return 'Blanco', distanciaBlanco
         else:
-            caminoBlanco = minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
-            caminoNegro = minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
-            if len(caminoNegro)<len(caminoBlanco):
-                return 'Negro', caminoNegro
+            distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
+            distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
+            if distanciaNegro < distanciaBlanco:
+                return 'Negro', minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
             else:
-                return 'Blanco', caminoBlanco
+                return 'Blanco', minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
     else:
         if sin_camino:
             distanciaBlanco = distanciaSinPeso(grafo, espiaBlanco, aeropuerto)
@@ -53,13 +53,13 @@ def main():
     args = parser.parse_args()
 
     if not os.path.isfile('mapa.coords'):
-        raise IOError("Mapa no presente! Crear un mapa con el archivo ManejoDeArchivos.py")
+        raise IOError("¡Mapa no presente! Crear un mapa con el archivo ManejoDeArchivos.py")
 
     if len(args.coordenadas) < 3:
         raise ValueError("3 numeros de linea deben ser dados. Ni más ni menos.")
 
     grafo = ManejoDeArchivos.crearGrafoDesdeArchivo(pesado=args.pesado)
-    args.coordenadas = sorted([int(x) for x in args.coordenadas])
+    args.coordenadas = [int(x) for x in args.coordenadas]
     posiciones = ManejoDeArchivos.lineas_a_vertices(args.coordenadas)
     
     print(

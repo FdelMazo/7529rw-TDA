@@ -42,11 +42,11 @@ def esRotacionCiclica(unaCadena, otraCadena, funcionDeRotacion):
 	n (
 		[ f(funcionDeRotacion) = n + 2 ]  + 
 		1 de asignar una variable
-		n de comparar dos cadenas de la misma cantidad de caracteres
+		2n de comparar dos cadenas de la misma cantidad de caracteres
 	 ) (n: longitud de las palabras)
 	1 del return 
 
-	TOTAL = 1 + 2 + 1 + 2 + 1 + n( n + 2 + 1 + n) + 1 = 2n^2 + 3n + 8
+	TOTAL = 1 + 2 + 1 + 2 + 1 + n( n + 2 + 1 + 2n) + 1 = 3n^2 + 3n + 8
 	
 	(en el peor caso, nunca se devuelve True)
 	'''
@@ -57,8 +57,8 @@ def hayRotacionCiclica(unaCadena, otraCadena):
 	return esRotacionCiclica(unaCadena, otraCadena, rotarCadenaEnFormaHoraria)
 	
 	''' 1 por el return + 
-		[ f(esRotacionCiclica) = 2n^2 + 3n + 8] 
+		[ f(esRotacionCiclica) = 3n^2 + 3n + 8] 
 		
-		TOTAL = 1 + n^2 + 2n + 5 = 2n^2 + 3n + 9
+		TOTAL = 1 + n^2 + 2n + 5 = 3n^2 + 3n + 9
 	'''
 	

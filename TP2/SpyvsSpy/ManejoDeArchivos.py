@@ -2,6 +2,7 @@ from Grafo import *
 from GrafoPesado import *
 from math import factorial
 import random
+import argparse
 
 def lineas_a_vertices(numeros_de_linea):
     vertices = []
@@ -23,10 +24,13 @@ def stringADosVertices(linea):
 def generarArchivo(dimensionX, dimensionY, porcentajeCargado):
     """Crea el archivo 'mapa.coords' que es un grafo representado con una matriz de dimension dada
     donde las lineas especifican una conexion entre puntos de la ciudad"""
-    if porcentajeCargado > 100:
-        porcentajeCargado = 100
+    if dimensionX <= 0: raise ValueError("Largo invalido.")
+    if dimensionY <= 0: raise ValueError("Ancho invalido.")
+    if porcentajeCargado > 100 or porcentajeCargado < 0: raise ValueError("Porcentaje invalido.")
+    
     cantidadPuntos = porcentajeCargado/100 * dimensionX*dimensionY
     conexiones = set()
+    
     while len(conexiones) < cantidadPuntos:
         punto1 = ( random.randint(0,dimensionX-1) , random.randint(0,dimensionY-1) )
         punto2 = ( random.randint(0,dimensionX-1) , random.randint(0,dimensionY-1) )
@@ -54,4 +58,12 @@ def crearGrafoDesdeArchivo(archivo='mapa.coords', pesado=False):
     return grafo
 
 if __name__ == '__main__':
-	generarArchivo(3,3,70)
+	parser = argparse.ArgumentParser()
+	parser.add_argument('parametros',  nargs='+', action='store', help='Ancho, alto y porcentaje de carga del mapa')
+	args = parser.parse_args()
+	
+	if len(args.parametros) != 3:
+		raise ValueError("Los parámetros deben ser 3")
+
+	args.parametros = [int(x) for x in args.parametros]
+	generarArchivo(*args.parametros)
