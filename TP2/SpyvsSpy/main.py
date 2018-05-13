@@ -14,7 +14,10 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
         if sin_camino:
             distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
             distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
-            return 'Negro' if distanciaNegro<distanciaBlanco else 'Blanco', []
+            if distanciaNegro < distanciaBlanco:
+                return 'Negro', distanciaNegro
+            else:
+                return 'Blanco', distanciaBlanco
         else:
             caminoBlanco = minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
             caminoNegro = minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
@@ -26,7 +29,10 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
         if sin_camino:
             distanciaBlanco = distanciaSinPeso(grafo, espiaBlanco, aeropuerto)
             distanciaNegro = distanciaSinPeso(grafo, espiaNegro, aeropuerto)
-            return 'Negro' if distanciaNegro<distanciaBlanco else 'Blanco', []
+            if distanciaNegro < distanciaBlanco:
+                return 'Negro', distanciaNegro
+            else:
+                return 'Blanco', distanciaBlanco
         else:
             caminoBlanco = minimoCaminoSinPeso(grafo, espiaBlanco, aeropuerto)
             caminoNegro = minimoCaminoSinPeso(grafo, espiaNegro, aeropuerto)
@@ -62,14 +68,16 @@ def main():
         "¿Quien llegara antes al aeropuerto ubicado en {}?\n".format(posiciones[2])
     )
 
-    ganador, camino = definirGanador(grafo, posiciones,args.pesado, args.sin_camino)
-
+    ganador, camino_o_distancia = definirGanador(grafo, posiciones,args.pesado, args.sin_camino)
     if ganador == "Blanco":
         print("Gano el Espia Blanco! Llego a escaparse del pais antes de que lo atrape ese sucio Espia Negro.")
     else:
         print("Gano el Espia Negro! Obtuvo los documentos antes de que esa zarigüella blanca logre escaparse.")
-    if camino: print("Su camino fue: {}".format(' -> '.join([str(x) for x in camino])))
     
+    if isinstance(camino_o_distancia,list):
+        print("Su camino fue: {}".format(' -> '.join([str(x) for x in camino_o_distancia])))
+    elif isinstance(camino_o_distancia,(int,float)):
+        print("Su distancia recorrida fue de: {:.2}".format(camino_o_distancia))
 
 if __name__ == '__main__':
     main()
