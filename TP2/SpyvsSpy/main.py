@@ -65,9 +65,9 @@ def main():
     ganador, camino = definirGanador(grafo, posiciones,args.pesado, args.sin_camino)
 
     if ganador == "Blanco":
-        print("Gano el Espia Blanco! Llego a escaparse del pais antes de que lo atrape ese sucio Espia Negro.")
+        print("¡Ganó el Espía Blanco! Llego a escaparse del país antes de que lo atrape el Espia Negro.")
     else:
-        print("Gano el Espia Negro! Obtuvo los documentos antes de que esa zarigüella blanca logre escaparse.")
+        print("¡Ganó el Espia Negro! Obtuvo los documentos antes de que el espía blanco logre escaparse.")
     if camino: print("Su camino fue: {}".format(' -> '.join([str(x) for x in camino])))
     
 
