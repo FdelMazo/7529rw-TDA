@@ -9,7 +9,7 @@ import random
 
 def definirGanador(grafo, posiciones, pesado, sin_camino):
     espiaBlanco, espiaNegro, aeropuerto = posiciones
-    
+
     if pesado:
         distanciaBlanco = distanciaConPeso(grafo, espiaBlanco, aeropuerto)
         distanciaNegro = distanciaConPeso(grafo, espiaNegro, aeropuerto)
@@ -17,23 +17,51 @@ def definirGanador(grafo, posiciones, pesado, sin_camino):
         distanciaBlanco = distanciaSinPeso(grafo, espiaBlanco, aeropuerto)
         distanciaNegro = distanciaSinPeso(grafo, espiaNegro, aeropuerto)
 
-    if distanciaBlanco == -1 and distanciaNegro == -1: return '', None
+    if distanciaBlanco == -1 and distanciaNegro == -1: return '', None, None
 
-    if distanciaBlanco == -1: ganador = 'Negro'
-    elif distanciaNegro == -1: ganador = 'Blanco'
-    else: ganador = 'Negro' if distanciaNegro < distanciaBlanco else 'Blanco'
+    if distanciaBlanco == -1:
+        ganador = 'Negro'
+    elif distanciaNegro == -1:
+        ganador = 'Blanco'
+    else:
+        ganador = 'Negro' if distanciaNegro < distanciaBlanco else 'Blanco'
 
     if sin_camino:
-        if ganador=='Negro': return ganador,distanciaNegro
-        else: return ganador,distanciaBlanco
+        return ganador, distanciaBlanco, distanciaNegro
     else:
         if pesado:
-            if ganador=='Negro': return ganador,minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
-            else: return ganador,minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto)
+            return ganador, minimoCaminoConPeso(grafo, espiaBlanco, aeropuerto), minimoCaminoConPeso(grafo, espiaNegro, aeropuerto)
         else:
-            if ganador=='Negro': return ganador,minimoCaminoSinPeso(grafo, espiaNegro, aeropuerto)
-            else: return ganador,minimoCaminoSinPeso(grafo, espiaBlanco, aeropuerto)
+            return ganador, minimoCaminoSinPeso(grafo, espiaBlanco, aeropuerto), minimoCaminoSinPeso(grafo, espiaNegro, aeropuerto)
 
+def imprimirGanador(ganador, blanco, negro):
+    if not ganador:
+        print("No gano nadie :( \nAmbos espias no tienen camino al aeropuerto.")
+        return
+    if ganador == "Blanco":
+        print("¡Ganó el Espía Blanco! Llego a escaparse del país antes de que lo atrape el Espia Negro.")
+    else:
+        print("¡Ganó el Espia Negro! Obtuvo los documentos antes de que el espía blanco logre escaparse.")
+    if isinstance(blanco, list):
+        if len(blanco) == 0:
+            print("El espia blanco no tiene camino al aeropuerto")
+        else:
+            print("El camino del espia blanco fue: {}".format(' -> '.join([str(x) for x in blanco])))
+    if isinstance(negro, list):
+        if len(negro) == 0:
+            print("El espia negro no tiene camino al aeropuerto")
+        else:
+            print("El camino del espia negro fue: {}".format(' -> '.join([str(x) for x in negro])))
+    if isinstance(blanco,(int,float)):
+        if blanco >= 0:
+            print("La distancia recorrida del espia blanco fue de: {:.2}".format(float(blanco)))
+        else:
+            print("El espia blanco no tiene camino al aeropuerto")
+    if isinstance(negro,(int,float)):
+        if negro >= 0:
+            print("La distancia recorrida del espia negro fue de: {:.2}".format(float(negro)))
+        else:
+            print("El espia negro no tiene camino al aeropuerto")
 
 def main():
     """Programa que dados dos espias y un objetivo final (aeropuerto), decide el que llega primero.
@@ -43,7 +71,8 @@ def main():
                         help='Lista de 3 numeros de linea de mapa.coords donde el primer vertice es la posicion del espia blanco, espia negro y el aeropuerto respectivamente.',
                         nargs='+', action='store')
     parser.add_argument('--pesado', help='Intercalar entre grafo pesado y no pesado', action='store_true')
-    parser.add_argument('--sin-camino', help='Calcular y devolver el camino o solamente anunciar al ganador', action='store_true')
+    parser.add_argument('--sin-camino', help='Calcular y devolver el camino o solamente anunciar al ganador',
+                        action='store_true')
     args = parser.parse_args()
 
     if not os.path.isfile('mapa.coords'):
@@ -55,25 +84,16 @@ def main():
     grafo = ManejoDeArchivos.crearGrafoDesdeArchivo(pesado=args.pesado)
     args.coordenadas = [int(x) for x in args.coordenadas]
     posiciones = ManejoDeArchivos.lineas_a_vertices(args.coordenadas)
-    
+
     print(
-        "Un espia blanco intenta escaparse desde {}\n".format(posiciones[0]) + 
+        "Un espia blanco intenta escaparse desde {}\n".format(posiciones[0]) +
         "Mientras que un espia negro intenta agarrarlo desde {}\n".format(posiciones[1]) +
         "¿Quien llegara antes al aeropuerto ubicado en {}?\n".format(posiciones[2])
     )
 
-    ganador, camino_o_distancia = definirGanador(grafo, posiciones,args.pesado, args.sin_camino)
-    if not ganador:
-        print("No gano nadie :( \nAmbos espias no tienen camino al aeropuerto.")  
-        return 
-    if ganador == "Blanco":
-        print("¡Ganó el Espía Blanco! Llego a escaparse del país antes de que lo atrape el Espia Negro.")
-    else:
-        print("¡Ganó el Espia Negro! Obtuvo los documentos antes de que el espía blanco logre escaparse.")  
-    if isinstance(camino_o_distancia,list):
-        print("Su camino fue: {}".format(' -> '.join([str(x) for x in camino_o_distancia])))
-    elif isinstance(camino_o_distancia,(int,float)):
-        print("Su distancia recorrida fue de: {:.2}".format(float(camino_o_distancia)))
+    ganador, blanco, negro = definirGanador(grafo, posiciones, args.pesado, args.sin_camino)
+
+    imprimirGanador(ganador, blanco, negro)
 
 if __name__ == '__main__':
     main()
