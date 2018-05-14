@@ -12,5 +12,5 @@ def hayRotacionCiclicaMejorada(unaCadena, otraCadena,):
 	2n de generar una cadena con dos veces la longitud de la original
 	2n + n de la complejidad del algoritmo de KMP
 	TOTAL = 5n + 3
-	(en el peor caso, el False no se ejecuta).
+	(en el peor caso, no se devuelve False).
 	'''
