@@ -1,9 +1,0 @@
-Hay una red de transporte de información.
-
-Cada arista se puede sabotear.
-
-Sólo se disponen de dos agentes para vigilar la red.
-
-Cada saboteador quiere hacer el máximo daño posible (llegar a la mayor cantidad de aristas).
-
-Determinar donde poner los agentes para minimizar el daño a realizar.
