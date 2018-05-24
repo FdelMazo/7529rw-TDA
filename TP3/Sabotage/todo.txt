@@ -1,18 +1,7 @@
-[Hay una red de transporte de información]
-Cada arista se puede sabotear.
-
-Sólo se disponen de dos agentes para vigilar la red.
-
-Cada saboteador quiere hacer el máximo daño posible (llegar a la mayor cantidad de aristas).
-
-Determinar donde poner los agentes para minimizar el daño a realizar.
-
-
-
-TODO:
-Definir un objeto para recorrer el grafo (y como lo recorre)
-Definir que es una arista saboteada
-Definir que es una arista vigilada
-Definir como calcular máximo daño posible (contar cantidad de aristas recorridas)
-Tener algoritmo para poner los agentes
-	--> Si tengo FF y el flujo max es 2, se que puedo dividir el grafo.
+Algoritmo Ford-Fulkerson:
+	-> Ver si los objetos arista sirven como identificadores sin generar conflictos
+	-> Ver si se respeta la mutabilidad del diccionario de flujos
+	
+	-> Separar dfs de Fulkerson y tener un recorrido propio para los flujos
+	-> Obtener camino: está mal. Tiene que ser de la fuente al sumidero.
+	-> Actualizar el grafo residual

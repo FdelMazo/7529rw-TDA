@@ -3,8 +3,11 @@ from Arista import *
 from RedDeTransporteUtils import *
 
 class RedDeTransporte:
-
-
+'''
+Para esta red de transporte, se considera un grafo dirigido con un único 
+vértice sin aristas incidentes, llamado fuente, y un único vértice sin aristas 
+salientes, llamado sumidero.
+'''
 	def __init__(self):
 		self.vertices = {}
 		self.aristas = {}
@@ -20,7 +23,9 @@ class RedDeTransporte:
 	
 	
 	def agregarVertice(self, numero):
-		
+		'''
+		El conjunto de vertices es un diccionario.
+		'''
 		try:
 			self.vertices[numero]
 			raise ValueError("Ya existe un vértice con ese número.")
@@ -46,9 +51,36 @@ class RedDeTransporte:
 
 
 	def agregarArista(self, numeroOrigen, numeroDestino, peso = 1):
+	''' 
+		El conjunto de aristas es un diccionario de diccionarios de 
+		listas de uniones entre vértices.
+		
+		El primer diccionario representa las aristas del vértice origen
+		y el segundo las aristas que inciden en un destino particular.
+	'''
+		if (numeroDestino == self.fuente.numero):
+			raise ValueError("La fuente no puede tener aristas entrantes")
+		
+		elif (numeroOrigen == self.sumidero.numero):
+			raise ValueError("El sumidero no puede tener aristas salientes")
+		
+		if (peso < 0)
+			raise ValueError("El peso no puede ser negativo")
+		
 		verticeOrigen = self.darVertice(numeroOrigen)
 		verticeDestino = self.darVertice(numeroDestino)
-		self.aristas[ len(self.aristas) ] = Arista(verticeOrigen, verticeDestino, peso)
+		numOrigen = verticeOrigen.obtenerNumero()
+		numDestino = verticeDestino.obtenerNumero()
+		
+		try: 
+			self.aristas[numOrigen][numDestino]
+		
+		except KeyError:
+			self.aristas[numOrigen][numDestino] = []
+		
+		finally:
+			self.aristas[numOrigen][numDestino].append( Arista(verticeOrigen, verticeDestino, peso) )
+		
 		verticeOrigen.agregarAdyacente(verticeDestino)
 	
 
@@ -61,5 +93,33 @@ class RedDeTransporte:
 			return None
 
 
+	def obtenerArista(self, v1, v2, peso = -1):
+		
+		try:
+			aristasPosibles = self.aristas[v1.obtenerNumero()][v2.obtenerNumero()]
+			
+			if(peso < 0)
+				return aristasPosibles[0]
+			
+			return aristasPosibles[peso]
+		
+		except KeyError:
+			return None
+				
+
 	def obtenerVertices(self):
 		return list(self.vertices.values())
+
+
+	def obtenerAristas(self, origen):
+		listaAristasOrigen = []
+		
+		for conjuntoAristas in self.aristas[origen.obtenerNumero()]:
+			for listaAristas in conjuntAristas.values():
+				listaAristasOrigen += listaAristasOrigen
+				
+		return listaAristasOrigen
+
+
+	def obtenerFuente(self)
+		return self.fuente

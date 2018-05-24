@@ -12,5 +12,13 @@ class Arista:
 		return str(self.origen) + ' -> ' + str(self.destino)
 
 
+	def esDeRegresion(self):
+		return False
+		
+
 	def obtenerOrigen(self):
 		return self.origen
+
+
+	def obtenerPeso(self):
+		return self.peso
