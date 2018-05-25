@@ -1,6 +1,7 @@
 from Vertice import *
 from Arista import *
-from RedDeTransporteUtils import *
+from bfs import *
+
 
 class RedDeTransporte:
 '''
@@ -50,7 +51,7 @@ salientes, llamado sumidero.
 			return self.vertices[numero]
 
 
-	def agregarArista(self, numeroOrigen, numeroDestino, peso = 1):
+	def agregarArista(self, numeroOrigen, numeroDestino, peso = 1, esAristaDeRegresion = False):
 	''' 
 		El conjunto de aristas es un diccionario de diccionarios de 
 		listas de uniones entre vértices.
@@ -79,9 +80,19 @@ salientes, llamado sumidero.
 			self.aristas[numOrigen][numDestino] = []
 		
 		finally:
-			self.aristas[numOrigen][numDestino].append( Arista(verticeOrigen, verticeDestino, peso) )
+			if esAristaDeRegresion:
+				self.aristas[numOrigen][numDestino].append(
+				AristaDeRegresion(verticeOrigen, verticeDestino, peso) )
+			
+			else:	
+				self.aristas[numOrigen][numDestino].append( 
+				Arista(verticeOrigen, verticeDestino, peso) )
 		
 		verticeOrigen.agregarAdyacente(verticeDestino)
+	
+
+	def agregarAristaDeRegresion(self, numeroOrigen, numeroDestino, peso = 1):
+		agregarArista(self, numeroOrigen, numeroDestino, peso, True):
 	
 
 	def obtenerVertice(self, numero):

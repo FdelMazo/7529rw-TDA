@@ -20,5 +20,13 @@ class Arista:
 		return self.origen
 
 
+	def obtenerDestino(self):
+		return self.destino
+
+
 	def obtenerPeso(self):
 		return self.peso
+
+
+	def setPeso(self, nuevoPeso):
+		self.peso = nuevoPeso
