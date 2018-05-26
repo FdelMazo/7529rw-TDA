@@ -1,20 +1,21 @@
 class Arista:
 
 	
-	def __init__(self, origen, destino, peso, flujo = 0):
+	def __init__(self, origen, destino, peso):
 		self.origen = origen
 		self.destino = destino
 		self.peso = peso
-		self.flujo = flujo
 	
 	
 	def __str__(self):
 		return str(self.origen) + ' -> ' + str(self.destino)
 
 
-	def esDeRegresion(self):
-		return False
-		
+	def __equals__(self, otraArista):
+		return ( self.origen == otraArista.obtenerOrigen() and
+		self.destino == otraArista.obtenerDestino() and
+		self.peso == otraArista.obtenerPeso() )
+
 
 	def obtenerOrigen(self):
 		return self.origen

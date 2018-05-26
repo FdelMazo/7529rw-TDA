@@ -1,3 +1,5 @@
+from RedDeTransporte import *
+
 
 def obtenerCamino(red, flujo):
 	
@@ -28,7 +30,7 @@ def obtenerCamino(red, flujo):
 					break
 			
 			else:
-				''' Volver al vértice anterior, si lo hay.'''
+				''' Volver al vértice anterior.'''
 				try: verticeActual = camino.pop().obtenerOrigen()
 				except IndexError: return []
 			
@@ -118,3 +120,9 @@ def flujoMaximo(red):
 	
 	maxFlujo, cuellosDeBotella = FordFulkerson(red)
 	return maxFlujo
+
+
+red = RedDeTransporte()
+red.agregarArista(0, 1, 1)
+red.agregarArista(0, 1, 2)
+print(flujoMaximo(red))

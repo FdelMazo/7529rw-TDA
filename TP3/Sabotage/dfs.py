@@ -10,11 +10,11 @@ def dfs(red):
 		
 		if v not in visitados:
 			recorridoStr.append('\n' + str(v))
-			dfs_visitar(red, v, visitados, recorridoStr)
-	
+			dfs_visitar(v, visitados, recorridoStr)
+
 	strRecorrido = ''
 	
-	for c in recorrido:
+	for c in recorridoStr:
 		strRecorrido += c
 		
 	return strRecorrido
@@ -29,5 +29,3 @@ def dfs_visitar(v, visitados, recorridoStr):
 		if w not in visitados:
 			recorridoStr.append(' -> ' + str(w))
 			dfs_visitar(w, visitados, recorridoStr)
-	
-	return recorrido

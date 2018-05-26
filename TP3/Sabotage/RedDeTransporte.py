@@ -1,14 +1,17 @@
 from Vertice import *
 from Arista import *
-from bfs import *
-
+from dfs import *
 
 class RedDeTransporte:
-'''
-Para esta red de transporte, se considera un grafo dirigido con un único 
-vértice sin aristas incidentes, llamado fuente, y un único vértice sin aristas 
-salientes, llamado sumidero.
-'''
+	'''
+	Para esta red de transporte, se considera un grafo dirigido con un único 
+	vértice sin aristas incidentes, llamado fuente, y un único vértice sin aristas 
+	salientes, llamado sumidero.
+
+	Las capacidades se consideran números enteros positivos, y se asume que cada
+	nodo tiene al menos una arista incidente.
+	'''
+
 	def __init__(self):
 		self.vertices = {}
 		self.aristas = {}
@@ -21,6 +24,14 @@ salientes, llamado sumidero.
 	
 	def __str__(self):
 		return dfs(self)
+	
+	
+	def obtenerFuente(self):
+		return self.fuente
+
+
+	def obtenerSumidero(self):
+		return self.sumidero
 	
 	
 	def agregarVertice(self, numero):
@@ -42,59 +53,51 @@ salientes, llamado sumidero.
 		'''
 		
 		try: 
-			self.vertice[numero]
+			self.vertices[numero]
 		
 		except KeyError: 
-			agregarVertice(numero)
+			self.agregarVertice(numero)
 		
 		finally:
 			return self.vertices[numero]
 
 
-	def agregarArista(self, numeroOrigen, numeroDestino, peso = 1, esAristaDeRegresion = False):
-	''' 
+	def agregarArista(self, numeroOrigen, numeroDestino, peso = 1):
+		''' 
+		Agrega una arista a la red. Si los vértices parametrizados no
+		existen, los crea.
+		
 		El conjunto de aristas es un diccionario de diccionarios de 
 		listas de uniones entre vértices.
 		
 		El primer diccionario representa las aristas del vértice origen
-		y el segundo las aristas que inciden en un destino particular.
-	'''
-		if (numeroDestino == self.fuente.numero):
-			raise ValueError("La fuente no puede tener aristas entrantes")
+		y el segundo la lista de aristas que inciden en un destino particular.
+		Se guardan en formato de listas por si existen varias con el mismo
+		origen y destino.
 		
-		elif (numeroOrigen == self.sumidero.numero):
-			raise ValueError("El sumidero no puede tener aristas salientes")
-		
-		if (peso < 0)
-			raise ValueError("El peso no puede ser negativo")
-		
+		'''
 		verticeOrigen = self.darVertice(numeroOrigen)
 		verticeDestino = self.darVertice(numeroDestino)
 		numOrigen = verticeOrigen.obtenerNumero()
 		numDestino = verticeDestino.obtenerNumero()
 		
-		try: 
-			self.aristas[numOrigen][numDestino]
+		try: self.aristas[numOrigen]
 		
-		except KeyError:
-			self.aristas[numOrigen][numDestino] = []
-		
-		finally:
-			if esAristaDeRegresion:
-				self.aristas[numOrigen][numDestino].append(
-				AristaDeRegresion(verticeOrigen, verticeDestino, peso) )
+		except KeyError: self.aristas[numOrigen] = {}
 			
-			else:	
-				self.aristas[numOrigen][numDestino].append( 
-				Arista(verticeOrigen, verticeDestino, peso) )
+		finally:
+			
+			try: 
+				self.aristas[numOrigen][numDestino]
+			
+			except KeyError: 
+				self.aristas[numOrigen][numDestino] = []
+				verticeOrigen.agregarAdyacente(verticeDestino)
+			
+			self.aristas[numOrigen][numDestino].append(
+			Arista(verticeOrigen, verticeDestino, peso) )
+			
 		
-		verticeOrigen.agregarAdyacente(verticeDestino)
-	
-
-	def agregarAristaDeRegresion(self, numeroOrigen, numeroDestino, peso = 1):
-		agregarArista(self, numeroOrigen, numeroDestino, peso, True):
-	
-
 	def obtenerVertice(self, numero):
 		
 		try:
@@ -104,33 +107,42 @@ salientes, llamado sumidero.
 			return None
 
 
-	def obtenerArista(self, v1, v2, peso = -1):
+	def obtenerVertices(self):
+		return list(self.vertices.values())
+	
+
+	def obtenerAristasDesdeHasta(self, numOrigen, numDestino):
 		
 		try:
-			aristasPosibles = self.aristas[v1.obtenerNumero()][v2.obtenerNumero()]
-			
-			if(peso < 0)
-				return aristasPosibles[0]
-			
-			return aristasPosibles[peso]
+			return self.aristas[numOrigen][numDestino]
 		
 		except KeyError:
 			return None
-				
+	
 
-	def obtenerVertices(self):
-		return list(self.vertices.values())
-
-
-	def obtenerAristas(self, origen):
+	def obtenerAristas(self, numOrigen = -1):
 		listaAristasOrigen = []
 		
-		for conjuntoAristas in self.aristas[origen.obtenerNumero()]:
-			for listaAristas in conjuntAristas.values():
-				listaAristasOrigen += listaAristasOrigen
+		if numOrigen > 0:
+			for listaAristas in self.aristas[numOrigen].values():
+				listaAristasOrigen += listaAristas
+
+		else:
+			for conjuntoAristas in self.aristas.values():
+				for listaAristas in conjuntoAristas.values():
+					listaAristasOrigen += listaAristas
 				
 		return listaAristasOrigen
 
 
-	def obtenerFuente(self)
-		return self.fuente
+	def tieneArista(self, arista):
+		
+		v1 = arista.obtenerOrigen().obtenerNumero()
+		v2 = arista.obtenerDestino().obtenerNumero()
+		
+		try:
+			self.aristas[v1][v2]
+			return True
+		
+		except KeyError:
+			return False

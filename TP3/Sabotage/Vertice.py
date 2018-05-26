@@ -11,7 +11,7 @@ class Vertice:
 				
 	
 	def __equals__(self, otroVertice):
-		return self.numero == otroVertice.numero
+		return self.numero == otroVertice.obtenerNumero()
 	
 	
 	def agregarAdyacente(self, vertice):
