@@ -78,25 +78,22 @@ class RedDeTransporte:
 		'''
 		verticeOrigen = self.darVertice(numeroOrigen)
 		verticeDestino = self.darVertice(numeroDestino)
-		numOrigen = verticeOrigen.obtenerNumero()
-		numDestino = verticeDestino.obtenerNumero()
 		
-		try: self.aristas[numOrigen]
+		try: self.aristas[numeroOrigen]
 		
-		except KeyError: self.aristas[numOrigen] = {}
+		except KeyError: self.aristas[numeroOrigen] = {}
 			
 		finally:
 			
 			try: 
-				self.aristas[numOrigen][numDestino]
+				self.aristas[numeroOrigen][numeroDestino]
 			
 			except KeyError: 
-				self.aristas[numOrigen][numDestino] = []
+				self.aristas[numeroOrigen][numeroDestino] = []
 				verticeOrigen.agregarAdyacente(verticeDestino)
 			
-			self.aristas[numOrigen][numDestino].append(
+			self.aristas[numeroOrigen][numeroDestino].append(
 			Arista(verticeOrigen, verticeDestino, peso) )
-			
 		
 	def obtenerVertice(self, numero):
 		
@@ -123,7 +120,7 @@ class RedDeTransporte:
 	def obtenerAristas(self, numOrigen = -1):
 		listaAristasOrigen = []
 		
-		if numOrigen > 0:
+		if numOrigen >= 0:
 			for listaAristas in self.aristas[numOrigen].values():
 				listaAristasOrigen += listaAristas
 

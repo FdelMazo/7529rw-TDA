@@ -3,7 +3,7 @@ class Vertice:
 
 	def __init__(self, numero):
 		self.numero = numero
-		self.adyacentes = {}
+		self.adyacentes = []
 	
 	
 	def __str__(self):
@@ -15,11 +15,11 @@ class Vertice:
 	
 	
 	def agregarAdyacente(self, vertice):
-		self.adyacentes[ len(self.adyacentes) ] = vertice
+		self.adyacentes.append(vertice)
 
 
 	def obtenerAdyacentes(self):
-		return list(self.adyacentes.values())
+		return self.adyacentes
 
 
 	def obtenerNumero(self):

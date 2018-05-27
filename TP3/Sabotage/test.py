@@ -1,5 +1,4 @@
-from RedDeTransporte import *
-
+from RedDeTransporte import RedDeTransporte
 
 def obtenerCamino(red, flujo):
 	
@@ -14,25 +13,21 @@ def obtenerCamino(red, flujo):
 	while not set(red.obtenerAristas(red.obtenerFuente().obtenerNumero())).issubset( 
 	set(visitadas))  and ( verticeActual is not red.obtenerSumidero() ):
 		
-		for v in verticeActual.obtenerAdyacentes():
+		for a in red.obtenerAristas(verticeActual.obtenerNumero()):
+			if (a not in visitadas) and (a.obtenerPeso() > 0):
+				aristaActual = a
+				visitadas.append(aristaActual)
+				break
 			
-			for a in red.obtenerAristasDesdeHasta(verticeActual.obtenerNumero(), 
-			v.obtenerNumero()):
-				if (a not in visitadas) and (a.obtenerPeso() > 0):
-					aristaActual = a
-					visitadas.append(aristaActual)
-					break
+		if aristaActual:
+				camino.append(aristaActual)
+				verticeActual = a.obtenerDestino()
+				aristaActual = None
 			
-			if aristaActual:
-					camino.append(aristaActual)
-					verticeActual = v
-					aristaActual = None
-					break
-			
-			else:
-				''' Volver al vértice anterior.'''
-				try: verticeActual = camino.pop().obtenerOrigen()
-				except IndexError: return []
+		else:
+			''' Volver al vértice anterior, si lo hay.'''
+			try: verticeActual = camino.pop().obtenerOrigen()
+			except IndexError: return []
 			
 	return camino
 		
@@ -123,6 +118,7 @@ def flujoMaximo(red):
 
 
 red = RedDeTransporte()
-red.agregarArista(0, 1, 1)
-red.agregarArista(0, 1, 2)
+red.agregarArista(0, 2, 1)
+red.agregarArista(2, 1, 1)
+red.agregarArista(0, 1, 10)
 print(flujoMaximo(red))
