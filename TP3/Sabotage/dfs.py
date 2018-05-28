@@ -9,7 +9,6 @@ def dfs(red):
 	for v in red.obtenerVertices():
 		
 		if v not in visitados:
-			recorridoStr.append('\n' + str(v))
 			dfs_visitar(v, visitados, recorridoStr)
 
 	strRecorrido = ''
@@ -27,5 +26,5 @@ def dfs_visitar(v, visitados, recorridoStr):
 	for w in v.obtenerAdyacentes():
 		
 		if w not in visitados:
-			recorridoStr.append(' -> ' + str(w))
+			recorridoStr.append( ' ( ' + str(v) + ' ' + str(w) + ') \n' )
 			dfs_visitar(w, visitados, recorridoStr)

@@ -109,7 +109,7 @@ class RedDeTransporteTest(unittest.TestCase):
 		self.assertEquals( 11, flujoMaximo(red) )
 
 
-	def test_red_tiene_la_arista_minima_esperada9(self):
+	def test_red_tiene_el_flujo_maximo_esperado9(self):
 		red = RedDeTransporte()
 		red.agregarArista(0, 2, 9)
 		red.agregarArista(2, 3, 8)
@@ -124,6 +124,90 @@ class RedDeTransporteTest(unittest.TestCase):
 		inicializarFlujo(red, flujo)
 		self.assertEquals( 12, flujoMaximo( red) )
 
+
+	def test_red_tiene_el_flujo_maximo_esperado10(self):
+		red = RedDeTransporte()
+		red.agregarArista(0, 2, 20)
+		red.agregarArista(2, 1, 10)
+		red.agregarArista(0, 3, 10)
+		red.agregarArista(2, 3, 30)
+		red.agregarArista(3, 1, 20)
+		self.assertEquals( 30, flujoMaximo(red) )
+
+
+	def test_red_tiene_el_flujo_maximo_esperado11(self):
+		red = RedDeTransporte()
+		red.agregarArista(0, 2, 100)
+		red.agregarArista(2, 1, 100)
+		red.agregarArista(0, 3, 100)
+		red.agregarArista(2, 3, 1)
+		red.agregarArista(3, 1, 100)
+		self.assertEquals( 200, flujoMaximo(red) )
+
+
+	def test_red_tiene_el_flujo_maximo_esperado12(self):
+		red = RedDeTransporte()
+		red.agregarArista(0, 2, 100)
+		red.agregarArista(2, 3, 100)
+		red.agregarArista(3, 1, 100)
+		red.agregarArista(2, 1, 1)
+		red.agregarArista(4, 1, 1)
+		red.agregarArista(0, 4, 100)
+		red.agregarArista(4, 5, 100)
+		red.agregarArista(5, 1, 100)
+		self.assertEquals( 200, flujoMaximo(red) )
+
+
+	def test_red_tiene_el_flujo_maximo_esperado13(self):
+		red = RedDeTransporte()
+		red.agregarArista(0, 2)
+		red.agregarArista(2, 1)
+		red.agregarArista(0, 3)
+		red.agregarArista(3, 1)
+		red.agregarArista(2, 3)
+		self.assertEquals( 2, flujoMaximo(red) )
+
+
+	def test_red_tiene_el_flujo_maximo_esperado14(self):
+		red = RedDeTransporte()
+		red.agregarArista(0, 2, 2)
+		red.agregarArista(2, 1, 4)
+		red.agregarArista(0, 3, 4)
+		red.agregarArista(3, 1, 2)
+		red.agregarArista(2, 3, 6)
+		self.assertEquals( 4, flujoMaximo(red) )
+
+
+	def test_red_tiene_el_flujo_maximo_esperado15(self):
+		red = RedDeTransporte()
+		red.agregarArista(0,2,10)
+		red.agregarArista(2,1,5)
+		red.agregarArista(2,4,3)
+		red.agregarArista(0,3,8)
+		red.agregarArista(3,2,3)
+		red.agregarArista(3,4,10)
+		red.agregarArista(3,5,3)
+		red.agregarArista(4,1,8)
+		red.agregarArista(0,5,5)
+		red.agregarArista(5,4,3)
+		red.agregarArista(5,1,5)	
+		self.assertEquals( 18, flujoMaximo(red) )
+
+
+	def test_red_tiene_el_flujo_maximo_esperado16(self):
+		red = RedDeTransporte()
+		red.agregarArista(0,2,10)
+		red.agregarArista(2,1,5)
+		red.agregarArista(2,4,3)
+		red.agregarArista(0,3,8)
+		red.agregarArista(3,2,3)
+		red.agregarArista(3,4,10)
+		red.agregarArista(3,5,3)
+		red.agregarArista(4,1,8)
+		red.agregarArista(0,5,5)
+		red.agregarArista(5,4,3)
+		red.agregarArista(5,1,10)
+		self.assertEquals( 21, flujoMaximo(red) )
 
 
 if __name__ == '__main__':

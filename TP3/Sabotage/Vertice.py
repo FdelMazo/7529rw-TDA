@@ -8,7 +8,11 @@ class Vertice:
 	
 	def __str__(self):
 		return str(self.numero)
-				
+	
+		
+	def __repr__(self):
+		return self.__str__()
+	
 	
 	def __equals__(self, otroVertice):
 		return self.numero == otroVertice.obtenerNumero()

@@ -33,7 +33,32 @@ class RedDeTransporteTest(unittest.TestCase):
 		red.agregarVertice(2)
 		red.agregarArista(0, 2)
 		red.agregarArista(2, 1)
-		self.assertEquals(str(red), '\n0 -> 2 -> 1')
+		self.assertEquals(str(red), (
+		"(0,2) [1]\n" +
+		"(2,1) [1]\n" ) )
+
+
+	def test_agregar_vertice_y_arista_en_red_de_transporte2(self):
+		red = RedDeTransporte()
+		red.agregarArista(0, 2)
+		red.agregarArista(2, 3)
+		red.agregarArista(2, 4)
+		red.agregarArista(3, 1)
+		red.agregarArista(0, 4)
+		red.agregarArista(4, 3)
+		red.agregarArista(4, 5)
+		red.agregarArista(5, 3)
+		red.agregarArista(5, 1)
+		self.assertEquals(str(red), (
+		"(0,2) [1]\n" +
+		"(0,4) [1]\n" +
+		"(2,3) [1]\n" +
+		"(2,4) [1]\n" +
+		"(3,1) [1]\n" +
+		"(4,3) [1]\n" +
+		"(4,5) [1]\n" +
+		"(5,3) [1]\n" +
+		"(5,1) [1]\n" ) )
 
 
 	def test_fuente_tiene_los_adyacentes_esperados(self):

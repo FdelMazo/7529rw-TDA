@@ -8,22 +8,25 @@ class RedDeTransporte:
 	vértice sin aristas incidentes, llamado fuente, y un único vértice sin aristas 
 	salientes, llamado sumidero.
 
-	Las capacidades se consideran números enteros positivos, y se asume que cada
+	Las capacidades se consideran números naturales, y se asume que cada
 	nodo tiene al menos una arista incidente.
 	'''
 
-	def __init__(self):
+	def __init__(self, aristas = []):
+					
 		self.vertices = {}
 		self.aristas = {}
 		self.fuente = Vertice(0)
 		self.sumidero = Vertice(1)
-		
 		self.vertices[0] = self.fuente
 		self.vertices[1] = self.sumidero
-	
-	
+				
+		
 	def __str__(self):
-		return dfs(self)
+		redStr = ''
+		for a in self.obtenerAristas():
+			redStr += str(a)
+		return redStr
 	
 	
 	def obtenerFuente(self):
@@ -44,6 +47,7 @@ class RedDeTransporte:
 		
 		except KeyError:
 			self.vertices[numero] = Vertice(numero)
+			return self.vertices[numero]
 
 
 	def darVertice(self, numero):
@@ -92,9 +96,20 @@ class RedDeTransporte:
 				self.aristas[numeroOrigen][numeroDestino] = []
 				verticeOrigen.agregarAdyacente(verticeDestino)
 			
+			arista = Arista(verticeOrigen, verticeDestino, peso)
 			self.aristas[numeroOrigen][numeroDestino].append(
-			Arista(verticeOrigen, verticeDestino, peso) )
-		
+			arista )
+			return arista
+
+
+	def agregarAristas(self, aristas):
+		for a in aristas:
+			self.agregarArista(
+			a.obtenerOrigen().obtenerNumero(),
+			a.obtenerDestino().obtenerNumero(),
+			a.obtenerPeso())
+			
+
 	def obtenerVertice(self, numero):
 		
 		try:
@@ -114,7 +129,7 @@ class RedDeTransporte:
 			return self.aristas[numOrigen][numDestino]
 		
 		except KeyError:
-			return None
+			return []
 	
 
 	def obtenerAristas(self, numOrigen = -1):
@@ -132,13 +147,10 @@ class RedDeTransporte:
 		return listaAristasOrigen
 
 
-	def tieneArista(self, arista):
-		
-		v1 = arista.obtenerOrigen().obtenerNumero()
-		v2 = arista.obtenerDestino().obtenerNumero()
+	def tieneArista(self, numOrigen, numDestino):
 		
 		try:
-			self.aristas[v1][v2]
+			self.aristas[numOrigen][numDestino]
 			return True
 		
 		except KeyError:

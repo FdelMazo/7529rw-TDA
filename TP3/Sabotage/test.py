@@ -1,4 +1,15 @@
-from RedDeTransporte import RedDeTransporte
+from RedDeTransporte import *
+
+
+def imprimirCamino(camino):
+	for a in camino:
+		print(a)
+
+
+def imprimirFlujo(flujo):
+	for key,value in flujo.items():
+		print( str(a) + '  -  ' + str(value) )
+
 
 def obtenerCamino(red, flujo):
 	
@@ -56,69 +67,86 @@ def obtenerAristaMinima(camino):
 		raise ValueError("Camino vacío.")
 
 
-def actualizarFlujo(red, camino, flujo, cuelloDeBotella):
+def flujoActualizado(red, camino, flujo, cuelloDeBotella):
+	
+	flujoActual = {}
 	
 	for a in camino:
 		
-		if(red.tieneArista(a)):
-			flujo[a] += cuelloDeBotella
+		if( red.tieneArista( a.obtenerOrigen().obtenerNumero(),
+		a.obtenerDestino().obtenerNumero() ) ):
+			flujoActual[a] = flujo[a] + cuelloDeBotella
 			
 		else:
-			flujo[a] -= cuelloDeBotella
+			flujoActual[a] = flujo[a] - cuelloDeBotella
+
+	return flujoActual
 
 
 def actualizarRedResidual(red, redResidual, flujo):
 	
-	for a in redResidual.obtenerAristas():
-		
-		difFlujo = a.obtenerPeso() - flujo[a]
-		
-		if ( flujo[a] and ( a.obtenerPeso()> 0 ) ):
-			
-			pesoActualDeRegresion = a.obtenerPeso() - difFlujo
-			a.setPeso(difFlujo)
-			
-			try:
-				''' La arista de regresión será única para el caso de múltiples
-				aristas con el mismo origen y destino.'''
-				regresion_a = redResidual.obtenerAristasDesdeHasta( 
-				a.obtenerDestino().obtenerNumero(), 
-				a.obtenerOrigen().obtenerNumero() )[0]
-				regresion_a.setPeso(regresion_a.obtenerPeso() + pesoActualDeRegresion)	
-			
-			except TypeError:
-				redResidual.agregarArista(a.obtenerDestino().obtenerNumero(), 
-				a.obtenerOrigen().obtenerNumero(), pesoActualDeRegresion)
+	for a, valorDeFlujo in flujo.items():
 	
+		aristaOriginal = red.obtenerAristaConPeso(
+		a.obtenerOrigen().obtenerNumero(),
+		a.obtenerDestino().obtenerNumero(), 
+		a.obtenerPeso())			
+		
+		if (aristaOriginal):
+			a.setPeso(aristaOriginal.obtenerPeso() - valorDeFlujo) 
+			numOrigen = a.obtenerOrigen().obtenerNumero()
+			numDestino = a.obtenerDestino().obtenerNumero()
+			
+			if (not redResidual.obtenerAristasDesdeHasta(numOrigen, numDestino)):
+				aristaResidual = redResidual.agregarArista( numOrigen, 
+				numDestino, valorDeFlujo)
+				flujo[aristaResidual] = 0
+			
+		else:
+			a.setPeso(valorDeFlujo)	
 
-def FordFulkerson(red):
+
+def actualizarFlujoA(flujo, flujoActual):
+	for a, valorFlujo in flujoActual.items():
+		flujo[a] = valorFlujo
+
+
+def FordFulkerson(red, mostrarCamino = False):
 
 	flujo = {}
 	cuellosDeBotella = []
-	redResidual = red
+	aristasRed = red.obtenerAristas()
+	redResidual = RedDeTransporte()
+	redResidual.agregarAristas(aristasRed)
 	maxFlujo = 0
+	inicializarFlujo(redResidual, flujo)
 	
 	while True:
-		inicializarFlujo(redResidual, flujo)
 		camino = obtenerCamino(redResidual, flujo)
 		if not camino: break
+		if mostrarCamino: imprimirCamino(camino)
 		cuellosDeBotella.append(obtenerAristaMinima(camino))
 		cuelloActual = cuellosDeBotella[-1].obtenerPeso()
 		maxFlujo += cuelloActual
-		actualizarFlujo(red, camino, flujo, cuelloActual)
-		actualizarRedResidual(red, redResidual, flujo)
-
+		flujoActual = flujoActualizado(red, camino, flujo, cuelloActual)
+		actualizarRedResidual(red, redResidual, flujoActual)
+		actualizarFlujoA(flujo, flujoActual)
+	
 	return maxFlujo, cuellosDeBotella
 
 
-def flujoMaximo(red):
+def flujoMaximo(red, mostrarCamino = False):
 	
-	maxFlujo, cuellosDeBotella = FordFulkerson(red)
+	maxFlujo, cuellosDeBotella = FordFulkerson(red, mostrarCamino)
 	return maxFlujo
 
 
+
+
 red = RedDeTransporte()
-red.agregarArista(0, 2, 1)
-red.agregarArista(2, 1, 1)
-red.agregarArista(0, 1, 10)
-print(flujoMaximo(red))
+red.agregarArista(0, 2, 20)
+red.agregarArista(2, 1, 10)
+red.agregarArista(0, 3, 10)
+red.agregarArista(2, 3, 30)
+red.agregarArista(3, 1, 20)
+flujoMaximo(red, True)
