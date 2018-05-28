@@ -1,20 +1,19 @@
 from RedDeTransporte import *
 
 
-ARCHIVO = redsecreta.map
+ARCHIVO = "redsecreta.map"
 
 
-def cargarArchivo():
+def cargarArchivoSabotage(archivo = ARCHIVO):
 	red = RedDeTransporte()
 	
-	with open(ARCHIVO) as file:
+	with open(archivo) as file:
 		
 		lineas = file.readlines()
 		
 		for linea in lineas:
 		
-			numOrigen, numDestino, peso = linea.spit(' ')
-			red.agregarArista(numOrigen, numDestino, peso)
+			numOrigen, numDestino, peso = linea.split(' ')
+			red.agregarArista(int(numOrigen), int(numDestino), int(peso))
 	
 	return red
-

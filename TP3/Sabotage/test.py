@@ -1,193 +1,211 @@
-from RedDeTransporte import *
+from Sabotage import *
 
+from Vertice import *
+from Arista import *
+from dfs import *
 
-def imprimirCamino(camino):
-	for a in camino:
-		print(a)
+class RedDeTransporte:
+	'''
+	Para esta red de transporte, se considera un grafo dirigido con un único 
+	vértice sin aristas incidentes, llamado fuente, y un único vértice sin aristas 
+	salientes, llamado sumidero.
 
+	Las capacidades se consideran números naturales, y se asume que cada
+	nodo tiene al menos una arista incidente.
+	'''
 
-def imprimirFlujo(flujo):
-	for key,value in flujo.items():
-		print( str(a) + '  -  ' + str(value) )
-
-
-def inicializarRedResidual(redResidual, aristasRed):
-	for a in aristasRed:
-		numOrigen = a.obtenerOrigen().obtenerNumero(),
-		numDestino = a.obtenerDestino().obtenerNumero(),
-		peso = a.obtenerPeso()
-		redResidual.agregarArista(numOrigen, numDestino, peso)
-		redResidual.agregarArista(numDestino, numOrigen, 0)
-
-
-def hayCaminoPosible(red):
-	
-	for a in red.obtenerAristas(red.obtenerFuente().obtenerNumero()):
-		if a.obtenerPeso() > 0:
-			return True
-	
-	return False
-
-
-def obtenerCamino(red, flujo):
-	
-	visitadas = []
-	adyacentesV = []
-	camino = []
-	verticeActual = red.obtenerFuente()
-	aristaActual = None
-	 
-	while ( verticeActual is not red.obtenerSumidero() ):
+	def __init__(self, aristas = []):
+					
+		self.vertices = {}
+		self.aristas = {}
+		self.fuente = Vertice(0)
+		self.sumidero = Vertice(1)
+		self.vertices[0] = self.fuente
+		self.vertices[1] = self.sumidero
+				
 		
-		for a in red.obtenerAristas(verticeActual.obtenerNumero()):
+	def __str__(self):
+		redStr = ''
+		for a in self.obtenerAristas():
+			redStr += str(a)
+		return redStr
+
+
+	def obtenerFuente(self):
+		return self.fuente
+
+
+	def obtenerSumidero(self):
+		return self.sumidero
+	
+	
+	def esIgualA(self, otraRed):
 		
-			if ( (a not in visitadas) and ( a.obtenerPeso() > 0 ) ):
-				aristaActual = a
-				visitadas.append(aristaActual)
-				break
+		try: 
+			for a in otraRed.obtenerAristas():
+				match = False
+				numOrigen = a.obtenerOrigen().obtenerNumero()
+				numDestino = a.obtenerDestino().obtenerNumero()
+				
+				for a2 in self.aristas[numOrigen][numDestino]:
+					if a.esIgualA(a2):
+						match = True
+						break
+						
+				if not match:
+					return False
+							
+			for v in otraRed.obtenerVertices():
+				numVertice = v.obtenerNumero()
+				
+				if not self.vertices[numVertice].esIgualA(v):
+					return False
+				
+				return True
 			
-		if aristaActual:
-				camino.append(aristaActual)
-				verticeActual = a.obtenerDestino()
-				aristaActual = None
-			
-		else:
-			''' Volver al vértice anterior, si lo hay.'''
-			try: verticeActual = camino.pop().obtenerOrigen()
-			except IndexError: return []
-			
-	return camino
+		except KeyError:
+			return False
 		
-
-def inicializarFlujo(red, flujo):
-	for a in red.obtenerAristas(): flujo[a] = 0
-
-
-def inicializarCapacidad(red, capacidad):
-	for a in red.obtenerAristas(): capacidad[a] = a.obtenerPeso()
-
-
-def obtenerAristaMinima(camino):
-	''' Devuelve la arista con menos peso del camino parametrizado'''
-	
-	try: 
-		aristaMin = camino[0]
-		 
-		for a in camino:
-			if ( a.obtenerPeso() < aristaMin.obtenerPeso() ):
-				aristaMin = a
-	
-		return aristaMin
-		 
-	except IndexError: 
-		raise ValueError("Camino vacío.")
-
-
-def flujoActualizado(red, redResidual, camino, flujo, cuelloDeBotella, capacidad):
-	
-	flujoActual = {}
-	
-	for a in camino:
 		
-		numOrigen = a.obtenerOrigen().obtenerNumero()
-		numDestino = a.obtenerDestino().obtenerNumero()
-		
-		if( red.tieneArista( numOrigen, numDestino) ):
-			flujoActual[a] = flujo[a] + cuelloDeBotella
-			a.setPeso(capacidad[a] - flujoActual[a])
-			if (not redResidual.obtenerAristasDesdeHasta(numDestino, numOrigen)):
-				aristaResidual = redResidual.agregarArista( numDestino, 
-				numOrigen, flujoActual[a])
-			
-		else:
-			aOriginal = redResidual.obtenerAristasDesdeHasta( numDestino, numOrigen )[0]
-			flujoActual[aOriginal] = flujo[aOriginal] - cuelloDeBotella
-			aOriginal.setPeso(capacidad[aOriginal] - flujoActual[aOriginal])
-			a.setPeso(flujoActual[aOriginal])
-
-	return flujoActual
-
-
-def actualizarRedResidual(red, redResidual, flujo, capacidad):
-	
-	flujoAux = dict(flujo)
-	
-	for a, valorDeFlujo in flujoAux.items():
-	
-		numOrigen = a.obtenerOrigen().obtenerNumero()
-		numDestino = a.obtenerDestino().obtenerNumero()
-
-		if (flujo[a] > 0):
-			a.setPeso(capacidad[a] - valorDeFlujo)
-			if (not redResidual.obtenerAristasDesdeHasta(numDestino, numOrigen)):
-				aristaResidual = redResidual.agregarArista( numDestino, 
-				numOrigen, valorDeFlujo)
-				flujo[aristaResidual] = 0
-			
-		else:
-			aResidual = redResidual.obtenerAristasDesdeHasta( numDestino, numOrigen )[0]
-			aResidual.setPeso(valorDeFlujo)
-			a.setPeso(capacidad[a] - valorDeFlujo)	
-
-
-def actualizarFlujoA(flujo, flujoActual):
-	for a, valorFlujo in flujoActual.items():
-		flujo[a] = valorFlujo
-
-
-def FordFulkerson(red, mostrarCamino = False):
-
-	flujo = {}
-	cuellosDeBotella = []
-	aristasRed = red.obtenerAristas()
-	redResidual = RedDeTransporte()
-	inicializarRedResidual(redResidual, aristasRed)
-	maxFlujo = 0
-	inicializarFlujo(redResidual, flujo)
-	capacidad = {}
-	inicializarCapacidad(redResidual, capacidad)
-	
-	while True:
-		camino = obtenerCamino(redResidual, flujo)
-		if not camino: break
-		if mostrarCamino: imprimirCamino(camino)
-		cuellosDeBotella.append(obtenerAristaMinima(camino))
-		cuelloActual = cuellosDeBotella[-1].obtenerPeso()
-		maxFlujo += cuelloActual
-		
-		for a in camino:
-			numOrigen = a.obtenerOrigen().obtenerNumero()
-			numDestino = a.obtenerDestino().obtenerNumero()
-			aristaInversa = red.obtenerAristasDesdeHasta(numDestino, numOrigen)
-			
-			if (red.tieneArista(numOrigen, numDestino)):
-				flujo[a] += cuelloActual
-				flujo[aristaInversa] -= cuelloActual
-				a.setPeso(capacidad[a] - flujo[a])
-				aristaInversa.setPeso(flujo[a])
-		
-			else:
-				flujo[aristaInversa] += cuelloActual
-				flujo[a] -= cuelloActual
-				aristaInversa.setPeso(capacidad[a] - flujo[a])
-				a.setPeso(flujo[a])
-		
-		'''flujoActual = flujoActualizado(red, redResidual, camino, flujo, cuelloActual, capacidad)
-		actualizarRedResidual(red, redResidual, flujoActual, capacidad)
-		actualizarFlujoA(flujo, flujoActual)
+	def agregarVertice(self, numero, info = None):
 		'''
-	
-	return maxFlujo, cuellosDeBotella
+		El conjunto de vertices es un diccionario.
+		'''
+		try:
+			self.vertices[numero]
+			raise ValueError("Ya existe un vértice con ese número.")
+		
+		except KeyError:
+			self.vertices[numero] = Vertice(numero, info)
+			return self.vertices[numero]
 
-def flujoMaximo(red, mostrarCamino = False):
-	
-	maxFlujo, cuellosDeBotella = FordFulkerson(red, mostrarCamino)
-	return maxFlujo
 
+	def darVertice(self, numero):
+		''' 
+		Devuelve el vértice con el número especificado.
+		Si no existe lo crea.
+		'''
+		
+		try: 
+			self.vertices[numero]
+		
+		except KeyError: 
+			self.agregarVertice(numero)
+		
+		finally:
+			return self.vertices[numero]
+
+
+	def agregarArista(self, numeroOrigen, numeroDestino, peso = 1, identificador = None):
+		''' 
+		Agrega una arista a la red. Si los vértices parametrizados no
+		existen, los crea.
+		
+		El conjunto de aristas es un diccionario de diccionarios de 
+		listas de uniones entre vértices.
+		
+		El primer diccionario representa las aristas del vértice origen
+		y el segundo la lista de aristas que inciden en un destino particular.
+		Se guardan en formato de listas por si existen varias con el mismo
+		origen y destino.
+		
+		'''
+		verticeOrigen = self.darVertice(numeroOrigen)
+		verticeDestino = self.darVertice(numeroDestino)
+		
+		try: self.aristas[numeroOrigen]
+		
+		except KeyError: self.aristas[numeroOrigen] = {}
+			
+		finally:
+			
+			try: 
+				self.aristas[numeroOrigen][numeroDestino]
+			
+			except KeyError: 
+				self.aristas[numeroOrigen][numeroDestino] = []
+				verticeOrigen.agregarAdyacente(verticeDestino)
+			
+			arista = Arista(verticeOrigen, verticeDestino, peso, identificador)
+			if (not identificador): arista.setId( id(arista) )
+			self.aristas[numeroOrigen][numeroDestino].append( arista )
+			return arista
+			
+
+	def agregarAristaInversa(self, arista):
+		idArista = arista.obtenerId()
+		numOrigen = arista.obtenerOrigen().obtenerNumero()
+		numDestino = arista.obtenerDestino().obtenerNumero()
+		return self.agregarArista(numDestino, numOrigen, 0, idArista)
+	
+
+	def obtenerAristaInversa(self, arista):
+		idArista = arista.obtenerId()
+		numOrigen = arista.obtenerOrigen().obtenerNumero()
+		numDestino = arista.obtenerDestino().obtenerNumero()
+		
+		try:
+			aristasPosibles = self.aristas[numDestino][numOrigen]
+			for a in aristasPosibles:
+				if ( ( a.obtenerId() ) and 
+				( a.obtenerId() == idArista ) ):
+					return a
+		
+		except KeyError:
+			return None
+
+
+	def obtenerVertice(self, numero):
+		
+		try:
+			return self.vertices[numero]
+			
+		except KeyError:
+			return None
+
+
+	def obtenerVertices(self):
+		return list(self.vertices.values())
+	
+
+	def obtenerAristasDesdeHasta(self, numOrigen, numDestino):
+		
+		try:
+			return self.aristas[numOrigen][numDestino]
+		
+		except KeyError:
+			return []
+	
+
+	def obtenerAristas(self, numOrigen = -1):
+		listaAristasOrigen = []
+		
+		if numOrigen >= 0:
+			for listaAristas in self.aristas[numOrigen].values():
+				listaAristasOrigen += listaAristas
+
+		else:
+			for conjuntoAristas in self.aristas.values():
+				for listaAristas in conjuntoAristas.values():
+					listaAristasOrigen += listaAristas
+				
+		return listaAristasOrigen
+
+
+	def tieneArista(self, numOrigen, numDestino):
+		
+		try:
+			self.aristas[numOrigen][numDestino]
+			return True
+		
+		except KeyError:
+			return False
 
 
 red = RedDeTransporte()
-red.agregarArista(0, 1, 1)
-red.agregarArista(0, 1, 1)
-red.agregarArista(0, 1, 1)
-flujoMaximo(red)
+red.agregarVertice(2)
+red.agregarArista(0, 2, 10)
+red.agregarArista(2, 1, 5)
+red2 = cargarArchivoSabotage("MapasDePrueba/mapa1.map")
+if (red.esIgualA(red2)):
+    print("ok")

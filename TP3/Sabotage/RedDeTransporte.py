@@ -27,8 +27,8 @@ class RedDeTransporte:
 		for a in self.obtenerAristas():
 			redStr += str(a)
 		return redStr
-	
-	
+
+
 	def obtenerFuente(self):
 		return self.fuente
 
@@ -37,7 +37,35 @@ class RedDeTransporte:
 		return self.sumidero
 	
 	
-	def agregarVertice(self, numero):
+	def esIgualA(self, otraRed):
+		
+		try: 
+			for a in otraRed.obtenerAristas():
+				match = False
+				numOrigen = a.obtenerOrigen().obtenerNumero()
+				numDestino = a.obtenerDestino().obtenerNumero()
+				
+				for a2 in self.aristas[numOrigen][numDestino]:
+					if a.esIgualA(a2):
+						match = True
+						break
+						
+				if not match:
+					return False
+							
+			for v in otraRed.obtenerVertices():
+				numVertice = v.obtenerNumero()
+				
+				if not self.vertices[numVertice].esIgualA(v):
+					return False
+				
+				return True
+			
+		except KeyError:
+			return False
+		
+		
+	def agregarVertice(self, numero, info = None):
 		'''
 		El conjunto de vertices es un diccionario.
 		'''
@@ -46,7 +74,7 @@ class RedDeTransporte:
 			raise ValueError("Ya existe un vértice con ese número.")
 		
 		except KeyError:
-			self.vertices[numero] = Vertice(numero)
+			self.vertices[numero] = Vertice(numero, info)
 			return self.vertices[numero]
 
 
@@ -66,7 +94,7 @@ class RedDeTransporte:
 			return self.vertices[numero]
 
 
-	def agregarArista(self, numeroOrigen, numeroDestino, peso = 1):
+	def agregarArista(self, numeroOrigen, numeroDestino, peso = 1, identificador = None):
 		''' 
 		Agrega una arista a la red. Si los vértices parametrizados no
 		existen, los crea.
@@ -96,19 +124,34 @@ class RedDeTransporte:
 				self.aristas[numeroOrigen][numeroDestino] = []
 				verticeOrigen.agregarAdyacente(verticeDestino)
 			
-			arista = Arista(verticeOrigen, verticeDestino, peso)
-			self.aristas[numeroOrigen][numeroDestino].append(
-			arista )
+			arista = Arista(verticeOrigen, verticeDestino, peso, identificador)
+			if (not identificador): arista.setId( id(arista) )
+			self.aristas[numeroOrigen][numeroDestino].append( arista )
 			return arista
-
-
-	def agregarAristas(self, aristas):
-		for a in aristas:
-			self.agregarArista(
-			a.obtenerOrigen().obtenerNumero(),
-			a.obtenerDestino().obtenerNumero(),
-			a.obtenerPeso())
 			
+
+	def agregarAristaInversa(self, arista):
+		idArista = arista.obtenerId()
+		numOrigen = arista.obtenerOrigen().obtenerNumero()
+		numDestino = arista.obtenerDestino().obtenerNumero()
+		return self.agregarArista(numDestino, numOrigen, 0, idArista)
+	
+
+	def obtenerAristaInversa(self, arista):
+		idArista = arista.obtenerId()
+		numOrigen = arista.obtenerOrigen().obtenerNumero()
+		numDestino = arista.obtenerDestino().obtenerNumero()
+		
+		try:
+			aristasPosibles = self.aristas[numDestino][numOrigen]
+			for a in aristasPosibles:
+				if ( ( a.obtenerId() ) and 
+				( a.obtenerId() == idArista ) ):
+					return a
+		
+		except KeyError:
+			return None
+
 
 	def obtenerVertice(self, numero):
 		

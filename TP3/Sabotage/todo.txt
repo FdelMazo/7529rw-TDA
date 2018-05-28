@@ -1,9 +1,3 @@
-Ford-Fulkerson in 5 minutes — Step by step example
-
-
-Algoritmo Ford-Fulkerson:
-
-
 
 Esto es, siempre y cuando los cuellos de botella sean "óptimos", es decir, no existan caminos alternativos que permitan maximizar el flujo, pero con aristas de mayor capacidad.
 
@@ -20,5 +14,4 @@ El peso es la capacidad de las aristas.
 THE ranking de universidades
 
 20.000
-
 40.000

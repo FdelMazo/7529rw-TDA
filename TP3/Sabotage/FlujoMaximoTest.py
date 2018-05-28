@@ -2,7 +2,7 @@ import unittest
 from RedDeTransporte import *
 from FlujoMaximo import *
 
-class RedDeTransporteTest(unittest.TestCase):
+class FlujoMaximoTest(unittest.TestCase):
 
 	def test_red_tiene_la_arista_minima_esperada(self):
 		red = RedDeTransporte()
@@ -509,5 +509,5 @@ class RedDeTransporteTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-	suite = unittest.TestLoader().loadTestsFromTestCase(RedDeTransporteTest)
+	suite = unittest.TestLoader().loadTestsFromTestCase(FlujoMaximoTest)
 	unittest.TextTestRunner(verbosity=1).run(suite)
