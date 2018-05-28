@@ -1,7 +1,24 @@
+Ford-Fulkerson in 5 minutes — Step by step example
+
+
 Algoritmo Ford-Fulkerson:
-	-> Ver si los objetos arista sirven como identificadores sin generar conflictos
-	-> Ver si se respeta la mutabilidad del diccionario de flujos
+
+
+
+Esto es, siempre y cuando los cuellos de botella sean "óptimos", es decir, no existan caminos alternativos que permitan maximizar el flujo, pero con aristas de mayor capacidad.
+
+Ejemplo
+
+
+
+
 	
-	-> Separar dfs de Fulkerson y tener un recorrido propio para los flujos
-	-> Obtener camino: está mal. Tiene que ser de la fuente al sumidero.
-	-> Actualizar el grafo residual
+	
+El peso es la capacidad de las aristas.
+
+
+THE ranking de universidades
+
+20.000
+
+40.000
