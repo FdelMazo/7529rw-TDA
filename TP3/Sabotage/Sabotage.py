@@ -17,3 +17,4 @@ def cargarArchivoSabotage(archivo = ARCHIVO):
 			red.agregarArista(int(numOrigen), int(numDestino), int(peso))
 	
 	return red
+
