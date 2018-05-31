@@ -508,6 +508,14 @@ class FlujoMaximoTest(unittest.TestCase):
 		self.assertEquals( 29, flujoMaximo(red))
 
 
+	def test_red_tiene_el_flujo_maximo_esperado34(self):
+		red = RedDeTransporte()
+		red.agregarVertice(2)
+		red.agregarArista(0, 2, 10)
+		red.agregarArista(2, 1, 5)
+		self.assertEquals( 5, flujoMaximo(red) )
+	
+
 if __name__ == '__main__':
 	suite = unittest.TestLoader().loadTestsFromTestCase(FlujoMaximoTest)
 	unittest.TextTestRunner(verbosity=1).run(suite)

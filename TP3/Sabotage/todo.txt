@@ -1,17 +1,4 @@
-
-Esto es, siempre y cuando los cuellos de botella sean "óptimos", es decir, no existan caminos alternativos que permitan maximizar el flujo, pero con aristas de mayor capacidad.
-
-Ejemplo
-
-
-
-
-	
-	
-El peso es la capacidad de las aristas.
-
-
-THE ranking de universidades
-
-20.000
-40.000
+-> Pruebas de protección de aristas.
+-> Describir un poco más el texto
+-> Hay que hacer el sabotage??
+-> punto 5

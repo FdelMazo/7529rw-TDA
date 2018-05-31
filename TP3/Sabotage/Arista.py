@@ -42,7 +42,7 @@ class Arista:
 
 	def esIgualA(self, otraArista):
 		return ( 
-		self.origen.obtenerNumero() == otraArista.obtenerOrigen().obtenerNumero() 
-		and self.destino.obtenerNumero() == otraArista.obtenerDestino().obtenerNumero() 
-		and self.peso == otraArista.obtenerPeso() 
+		self.origen.esIgualA(otraArista.obtenerOrigen()) and
+		self.destino.esIgualA(otraArista.obtenerDestino()) and 
+		self.peso == otraArista.obtenerPeso() 
 		)

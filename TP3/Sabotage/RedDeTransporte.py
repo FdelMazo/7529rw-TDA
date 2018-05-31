@@ -12,8 +12,8 @@ class RedDeTransporte:
 	nodo tiene al menos una arista incidente.
 	'''
 
-	def __init__(self, aristas = []):
-					
+	def __init__(self):
+		
 		self.vertices = {}
 		self.aristas = {}
 		self.fuente = Vertice(0)
@@ -174,7 +174,17 @@ class RedDeTransporte:
 		except KeyError:
 			return []
 	
-
+	
+	def obtenerArista(self, numOrigen, numDestino, identificador):
+		aristasPosibles = self.obtenerAristasDesdeHasta(numOrigen, numDestino)
+		
+		for a in aristasPosibles:
+			if a.obtenerId() == identificador:
+				return a
+		
+		return None
+	
+	
 	def obtenerAristas(self, numOrigen = -1):
 		listaAristasOrigen = []
 		
@@ -198,3 +208,17 @@ class RedDeTransporte:
 		
 		except KeyError:
 			return False
+
+
+def duplicarRed(unaRed):
+	red = RedDeTransporte()
+	
+	for a in unaRed.obtenerAristas():
+		red.agregarArista(
+		a.obtenerOrigen().obtenerNumero(),
+		a.obtenerDestino().obtenerNumero(),
+		a.obtenerPeso(),
+		a.obtenerId()
+		)
+		
+	return red

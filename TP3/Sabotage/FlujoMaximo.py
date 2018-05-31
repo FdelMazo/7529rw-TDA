@@ -1,16 +1,6 @@
 from RedDeTransporte import *
 
 
-def imprimirCamino(camino):
-	for a in camino:
-		print(a)
-
-
-def imprimirFlujo(flujo):
-	for key,value in flujo.items():
-		print( str(a) + '  -  ' + str(value) )
-
-
 def inicializarRedResidual(redResidual, aristasRed):
 	for a in aristasRed:
 		numOrigen = a.obtenerOrigen().obtenerNumero()
@@ -30,9 +20,7 @@ def obtenerCamino(red, flujo):
 	aristaActual = None
 	 
 	while ( verticeActual is not red.obtenerSumidero() ):
-		
 		for a in red.obtenerAristas(verticeActual.obtenerNumero()):
-		
 			if ( (a not in visitadas) and ( a.obtenerPeso() > 0 ) ):
 				aristaActual = a
 				visitadas.append(aristaActual)
@@ -75,8 +63,14 @@ def obtenerAristaMinima(camino):
 		raise ValueError("Camino vacío.")
 
 
-def FordFulkerson(red, mostrarCamino = False):
-
+def FordFulkerson(redOriginal, mostrarCamino = False):
+	'''
+	Devuelve el flujo máximo de la red, sus cuellos de botella
+	y los caminos "reales" (sin aristas de regresión) realizados
+	para computar el flujo máximo.
+	'''
+	
+	red = duplicarRed(redOriginal)
 	flujo = {}
 	cuellosDeBotella = []
 	aristasRed = red.obtenerAristas()
@@ -86,14 +80,24 @@ def FordFulkerson(red, mostrarCamino = False):
 	inicializarFlujo(redResidual, flujo)
 	capacidad = {}
 	inicializarCapacidad(redResidual, capacidad)
+	caminos = []
 	
 	while True:
 		camino = obtenerCamino(redResidual, flujo)
 		if not camino: break
-		if mostrarCamino: imprimirCamino(camino)
-		cuellosDeBotella.append(obtenerAristaMinima(camino))
-		cuelloActual = cuellosDeBotella[-1].obtenerPeso()
+		if mostrarCamino: print(camino)
+		
+		cuelloDeBotella = obtenerAristaMinima(camino)
+		cuelloActual = cuelloDeBotella.obtenerPeso()
 		maxFlujo += cuelloActual
+		
+		cuellosDeBotella.append(redOriginal.obtenerArista(
+		cuelloDeBotella.obtenerOrigen().obtenerNumero(),
+		cuelloDeBotella.obtenerDestino().obtenerNumero(),
+		cuelloDeBotella.obtenerId()
+		)
+		)	
+		unCamino = []
 		
 		for a in camino:
 			numOrigen = a.obtenerOrigen().obtenerNumero()
@@ -104,16 +108,25 @@ def FordFulkerson(red, mostrarCamino = False):
 				flujo[a] += cuelloActual
 				a.setPeso(capacidad[a] - flujo[a])
 				aristaInversa.setPeso(flujo[a])
+				unCamino.append( redOriginal.obtenerArista(
+				a.obtenerOrigen().obtenerNumero(),
+				a.obtenerDestino().obtenerNumero(),
+				a.obtenerId()
+				)
+				)
 					
 			else:
 				flujo[aristaInversa] -= cuelloActual
 				a.setPeso(flujo[aristaInversa])
 				aristaInversa.setPeso(capacidad[aristaInversa] - flujo[aristaInversa])				
+				if cuellosDeBotella: cuellosDeBotella.pop()
+			
+		caminos.append(unCamino)
 
-	return maxFlujo, cuellosDeBotella
+	return maxFlujo, cuellosDeBotella, caminos 
 
 
 def flujoMaximo(red, mostrarCamino = False):
 	
-	maxFlujo, cuellosDeBotella = FordFulkerson(red, mostrarCamino)
+	maxFlujo, cuellosDeBotella, caminos = FordFulkerson(red, mostrarCamino)
 	return maxFlujo
