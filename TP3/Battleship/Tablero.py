@@ -8,11 +8,11 @@ class Tablero():
 
     def avanzarBarcos(self):
         for barco in self.barcos:
-            x, y = barco.getPosicion()
-            if y == len(self.matriz[x]) - 1:
-                barco.setPosicion(x, 0)
+            y, x = barco.getPosicion()
+            if y == len(self.matriz[y]) - 1:
+                barco.setPosicion(y, 0)
             else:
-                barco.setPosicion(x, y + 1)
+                barco.setPosicion(y, x + 1)
 
     def getCantidadDeLanzaderas(self):
         return self.lanzaderas
