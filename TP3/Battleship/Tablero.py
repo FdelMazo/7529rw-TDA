@@ -23,3 +23,6 @@ class Tablero():
 
     def estaVacio(self):
         return len(self.barcos) == 0
+
+    def getValorCasillero(self, x, y):
+        return self.matriz[y][x]

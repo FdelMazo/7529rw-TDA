@@ -8,7 +8,7 @@ class TestDerribarUnBarcoCon1Lanzadera(unittest.TestCase):
         barco.setPosicion(0, 0)
         barcos = [barco]
         tablero = Tablero(matriz, barcos, 1)
-        GreedoTurno(tablero, matriz, barcos, 1)
+        GreedoTurno(tablero, barcos, 1)
         self.assertTrue(barco.estaDerribado())
 
     def testBarcoNoDerribado(self):
@@ -17,7 +17,7 @@ class TestDerribarUnBarcoCon1Lanzadera(unittest.TestCase):
         barco.setPosicion(0, 0)
         barcos = [barco]
         tablero = Tablero(matriz, barcos, 1)
-        GreedoTurno(tablero, matriz, barcos, 1)
+        GreedoTurno(tablero, barcos, 1)
         self.assertFalse(barco.estaDerribado())
 
 
@@ -28,7 +28,7 @@ class TestDerribarUnBarcoCon3Lanzaderas(unittest.TestCase):
         barco.setPosicion(0, 0)
         barcos = [barco]
         tablero = Tablero(matriz, barcos, 3)
-        GreedoTurno(tablero, matriz, barcos, 3)
+        GreedoTurno(tablero, barcos, 3)
         self.assertTrue(barco.estaDerribado())
 
     def testBarcoNoDerribado(self):
@@ -37,7 +37,7 @@ class TestDerribarUnBarcoCon3Lanzaderas(unittest.TestCase):
         barco.setPosicion(0, 0)
         barcos = [barco]
         tablero = Tablero(matriz, barcos, 3)
-        GreedoTurno(tablero, matriz, barcos, 3)
+        GreedoTurno(tablero, barcos, 3)
         self.assertFalse(barco.estaDerribado())
 
 class TestDerribarDosBarcosCon1Lanzadera(unittest.TestCase):
@@ -46,10 +46,10 @@ class TestDerribarDosBarcosCon1Lanzadera(unittest.TestCase):
         A = Barco(100)
         B = Barco(100)
         A.setPosicion(0, 0)
-        B.setPosicion(1, 0)
+        B.setPosicion(0, 1)
         barcos = [A, B]
         tablero = Tablero(matriz, barcos, 1)
-        GreedoTurno(tablero, matriz, barcos, 1)
+        GreedoTurno(tablero, barcos, 1)
         self.assertTrue(A.estaDerribado() and not B.estaDerribado())
 
     def testBDerribadoASinDerribar(self):
@@ -57,10 +57,10 @@ class TestDerribarDosBarcosCon1Lanzadera(unittest.TestCase):
         A = Barco(100)
         B = Barco(100)
         A.setPosicion(0, 0)
-        B.setPosicion(1, 0)
+        B.setPosicion(0, 1)
         barcos = [A, B]
         tablero = Tablero(matriz, barcos, 1)
-        GreedoTurno(tablero, matriz, barcos, 1)
+        GreedoTurno(tablero, barcos, 1)
         self.assertTrue(not A.estaDerribado() and B.estaDerribado())
 
 class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
@@ -69,10 +69,10 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         A = Barco(100)
         B = Barco(100)
         A.setPosicion(0, 0)
-        B.setPosicion(1, 0)
+        B.setPosicion(0, 1)
         barcos = [A, B]
         tablero = Tablero(matriz, barcos, 3)
-        GreedoTurno(tablero, matriz, barcos, 3)
+        GreedoTurno(tablero, barcos, 3)
         self.assertTrue(A.estaDerribado() and not B.estaDerribado())
 
     def testBDerribadoASinDerribar(self):
@@ -80,10 +80,10 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         A = Barco(100)
         B = Barco(100)
         A.setPosicion(0, 0)
-        B.setPosicion(1, 0)
+        B.setPosicion(0, 1)
         barcos = [A, B]
         tablero = Tablero(matriz, barcos, 3)
-        GreedoTurno(tablero, matriz, barcos, 3)
+        GreedoTurno(tablero, barcos, 3)
         self.assertTrue(not A.estaDerribado() and B.estaDerribado())
 
     def testADerribadoADerribado(self):
@@ -91,19 +91,30 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         A = Barco(100)
         B = Barco(100)
         A.setPosicion(0, 0)
-        B.setPosicion(1, 0)
+        B.setPosicion(0, 1)
         barcos = [A, B]
         tablero = Tablero(matriz, barcos, 3)
-        GreedoTurno(tablero, matriz, barcos, 3)
+        GreedoTurno(tablero, barcos, 3)
         self.assertTrue(A.estaDerribado() and B.estaDerribado())
 
-    def ASinDerribarBSinDerribar(self):
+    def testASinDerribarBSinDerribar1(self):
         matriz = [[50, 40, 30, 10], [100, 30, 80, 100]]
         A = Barco(1000)
         B = Barco(1000)
         A.setPosicion(0, 0)
-        B.setPosicion(1, 0)
+        B.setPosicion(0, 1)
         barcos = [A, B]
         tablero = Tablero(matriz, barcos, 3)
-        GreedoTurno(tablero, matriz, barcos, 3)
+        GreedoTurno(tablero, barcos, 3)
         self.assertFalse(A.estaDerribado() and B.estaDerribado())
+
+    def testASinDerribarBDerribado2(self):
+        matriz = [[1, 1000, 30, 10], [2, 1000, 80, 100]]
+        A = Barco(100)
+        B = Barco(100)
+        A.setPosicion(0, 0)
+        B.setPosicion(1, 1)
+        barcos = [A, B]
+        tablero = Tablero(matriz, barcos, 3)
+        GreedoTurno(tablero, barcos, 3)
+        self.assertTrue(not A.estaDerribado() and B.estaDerribado())
