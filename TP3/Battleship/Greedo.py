@@ -15,7 +15,7 @@ def GreedoTurno(tablero, matriz, barcos, lanzaderas):
         if barco.estaDerribado():
             barcosDisponibles -= 1
             tablero.removerBarco(barco)
-            if barcosDisponibles > 0:
+            if not tablero.tableroEstaVacio():
                 barcoActual = barcosOrdenados[barcosDisponibles - 1]
             else:
                 break

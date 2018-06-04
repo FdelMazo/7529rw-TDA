@@ -9,7 +9,7 @@ class Tablero():
     def avanzarBarcos(self):
         for barco in self.barcos:
             y, x = barco.getPosicion()
-            if y == len(self.matriz[y]) - 1:
+            if x == len(self.matriz[y]) - 1:
                 barco.setPosicion(y, 0)
             else:
                 barco.setPosicion(y, x + 1)
@@ -20,3 +20,6 @@ class Tablero():
     def removerBarco(self, barco):
         if barco in self.barcos:
             self.barcos.remove(barco)
+
+    def tableroEstaVacio(self):
+        return len(self.barcos) == 0
