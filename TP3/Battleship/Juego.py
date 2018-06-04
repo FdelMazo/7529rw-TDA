@@ -8,6 +8,12 @@ class Juego():
         self.lanzaderas = lanzaderas
         self.turno = 0
         self.puntos = 0
+        self.jugador = None
+        self.setBarcos()
+    
+    def setBarcos(self):
+        for i, b in enumerate(self.barcos):
+            b.setPosicion(0,i)
 
     def avanzarBarcos(self):
         for barco in self.barcos:
@@ -21,9 +27,6 @@ class Juego():
         if barco in self.barcos:
             self.barcos.remove(barco)
 
-    def estaVacio(self):
-        return len(self.barcos) == 0
-
     def getCantidadDeLanzaderas(self):
         return self.lanzaderas
 
@@ -36,8 +39,19 @@ class Juego():
     def getValorCasillero(self, x, y):
         return self.matriz[y][x]
 
-    def getBarcosVivos(self):
-        return [b for b in self.barcos if not b.estaDerribado()]
+    def terminado(self):
+        return not self.barcos
+
+    def getPuntos(self):
+        return self.puntos
+    
+    def setJugador(self,jugador):
+        self.jugador = jugador
+
+    def jugar(self):
+        self.jugador.turno(self, self.barcos, self.lanzaderas)
+        self.puntos += len(self.getBarcos())
+        self.turno+=1
 
     @staticmethod
     def ArchivoToBarcos(archivo):

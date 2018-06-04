@@ -27,6 +27,8 @@ class VistaJuego():
     def update(self):
         for linea in self.juego.matriz:
             self.imprimirLinea(linea)
+        print()
+
         #self.informacionAdicional()
 
     def start(self):
@@ -39,7 +41,21 @@ class VistaJuego():
         print(string)
 
     def end(self):
-        string =  "Juego finalizado!\n"
-        string += "En {} turnos se alcanzaron {} puntos!".format(self.juego.contadorTurnos, self.juego.puntos)
+        string =  "Turno finalizado!\n"
+        string += "En {} turnos se alcanzaron {} puntos!".format(self.juego.turno, self.juego.puntos)
         print(string)
 
+    @staticmethod
+    def imprimirSeparacion():
+        string = "\n\n*******************************\n"
+        string += "Cambio de turno!!! \n"
+        string += "*******************************\n\n"
+        print(string)
+    
+    @staticmethod    
+    def imprimirGanador(puntosGreedo, puntosDyno):
+        ganador = "Greedo" if puntosGreedo<puntosDyno else "Dyno"      
+        string = "\n\n*******************************\n"
+        string += "El ganador es {}!!!\n".format(ganador)
+        string += "*******************************\n\n"
+        print(string)
