@@ -19,3 +19,11 @@ def GreedoTurno(tablero, barcos, lanzaderas):
                 barcoActual = barcosOrdenados[barcosDisponibles - 1]
             else:
                 break
+
+def Greedo(tablero):
+    puntaje = 0
+    while not tablero.estaVacio():
+        barcos = tablero.getBarcos()
+        lanzaderas = tablero.getCantidadDeLanzaderas()
+        GreedoTurno(tablero, barcos, lanzaderas)
+        puntaje += tablero.getCantidadDeBarcos()
