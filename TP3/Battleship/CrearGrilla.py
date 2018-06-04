@@ -1,4 +1,3 @@
-from sys import argv
 import random
 
 FILAS = 5

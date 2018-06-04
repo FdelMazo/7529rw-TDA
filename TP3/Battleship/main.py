@@ -18,6 +18,7 @@ def jugar(archivo, jugador):
     juego.setJugador(jugador)
     vista = VistaJuego(juego)
     vista.start()
+    vista.update()
     while not juego.terminado():
         juego.jugar()
         vista.update()

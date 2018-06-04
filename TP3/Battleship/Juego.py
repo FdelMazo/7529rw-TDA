@@ -12,30 +12,23 @@ class Juego():
         self.setBarcos()
     
     def setBarcos(self):
-        for i, b in enumerate(self.barcos):
-            b.setPosicion(0,i)
+        for i, barco in enumerate(self.barcos):
+            barco.setPosicion(0,i)
 
     def avanzarBarcos(self):
         for barco in self.barcos:
             x, y = barco.getPosicion()
             if x == len(self.matriz[y]) - 1:
-                barco.setPosicion(y, 0)
+                barco.setPosicion(0,y)
             else:
-                barco.setPosicion(y, x + 1)
+                barco.setPosicion(x + 1, y)
 
     def removerBarco(self, barco):
-        if barco in self.barcos:
-            self.barcos.remove(barco)
-
-    def getCantidadDeLanzaderas(self):
-        return self.lanzaderas
+        self.barcos.remove(barco)
 
     def getBarcos(self):
         return self.barcos
-
-    def getCantidadDeBarcos(self):
-        return len(self.barcos)
-
+        
     def getValorCasillero(self, x, y):
         return self.matriz[y][x]
 
@@ -50,6 +43,7 @@ class Juego():
 
     def jugar(self):
         self.jugador.turno(self, self.barcos, self.lanzaderas)
+        self.avanzarBarcos()
         self.puntos += len(self.getBarcos())
         self.turno+=1
 

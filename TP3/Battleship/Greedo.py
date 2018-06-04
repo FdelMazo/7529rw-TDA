@@ -12,7 +12,7 @@ class Greedo():
         barcoActual = barcosOrdenados[barcosDisponibles - 1]
         for i in range(len(lanzaderas)):
             barco, danio = barcoActual
-            barco.atacar(danio)
+            barco.recibirDanio(danio)
             if barco.estaDerribado():
                 barcosDisponibles -= 1
                 juego.removerBarco(barco)

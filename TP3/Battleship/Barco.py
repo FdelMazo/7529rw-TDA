@@ -3,7 +3,7 @@ class Barco():
         self.vida = vida
         self.posicion = None
 
-    def atacar(self, danio):
+    def recibirDanio(self, danio):
         self.vida -= danio
 
     def estaDerribado(self):

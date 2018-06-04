@@ -1,5 +1,5 @@
 import unittest
-from Greedo import *
+from Dyno import *
 from Juego import Juego
 
 class TestDerribarUnBarcoCon1Lanzadera(unittest.TestCase):
