@@ -24,3 +24,5 @@
 *__pycache__
 *_minted*
 .vscode/
+
+.coords
