@@ -14,3 +14,6 @@ class Barco():
 
     def setPosicion(self, x, y):
         self.posicion = (x, y)
+
+    def getVida(self):
+        return self.vida

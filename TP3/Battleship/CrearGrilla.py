@@ -2,7 +2,7 @@ from sys import argv
 import random
 
 FILAS = 5
-COLUMNAS = 20
+COLUMNAS = 10
 RANGE_VIDA = (500, 1000)
 MAX_DANIO = 300
 

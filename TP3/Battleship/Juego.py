@@ -1,11 +1,13 @@
-from Barco import *
-from Lanzadera import *
+from Barco import Barco
+from Lanzadera import Lanzadera
 
 class Juego():
     def __init__(self, matriz, barcos, lanzaderas):
         self.matriz = matriz
         self.barcos = barcos
         self.lanzaderas = lanzaderas
+        self.turno = 0
+        self.puntos = 0
 
     def avanzarBarcos(self):
         for barco in self.barcos:
@@ -33,6 +35,9 @@ class Juego():
 
     def getValorCasillero(self, x, y):
         return self.matriz[y][x]
+
+    def getBarcosVivos(self):
+        return [b for b in self.barcos if not b.estaDerribado()]
 
     @staticmethod
     def ArchivoToBarcos(archivo):

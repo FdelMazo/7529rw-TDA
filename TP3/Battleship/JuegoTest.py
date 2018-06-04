@@ -1,5 +1,7 @@
 import unittest
-from Tablero import *
+
+from Juego import Juego
+from Barco import Barco
 
 class TestMoverBarco(unittest.TestCase):
     def testMoverBarco(self):
@@ -7,8 +9,8 @@ class TestMoverBarco(unittest.TestCase):
         barco.setPosicion(0, 0)
         barcos = [barco]
         matriz = [[10, 30, 40, 50]]
-        tablero = Tablero(matriz, barcos, 0)
-        tablero.avanzarBarcos()
+        juego = Juego(matriz, barcos, 0)
+        juego.avanzarBarcos()
         self.assertEqual(barco.getPosicion(), (0,1))
 
 class TestBarcoVuelveAlInicio(unittest.TestCase):
@@ -17,8 +19,8 @@ class TestBarcoVuelveAlInicio(unittest.TestCase):
         barco.setPosicion(3, 0)
         barcos = [barco]
         matriz = [[10, 30, 40, 50]]
-        tablero = Tablero(matriz, barcos, 0)
-        tablero.avanzarBarcos()
+        juego = Juego(matriz, barcos, 0)
+        juego.avanzarBarcos()
         self.assertEqual(barco.getPosicion(), (0,0))
 
 class TestDanioCorrectoEnElCasillero(unittest.TestCase):
@@ -27,5 +29,8 @@ class TestDanioCorrectoEnElCasillero(unittest.TestCase):
         barco.setPosicion(0, 0)
         barcos = [barco]
         matriz = [[1, 2, 3], [4, 5, 6]]
-        tablero = Tablero(matriz, barcos, 1)
-        self.assertEqual(tablero.getValorCasillero(2, 1), 6)
+        juego = Juego(matriz, barcos, 1)
+        self.assertEqual(juego.getValorCasillero(2, 1), 6)
+
+if __name__ == '__main__':
+	unittest.main()

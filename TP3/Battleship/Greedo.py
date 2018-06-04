@@ -1,4 +1,3 @@
-from Tablero import *
 from Barco import *
 
 def GreedoTurno(tablero, barcos, lanzaderas):

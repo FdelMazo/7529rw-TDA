@@ -18,3 +18,6 @@ class TestBarcoNoEstaDerribado(unittest.TestCase):
         barco = Barco(100)
         barco.atacar(50)
         self.assertFalse(barco.estaDerribado())
+
+if __name__ == '__main__':
+	unittest.main()

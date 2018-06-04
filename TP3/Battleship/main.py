@@ -3,7 +3,7 @@ import CrearGrilla
 from Juego import Juego
 from VistaJuego import VistaJuego
 
-DEFAULT_GRILLA = [5, 20, (500,1000), 300] # Filas, Columnas, Rango de Vida barco, maximo danio de celda
+DEFAULT_GRILLA = [5, 10, (500,1000), 300] # Filas, Columnas, Rango de Vida barco, maximo danio de celda
 DEFAULT_LANZADERAS = 3
 ARCHIVO = 'grilla.coords'
 
@@ -18,7 +18,8 @@ def main():
     
     juego = Juego(matrizTablero, barcos, lanzaderas)
     vista = VistaJuego(juego)
-    vista.imprimirLineas()
+    vista.start()
+    vista.update()
 
 if __name__ == '__main__':
 	main()
