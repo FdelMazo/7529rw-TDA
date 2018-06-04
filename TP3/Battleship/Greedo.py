@@ -5,7 +5,7 @@ def GreedoTurno(tablero, matriz, barcos, lanzaderas):
     dic = {} #dic = {barco:danioCasillero}
     for barco in barcos:
         x, y = barco.getPosicion()
-        dic[barco] = matriz[x][y]
+        dic[barco] = matriz[y][x]
     barcosOrdenados = sorted(dic.items(), key=lambda x: x[1])
     barcosDisponibles = len(barcosOrdenados)
     barcoActual = barcosOrdenados[barcosDisponibles - 1]
@@ -15,7 +15,11 @@ def GreedoTurno(tablero, matriz, barcos, lanzaderas):
         if barco.estaDerribado():
             barcosDisponibles -= 1
             tablero.removerBarco(barco)
-            if not tablero.tableroEstaVacio():
+            if not tablero.estaVacio():
                 barcoActual = barcosOrdenados[barcosDisponibles - 1]
             else:
                 break
+
+
+[[1, 2, 3, 4],
+ [6, 7, 8, 9],]

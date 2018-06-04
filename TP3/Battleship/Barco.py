@@ -12,5 +12,5 @@ class Barco():
     def getPosicion(self):
         return self.posicion
 
-    def setPosicion(self, y, x):
-        self.posicion = (y, x)
+    def setPosicion(self, x, y):
+        self.posicion = (x, y)
