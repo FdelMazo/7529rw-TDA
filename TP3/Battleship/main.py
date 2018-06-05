@@ -12,16 +12,18 @@ ARCHIVO = 'grilla.coords'
 def jugar(archivo, jugador):
     matrizTablero = Juego.ArchivoToMatriz(archivo)
     barcos = Juego.ArchivoToBarcos(archivo)
-    lanzaderas = Juego.CrearLanzaderas(DEFAULT_LANZADERAS)
+    cantidadLanzaderas = DEFAULT_LANZADERAS
     
-    juego = Juego(matrizTablero, barcos, lanzaderas)
+    juego = Juego(matrizTablero, barcos, cantidadLanzaderas)
     juego.setJugador(jugador)
+    juego.setPosicionesIniciales()
     vista = VistaJuego(juego)
     vista.start()
-    vista.update()
     while not juego.terminado():
         juego.jugar()
+        vista.informacionAdicional()
         vista.update()
+        juego.avanzarTurno()
     vista.end()
     return juego.getPuntos()
 

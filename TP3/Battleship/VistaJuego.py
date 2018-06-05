@@ -24,25 +24,27 @@ class VistaJuego():
                 num = "{}".format(n).center(5)
                 celda = "{}|".format(num)
             linea+=celda
-        stringBarco = "\t\t{} Barco {}: ".format(bcolors.RED, y)
-        if barco.estaDerribado(): stringBarco+="Dead"
-        else: stringBarco+="{}HP".format(barco.getVida())
+        if barco.estaDerribado():
+            stringBarco = bcolors.RED
+            stringBarco +="\t\t Barco {}: Dead".format(y)
+        else:
+            stringBarco = bcolors.GREEN
+            stringBarco = "\t\t{} Barco {}: {} HP".format(bcolors.GREEN, y, barco.getVida())
         stringBarco+=bcolors.ENDC
         linea+= stringBarco
         print(linea)
         
     def informacionAdicional(self):
+        print("*******************************")
         string = "Turno: {}\n".format(self.juego.turno)
         string += "Puntos: {}\n".format(self.juego.puntos)
         barcosVivos = self.juego.getBarcosVivos()
-        string += "Barcos en juego: {}\n".format(len(barcosVivos))
-        for i,l in enumerate(self.juego.lanzaderas):
-            string += "Lanzadera {} Target: {}\n".format(i, self.juego.targets[i])
+        string += "Barcos en juego: {}\n\n".format(len(barcosVivos))
+        for i in range(self.juego.cantidadLanzaderas):
+            string += "Lanzadera {} --> Barco {}\n".format(i, self.juego.barcosAtacados[i])
         print(string)
 
     def update(self):
-        print("*******************************")
-        self.informacionAdicional()
         for columna, fila in enumerate(self.juego.matriz):
             self.imprimirFila(fila, columna)
         print()
@@ -51,9 +53,9 @@ class VistaJuego():
         string = "\n\n*******************************\n"
         string += "Battleship: La batalla final! \n"
         string += "*******************************\n\n"
-        string += "En esta esquina, Dyno! El mejor programador de la historia desde Thomas Cormen \n"
-        string += "En esta otra, Greedo! El sucesor al creador de la programacion greedy, John Greedy \n\n"
-        string += "{} lanzaderas de misiles, {} barcos, y mucha, mucha, muuuuuuuucha acción\n\n".format(len(self.juego.lanzaderas),len(self.juego.getBarcos()))
+        string += "En esta esquina, el memorizador Dyno! El mejor programador de la historia desde Thomas Cormen \n"
+        string += "En esta otra, el goloso Greedo! El sucesor al creador de la programacion greedy, John Greedy \n\n"
+        string += "{} lanzaderas de misiles, {} barcos, y mucha, mucha, muuuuuuuucha acción\n\n".format(self.juego.cantidadLanzaderas,len(self.juego.getBarcos()))
         print(string)
 
     def end(self):

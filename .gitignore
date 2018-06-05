@@ -25,4 +25,5 @@
 *_minted*
 .vscode/
 
+.idea/
 *.coords

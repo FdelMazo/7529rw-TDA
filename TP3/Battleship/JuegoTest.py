@@ -11,7 +11,7 @@ class TestMoverBarco(unittest.TestCase):
         matriz = [[10, 30, 40, 50]]
         juego = Juego(matriz, barcos, 0)
         juego.avanzarBarcos()
-        self.assertEqual(barco.getPosicion(), (0,1))
+        self.assertEqual(barco.getPosicion(), (1,0))
 
 class TestBarcoVuelveAlInicio(unittest.TestCase):
     def testUnBarcoPosicionadoAlFinalDeLaFilaVuelveAlInicio(self):

@@ -1,18 +1,16 @@
 from Barco import Barco
-from Lanzadera import Lanzadera
 
 class Juego():
-    def __init__(self, matriz, barcos, lanzaderas):
+    def __init__(self, matriz, barcos, cantidadLanzaderas):
         self.matriz = matriz
         self.barcos = barcos
-        self.lanzaderas = lanzaderas
+        self.cantidadLanzaderas = cantidadLanzaderas
         self.turno = 0
         self.puntos = 0
         self.jugador = None
-        self.targets = [None] * len(self.lanzaderas)
-        self.setBarcos()
-    
-    def setBarcos(self):
+        self.targets = [None] * self.cantidadLanzaderas
+
+    def setPosicionesIniciales(self):
         for i, barco in enumerate(self.barcos):
             barco.setPosicion(0,i)
 
@@ -42,14 +40,19 @@ class Juego():
     def setJugador(self,jugador):
         self.jugador = jugador
 
+    def getCantidadLanzaderas(self):
+        return self.cantidadLanzaderas
+
     def jugar(self):
+        self.targets = self.jugador.turno(self)
+        self.barcosAtacados = [i.getPosicion()[1] if i != None else None for i in self.targets ]
+
+    def avanzarTurno(self):
         self.puntos += len(self.getBarcosVivos())
-        targets = self.jugador.turno(self, self.barcos, self.lanzaderas)
-        for barco in targets:
-            barco.recibirDanio(self.getValorCasillero(*barco.getPosicion()))
-        self.targets = [i.getPosicion()[1] for i in targets]
+        for barco in self.targets:
+            if barco != None: barco.recibirDanio(self.getValorCasillero(*barco.getPosicion()))
         self.avanzarBarcos()
-        self.turno+=1
+        self.turno += 1
        
     @staticmethod
     def ArchivoToBarcos(archivo):
@@ -74,10 +77,3 @@ class Juego():
                 linea = [int(x) for x in linea]
                 matriz.append(linea)
         return matriz
-
-    @staticmethod
-    def CrearLanzaderas(cantidad):
-        lanzaderas = []
-        for x in range(cantidad):
-            lanzaderas.append(Lanzadera())
-        return lanzaderas
