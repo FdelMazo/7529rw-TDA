@@ -5,9 +5,10 @@ class Barco():
 
     def recibirDanio(self, danio):
         self.vida -= danio
+        if self.vida < 0: self.vida = 0
 
     def estaDerribado(self):
-        return self.vida <= 0
+        return self.vida == 0
 
     def getPosicion(self):
         return self.posicion

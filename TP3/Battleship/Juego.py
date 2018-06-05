@@ -9,6 +9,7 @@ class Juego():
         self.turno = 0
         self.puntos = 0
         self.jugador = None
+        self.targets = [None] * len(self.lanzaderas)
         self.setBarcos()
     
     def setBarcos(self):
@@ -23,8 +24,8 @@ class Juego():
             else:
                 barco.setPosicion(x + 1, y)
 
-    def removerBarco(self, barco):
-        self.barcos.remove(barco)
+    def getBarcosVivos(self):
+        return [b for b in self.barcos if not b.estaDerribado()]
 
     def getBarcos(self):
         return self.barcos
@@ -33,7 +34,7 @@ class Juego():
         return self.matriz[y][x]
 
     def terminado(self):
-        return not self.barcos
+        return not self.getBarcosVivos()
 
     def getPuntos(self):
         return self.puntos
@@ -42,11 +43,14 @@ class Juego():
         self.jugador = jugador
 
     def jugar(self):
-        self.jugador.turno(self, self.barcos, self.lanzaderas)
+        self.puntos += len(self.getBarcosVivos())
+        targets = self.jugador.turno(self, self.barcos, self.lanzaderas)
+        for barco in targets:
+            barco.recibirDanio(self.getValorCasillero(*barco.getPosicion()))
+        self.targets = [i.getPosicion()[1] for i in targets]
         self.avanzarBarcos()
-        self.puntos += len(self.getBarcos())
         self.turno+=1
-
+       
     @staticmethod
     def ArchivoToBarcos(archivo):
         vida_barcos = []

@@ -1,54 +1,51 @@
 class bcolors:
     HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
-print (bcolors.WARNING + "Warning: No active frommets remain. Continue?" 
-      + bcolors.ENDC)
 
 class VistaJuego():
     def __init__(self, juego):
         self.juego = juego
 
     def imprimirFila(self, fila, y):
-        posBarcos = []
-        for b in self.juego.getBarcos():
-            posBarcos.append(b.getPosicion())
+        linea = ""
+        barco = self.juego.getBarcos()[y]
+        xBarco = barco.getPosicion()[0]
         for x,n in enumerate(fila):
-            if (x,y) in posBarcos: 
-                num = "<"+"{}".format(n).center(3)+">"
-                celda = "{}{}{}|".format(bcolors.OKGREEN,num,bcolors.ENDC)
+            if x == xBarco and not barco.estaDerribado(): 
+                num = "<{}>".format(str(n).center(3))
+                celda = "{}{}{}|".format(bcolors.GREEN,num,bcolors.ENDC)
             else: 
                 num = "{}".format(n).center(5)
                 celda = "{}|".format(num)
-            print(celda, end='')
-        print()
-
+            linea+=celda
+        stringBarco = "\t\t{} Barco {}: ".format(bcolors.RED, y)
+        if barco.estaDerribado(): stringBarco+="Dead"
+        else: stringBarco+="{}HP".format(barco.getVida())
+        stringBarco+=bcolors.ENDC
+        linea+= stringBarco
+        print(linea)
+        
     def informacionAdicional(self):
         string = "Turno: {}\n".format(self.juego.turno)
         string += "Puntos: {}\n".format(self.juego.puntos)
-        barcosVivos = self.juego.getBarcos()
+        barcosVivos = self.juego.getBarcosVivos()
         string += "Barcos en juego: {}\n".format(len(barcosVivos))
-        for i,b in enumerate(barcosVivos,1):
-            string += "Barco {}: {}HP - {} daño potencial\n".format(
-                i,
-                b.getVida(),
-                self.juego.getValorCasillero(*b.getPosicion())
-            )
-        for i,l in enumerate(self.juego.lanzaderas, 1):
-            string += "Lanzadera {}: Target (???)\n".format(i)
+        for i,l in enumerate(self.juego.lanzaderas):
+            string += "Lanzadera {} Target: {}\n".format(i, self.juego.targets[i])
         print(string)
 
     def update(self):
+        print("*******************************")
+        self.informacionAdicional()
         for columna, fila in enumerate(self.juego.matriz):
             self.imprimirFila(fila, columna)
         print()
-        self.informacionAdicional()
 
     def start(self):
         string = "\n\n*******************************\n"
@@ -60,13 +57,15 @@ class VistaJuego():
         print(string)
 
     def end(self):
-        string =  "Turno finalizado!\n"
-        string += "En {} turnos se alcanzaron {} puntos!".format(self.juego.turno, self.juego.puntos)
+        string = "\n\n*******************************\n"
+        string +=  "Turno finalizado!\n"
+        string += "En {} turnos se alcanzaron {} puntos!\n".format(self.juego.turno, self.juego.puntos)
+        string += "*******************************"
         print(string)
 
     @staticmethod
     def imprimirSeparacion():
-        string = "\n\n*******************************\n"
+        string = "\n*******************************\n"
         string += "Cambio de turno!!! \n"
         string += "*******************************\n\n"
         print(string)

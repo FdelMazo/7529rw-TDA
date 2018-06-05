@@ -10,13 +10,15 @@ class Greedo():
         barcosOrdenados = sorted(dic.items(), key=lambda x: x[1])
         barcosDisponibles = len(barcosOrdenados)
         barcoActual = barcosOrdenados[barcosDisponibles - 1]
+        targets = []
         for i in range(len(lanzaderas)):
             barco, danio = barcoActual
-            barco.recibirDanio(danio)
-            if barco.estaDerribado():
+            dummyVida = barco.getVida()
+            dummyVida -= danio
+            targets.append(barco)
+            if dummyVida <= 0:
                 barcosDisponibles -= 1
-                juego.removerBarco(barco)
-                if not juego.terminado():
-                    barcoActual = barcosOrdenados[barcosDisponibles - 1]
-                else:
+                if barcosDisponibles == 0:
                     break
+                barcoActual = barcosOrdenados[barcosDisponibles-1]
+        return targets
