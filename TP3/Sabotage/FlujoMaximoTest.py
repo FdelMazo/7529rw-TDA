@@ -1,6 +1,7 @@
 import unittest
 from RedDeTransporte import *
 from FlujoMaximo import *
+from Sabotage import *
 
 class FlujoMaximoTest(unittest.TestCase):
 
@@ -11,7 +12,7 @@ class FlujoMaximoTest(unittest.TestCase):
 		red.agregarArista(2, 1, 5)
 		flujo = {}
 		inicializarFlujo(red, flujo)
-		self.assertEquals( 5, obtenerAristaMinima( red.obtenerAristas() ).obtenerPeso()  )
+		self.assertEquals( 5, obtenerAristaMinima( red, red.obtenerAristas() ).obtenerPeso()  )
 	
 	
 	def test_red_tiene_la_arista_minima_esperada2(self):
@@ -21,7 +22,7 @@ class FlujoMaximoTest(unittest.TestCase):
 		red.agregarArista(2, 4, 10)
 		flujo = {}
 		inicializarFlujo(red, flujo)
-		self.assertEquals( 8, obtenerAristaMinima( red.obtenerAristas() ).obtenerPeso()  )
+		self.assertEquals( 8, obtenerAristaMinima( red, red.obtenerAristas() ).obtenerPeso()  )
 
 
 	def test_red_tiene_la_arista_minima_esperada3(self):
@@ -37,7 +38,7 @@ class FlujoMaximoTest(unittest.TestCase):
 		red.agregarArista(5, 1, 7)
 		flujo = {}
 		inicializarFlujo(red, flujo)
-		self.assertEquals( 1, obtenerAristaMinima( red.obtenerAristas() ).obtenerPeso()  )
+		self.assertEquals( 1, obtenerAristaMinima( red, red.obtenerAristas() ).obtenerPeso()  )
 
 
 	def test_red_tiene_la_arista_minima_esperada4(self):
@@ -46,7 +47,7 @@ class FlujoMaximoTest(unittest.TestCase):
 		red.agregarArista(0, 1, 2)
 		flujo = {}
 		inicializarFlujo(red, flujo)
-		self.assertEquals( 1, obtenerAristaMinima( red.obtenerAristas() ).obtenerPeso()  )
+		self.assertEquals( 1, obtenerAristaMinima( red, red.obtenerAristas() ).obtenerPeso()  )
 
 
 	def test_red_tiene_el_flujo_maximo_esperado(self):
@@ -515,6 +516,12 @@ class FlujoMaximoTest(unittest.TestCase):
 		red.agregarArista(2, 1, 5)
 		self.assertEquals( 5, flujoMaximo(red) )
 	
+
+	def test_red_tiene_el_flujo_maximo_esperado35(self):
+		red = cargarArchivoSabotage("MapasDePrueba/mapa38.map")
+		self.assertEquals( 20, flujoMaximo(red) )
+		
+		
 
 if __name__ == '__main__':
 	suite = unittest.TestLoader().loadTestsFromTestCase(FlujoMaximoTest)

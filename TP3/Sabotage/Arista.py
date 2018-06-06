@@ -12,9 +12,18 @@ class Arista:
 		return ('(' + str(self.origen) + ',' + str(self.destino) + 
 		') [' +  str(self.peso) + ']\n')
 	
-
+	
 	def __repr__(self):
 		return self.__str__()	
+
+
+	def __gt__(self, otraArista):
+		return self.peso > otraArista.obtenerPeso()
+
+
+	def __lt__(self, otraArista):
+		return self.peso < otraArista.obtenerPeso()
+
 
 	def obtenerOrigen(self):
 		return self.origen
@@ -42,7 +51,13 @@ class Arista:
 
 	def esIgualA(self, otraArista):
 		return ( 
-		self.origen.esIgualA(otraArista.obtenerOrigen()) and
-		self.destino.esIgualA(otraArista.obtenerDestino()) and 
+		self.esSimilarA(otraArista) and
 		self.peso == otraArista.obtenerPeso() 
+		)
+
+
+	def esSimilarA(self, otraArista):
+		return ( 
+		self.origen.esIgualA(otraArista.obtenerOrigen()) and
+		self.destino.esIgualA(otraArista.obtenerDestino()) 
 		)

@@ -1,6 +1,5 @@
 from RedDeTransporte import *
 
-
 def inicializarRedResidual(redResidual, aristasRed):
 	for a in aristasRed:
 		numOrigen = a.obtenerOrigen().obtenerNumero()
@@ -47,9 +46,8 @@ def inicializarCapacidad(red, capacidad):
 	for a in red.obtenerAristas(): capacidad[a] = a.obtenerPeso()
 
 
-def obtenerAristaMinima(camino):
-	''' Devuelve la arista con menos peso del camino parametrizado.'''
-	
+def obtenerAristaMinima(red, camino):
+
 	try: 
 		aristaMin = camino[0]
 		 
@@ -57,10 +55,63 @@ def obtenerAristaMinima(camino):
 			if ( a.obtenerPeso() < aristaMin.obtenerPeso() ):
 				aristaMin = a
 	
+			if ( a.obtenerPeso() == aristaMin.obtenerPeso() ):
+				aOriginal = red.obtenerArista(a.obtenerOrigen().obtenerNumero(),
+				a.obtenerDestino().obtenerNumero(),
+				a.obtenerId() )
+				
+				aristaMinOriginal = red.obtenerArista(
+				aristaMin.obtenerOrigen().obtenerNumero(),
+				aristaMin.obtenerDestino().obtenerNumero(),
+				aristaMin.obtenerId() )
+				
+				if(aOriginal and aristaMinOriginal):
+					if ( aOriginal.obtenerPeso() < 
+					aristaMinOriginal.obtenerPeso() ):
+						aristaMin = a
+					
+				elif aOriginal:
+					aristaMin = a
+									
 		return aristaMin
 		 
 	except IndexError: 
 		raise ValueError("Camino vacío.")
+
+
+def actualizarCuellosDeBotella(cuellosDeBotella, cuelloDeBotella, redOriginal):
+	
+	numOrigen = cuelloDeBotella.obtenerOrigen().obtenerNumero()
+	numDestino = cuelloDeBotella.obtenerDestino().obtenerNumero()
+	identificador = cuelloDeBotella.obtenerId()
+
+	aristaOriginal = redOriginal.obtenerArista(numOrigen, numDestino, identificador)
+	aristaInversa = redOriginal.obtenerArista(numDestino, numOrigen, identificador)
+	
+	if (aristaOriginal) and (aristaOriginal not in cuellosDeBotella):
+		cuellosDeBotella.append(aristaOriginal)
+	
+	elif (aristaInversa) and (aristaInversa not in cuellosDeBotella):
+		cuellosDeBotella.append(aristaInversa)
+
+
+def actualizarCaminos(caminos, redOriginal, camino):
+	
+	unCamino = []
+	
+	for a in camino:
+		aristaOriginal = redOriginal.obtenerArista(
+		a.obtenerOrigen().obtenerNumero(),
+		a.obtenerDestino().obtenerNumero(),
+		a.obtenerId())
+		
+		if(aristaOriginal):
+			unCamino.append(aristaOriginal)
+		
+		else:
+			unCamino.append(a)
+
+	caminos.append(unCamino)
 
 
 def FordFulkerson(redOriginal, mostrarCamino = False):
@@ -70,58 +121,43 @@ def FordFulkerson(redOriginal, mostrarCamino = False):
 	para computar el flujo máximo.
 	'''
 	
-	red = duplicarRed(redOriginal)
 	flujo = {}
-	cuellosDeBotella = []
-	aristasRed = red.obtenerAristas()
-	redResidual = RedDeTransporte()
-	inicializarRedResidual(redResidual, aristasRed)
-	maxFlujo = 0
-	inicializarFlujo(redResidual, flujo)
 	capacidad = {}
-	inicializarCapacidad(redResidual, capacidad)
+	maxFlujo = 0
+	cuellosDeBotella = []
 	caminos = []
+	
+	redResidual = RedDeTransporte()
+	inicializarRedResidual(redResidual, redOriginal.obtenerAristas())
+	inicializarFlujo(redResidual, flujo)
+	inicializarCapacidad(redResidual, capacidad)
 	
 	while True:
 		camino = obtenerCamino(redResidual, flujo)
 		if not camino: break
+		actualizarCaminos(caminos, redOriginal, camino)
 		if mostrarCamino: print(camino)
 		
-		cuelloDeBotella = obtenerAristaMinima(camino)
+		cuelloDeBotella = obtenerAristaMinima(redOriginal, camino)
+		actualizarCuellosDeBotella(cuellosDeBotella, cuelloDeBotella, redOriginal)
 		cuelloActual = cuelloDeBotella.obtenerPeso()
 		maxFlujo += cuelloActual
-		
-		cuellosDeBotella.append(redOriginal.obtenerArista(
-		cuelloDeBotella.obtenerOrigen().obtenerNumero(),
-		cuelloDeBotella.obtenerDestino().obtenerNumero(),
-		cuelloDeBotella.obtenerId()
-		)
-		)	
-		unCamino = []
-		
+
 		for a in camino:
 			numOrigen = a.obtenerOrigen().obtenerNumero()
 			numDestino = a.obtenerDestino().obtenerNumero()	
 			aristaInversa = redResidual.obtenerAristaInversa(a)
 			
-			if (red.tieneArista(numOrigen, numDestino)):
+			if (redOriginal.tieneArista(numOrigen, numDestino)):
 				flujo[a] += cuelloActual
 				a.setPeso(capacidad[a] - flujo[a])
 				aristaInversa.setPeso(flujo[a])
-				unCamino.append( redOriginal.obtenerArista(
-				a.obtenerOrigen().obtenerNumero(),
-				a.obtenerDestino().obtenerNumero(),
-				a.obtenerId()
-				)
-				)
-					
+				
 			else:
 				flujo[aristaInversa] -= cuelloActual
 				a.setPeso(flujo[aristaInversa])
 				aristaInversa.setPeso(capacidad[aristaInversa] - flujo[aristaInversa])				
-				if cuellosDeBotella: cuellosDeBotella.pop()
 			
-		caminos.append(unCamino)
 
 	return maxFlujo, cuellosDeBotella, caminos 
 

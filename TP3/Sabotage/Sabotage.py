@@ -1,70 +1,51 @@
 from RedDeTransporte import *
 from FlujoMaximo import *
-from heapq import heapify, heappop
+from heapq import heappop, nlargest
 
 ARCHIVO = "redsecreta.map"
 
 
 def cargarArchivoSabotage(archivo = ARCHIVO):
+	
 	red = RedDeTransporte()
 	
 	with open(archivo) as file:
-		
 		lineas = file.readlines()
 		
-		for linea in lineas:
-		
+		for linea in lineas:	
 			numOrigen, numDestino, peso = linea.split(' ')
 			red.agregarArista(int(numOrigen), int(numDestino), int(peso))
 	
 	return red
 
 
-def obtenerAristasDeCorte(caminosReales):
+def protegerAristas(aristasAProteger, cantidadDeVigilancias, aristasProtegidas):
 	
-	caminosRealesAux = caminosReales
-	coincidencias = 0
-	cantCaminos = len(caminosReales)
-	aristasDeCorte = []
+	for a in aristasAProteger:
+		if (cantidadDeVigilancias == 0):
+			break
+		
+		aristasProtegidas.append(a)
+		cantidadDeVigilancias -= 1
 	
-	for c in caminosReales:
-		for a in c:
-			for cAux in caminosRealesAux:
-				if a in cAux:
-					coincidencias +=1 
-			
-			if coincidencias == cantCaminos:
-				aristasDeCorte.append(a)
-	
-	aristasDeCorteOrdenadas = []
-	heapify(aristasDeCorte)
-	while aristasDeCorte:
-		aristasDeCorteOrdenadas.append(heappop(aristasDeCorte))
-	
-	return aristasDeCorte
+	return cantidadDeVigilancias
 
 
 def proteger2Aristas(red):
 
 	cantidadDeVigilancias = 2
 	aristasProtegidas = []
-	flujoMaximo, cuellosDeBotella, caminosReales =  FordFulkerson(red)
-	
-	aristasDeCorte =  obtenerAristasDeCorte(caminosReales)	
+	unFlujoMaximo, cuellosDeBotella, unosCaminos =  FordFulkerson(red)
+	aristasDeCorte = red.obtenerAristasDeCorte()
 	
 	for a in aristasDeCorte:
-		aristasProtegidas.append(a)
-		cantidadDeVigilancias-=1
-		
-		if (cantidadDeVigilancias == 0):
-			break
-		
-	for a in cuellosDeBotella:
-		aristasProtegidas.append(a)
-		cantidadDeVigilancias-=1
-			
-		if (cantidadDeVigilancias == 0):
-			break
+		aristaIgual = obtenerAristaIgualIncluida(a, cuellosDeBotella)
+		if aristaIgual:
+			cuellosDeBotella.remove(a)
 	
+	cuellosDeBotella.sort(reverse=True)
+
+	cantidadDeVigilancias = protegerAristas(aristasDeCorte, cantidadDeVigilancias, aristasProtegidas)
+	cantidadDeVigilancias = protegerAristas(cuellosDeBotella, cantidadDeVigilancias, aristasProtegidas)
 	return aristasProtegidas
-	
+

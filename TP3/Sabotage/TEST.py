@@ -1,5 +1,6 @@
 from Vertice import *
 from Arista import *
+from Sabotage import cargarArchivoSabotage
 
 class RedDeTransporte:
 	'''
@@ -286,3 +287,16 @@ def llegarAlSumidero_visitar(v, visitados):
 		
 		if w.obtenerNumero() not in visitados:
 			llegarAlSumidero_visitar(w, visitados)
+
+
+
+red = RedDeTransporte()
+
+with open("MapasDePrueba/mapa42.map") as file:
+	lineas = file.readlines()
+	
+	for linea in lineas:	
+		numOrigen, numDestino, peso = linea.split(' ')
+		red.agregarArista(int(numOrigen), int(numDestino), int(peso))
+
+print(red.obtenerAristasDeCorte())

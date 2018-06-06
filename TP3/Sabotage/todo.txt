@@ -1,4 +1,64 @@
 -> Pruebas de protección de aristas.
--> Describir un poco más el texto
--> Hay que hacer el sabotage??
--> punto 5
+-> Actualizar algoritmo y complejidad
+-> Justificar en el doc porque no se usa fuerza bruta
+4) Es sacando las aristas protegidas. Incluirlo en el main
+(un main que imprima la red y diga cuales proteger).
+-> test de cobertura en python
+
+Obtener cuellos de botella O(A)
+No va a haber caminos, sacarlo
+
+
+ANTES DE ENTREGARLO:
+Sacar toda la documentación innecesaria
+Sacar lo de los caminos + imprimir caminos
+
+Probema
+Que ejes vigilar
+Pseudocódigo + funcionamiento
+es óptimo?
+
+
+============
+1
+*
+3
+4
+5
+6
+7
+8
+9
+10
+============
+11
+12
+13
+14
+15
+16
+*
+18
+19
+
+38
+39
+40
+41
+===================================================================================
+
+Problema:
+Botes en filas donde cada casillero indica el daño que reciben si se les dispara.
+Solución Greedy: 
+
+#Para optimizar cantidad de disparos
+Ordenar posiciones por vida - (dañoCasilla * cantLanzaderas) 
+
+Por cada posición actual de los barcos
+	Si se puede matar al barco con la cantidad de disparos disponibles
+		disparar lo necesario
+
+Si todavía quedan disparos disponibles:
+	disparar lo restante al primero no destriudo
+
+

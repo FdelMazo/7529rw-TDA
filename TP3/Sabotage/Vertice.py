@@ -19,6 +19,10 @@ class Vertice:
 		self.adyacentes.append(vertice)
 
 
+	def borrarAdyacente(self, vertice):
+		self.adyacentes.remove(vertice)
+
+
 	def obtenerAdyacentes(self):
 		return self.adyacentes
 
