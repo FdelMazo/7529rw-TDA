@@ -1,4 +1,5 @@
 import os
+import platform
 import CrearGrilla
 from Juego import Juego
 from VistaJuego import VistaJuego
@@ -11,14 +12,14 @@ DEFAULT_LANZADERAS = 3
 ARCHIVO = 'grilla.coords'
 
 
-def jugar(archivo, jugador, no_input):
+def jugar(archivo, jugador, no_input, sistema):
 	matrizTablero = Juego.ArchivoToMatriz(archivo)
 	barcos = Juego.ArchivoToBarcos(archivo)
 	cantidadLanzaderas = DEFAULT_LANZADERAS
 
 	juego = Juego(matrizTablero, barcos, cantidadLanzaderas, jugador)
 	juego.setPosicionesIniciales()
-	vista = VistaJuego(juego, no_input)
+	vista = VistaJuego(juego, no_input, sistema)
 	vista.start()
 	while not juego.terminado():
 		juego.elegirTargets()
@@ -38,11 +39,11 @@ def main():
 		archivo = CrearGrilla.crearArchivo(ARCHIVO, DEFAULT_GRILLA)
 	greedo = Greedo()
 	dyno = Dyno()
-	VistaJuego.titulo()
-	jugar(archivo, greedo, args.no_input)
-	VistaJuego.imprimirSeparacion()
-	jugar(archivo, dyno, args.no_input)
-	VistaJuego.imprimirGanador(greedo, dyno)
+	VistaJuego.titulo(platform.system())
+	jugar(archivo, greedo, args.no_input, platform.system())
+	VistaJuego.imprimirSeparacion(platform.system())
+	jugar(archivo, dyno, args.no_input, platform.system())
+	VistaJuego.imprimirGanador(greedo, dyno,platform.system())
 
 if __name__ == '__main__':
 	try: main()

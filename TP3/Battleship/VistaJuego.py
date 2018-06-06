@@ -1,7 +1,10 @@
+import os
+
 class VistaJuego():
-	def __init__(self, juego, no_input):
+	def __init__(self, juego, no_input, nombre_sistema):
 		self.juego = juego
 		self.input = not no_input
+		self.linux = True if nombre_sistema == 'Linux' else False
 
 	def start(self):
 		string = "Comienza la partida de {}\n".format(self.juego.jugador)
@@ -23,23 +26,30 @@ class VistaJuego():
 		for x,n in enumerate(fila):
 			if x == xBarco and not barco.estaDerribado():
 				num = "<{}>".format(str(n).center(3))
-				celda = "{}{}{}|".format(bcolors.GREEN, num, bcolors.END)
+				celda = ""
+				if self.linux: celda += bcolors.GREEN
+				celda += num
+				if self.linux: celda += bcolors.END
+				celda +="|"
+
 			else:
 				num = "{}".format(n).center(5)
 				celda = "{}|".format(num)
 			linea+=celda
+		stringBarco = ""
 		if barco.estaDerribado():
-			stringBarco = bcolors.RED
+			if self.linux: stringBarco += bcolors.RED
 			stringBarco +="\t\t Barco {}: Dead".format(y)
 		else:
-			stringBarco = bcolors.GREEN
-			stringBarco = "\t\t{} Barco {}: {} HP".format(bcolors.GREEN, y, barco.getVida())
-		stringBarco+=bcolors.END
+			if self.linux: stringBarco += bcolors.GREEN
+			stringBarco = "\t\t Barco {}: {} HP".format(y, barco.getVida())
+		if self.linux: stringBarco += bcolors.END
 		linea+= stringBarco
 		print(linea)
 
 	def informacionTurno(self):
-		print("\033[H\033[J")
+		if self.linux: print("\033[H\033[J")
+		else: os.system('cls||clear')
 		print("*******************************")
 		string = "Turno: {}\n".format(self.juego.turno)
 		string += "Puntos: {}\n".format(self.juego.jugador.getPuntos())
@@ -52,40 +62,45 @@ class VistaJuego():
 		print(string)
 
 	def end(self):
-		string = bcolors.PURPLE
+		string = ""
+		if self.linux: string += bcolors.PURPLE
 		string += "\n\n*******************************\n"
 		string +=  "Turno finalizado!\n"
 		string += "En {} turnos, {} alcanzó {} puntos!\n".format(self.juego.turno, self.juego.jugador, self.juego.jugador.getPuntos())
 		string += "*******************************"
-		string += bcolors.END
+		if self.linux: string += bcolors.END
 		print(string)
 		if self.input: input()
 
 	@staticmethod
-	def titulo():
-		string = bcolors.PURPLE
+	def titulo(sistema):
+		string = ""
+		if sistema == "Linux": string += bcolors.PURPLE
 		string += "\n\n*******************************\n"
 		string += "Battleship: La Batalla Final! \n\n"
 		string += "En esta esquina, el memorizador Dyno! El mejor programador de la historia desde Thomas Cormen \n"
 		string += "En esta otra, el goloso Greedo! El sucesor al creador de la programacion greedy, John Greedy \n"
 		string += "*******************************\n\n"
-		string += bcolors.END
+		if sistema == "Linux": string += bcolors.END
 		print(string)
 
 
 	@staticmethod
-	def imprimirSeparacion():
-		print("\033[H\033[J")
-		string = bcolors.PURPLE
+	def imprimirSeparacion(sistema):
+		if sistema=="Linux": print("\033[H\033[J")
+		else: os.system('cls||clear')
+		string = ""
+		if sistema == "Linux": string += bcolors.PURPLE
 		string += "\n*******************************\n"
 		string += "Cambio de turno!!!\n"
 		string += "*******************************\n\n"
-		string += bcolors.END
+		if sistema == "Linux": string += bcolors.END
 		print(string)
 
 	@staticmethod
-	def imprimirGanador(jugador1, jugador2):
-		print("\033[H\033[J")
+	def imprimirGanador(jugador1, jugador2, sistema):
+		if sistema=="Linux": print("\033[H\033[J")
+		else: os.system('cls||clear')
 		if jugador1.getPuntos()<jugador2.getPuntos():
 			ganador = jugador1
 			perdedor = jugador2
@@ -93,7 +108,8 @@ class VistaJuego():
 			ganador = jugador2
 			perdedor = jugador1
 		else: ganador,perdedor = '',''
-		string = bcolors.PURPLE
+		string = ""
+		if sistema == "Linux": string += bcolors.PURPLE
 		string += "\n\n*******************************\n"
 		if ganador:
 			ganadorString = "El ganador es {}!!!\n".format(ganador)
@@ -102,7 +118,7 @@ class VistaJuego():
 			ganadorString = "Empataron con {} puntos!!!\n".format(jugador1.getPuntos())
 		string += ganadorString
 		string += "*******************************\n\n"
-		string += bcolors.END
+		if sistema == "Linux": string += bcolors.END
 		print(string)
 
 class bcolors:
