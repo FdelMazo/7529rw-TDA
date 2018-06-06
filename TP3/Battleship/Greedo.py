@@ -1,14 +1,16 @@
-class Greedo():
-	def __init__(self):
-		self.nombre = 'Greedo'
+from Jugador import Jugador
 
-	def turno(self, juego):
+class Greedo(Jugador):
+	def __init__(self):
+		super().__init__('Greedo')
+
+	def elegirTargets(self, juego):
 		"""Recibe el estado del juego
 		Devuelve los targets seleccionados para cada lanzadera"""
 		dic = {} #dic = {barco:danioCasillero}
 		for barco in juego.getBarcos():
 			x, y = barco.getPosicion()
-			dic[barco] = juego.getValorCasillero(x, y)
+			dic[barco] = juego.getDanioCasillero(x, y)
 		barcosOrdenados = sorted(dic.items(), key=lambda x: x[1])
 		barcosDisponibles = len(barcosOrdenados)
 		barcoActual = barcosOrdenados[barcosDisponibles - 1]

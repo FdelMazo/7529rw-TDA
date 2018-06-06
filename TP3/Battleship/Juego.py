@@ -1,14 +1,17 @@
 from Barco import Barco
 
 class Juego():
-    def __init__(self, matriz, barcos, cantidadLanzaderas):
+    def __init__(self, matriz, barcos, cantidadLanzaderas, jugador):
         self.matriz = matriz
         self.barcos = barcos
         self.cantidadLanzaderas = cantidadLanzaderas
         self.turno = 0
         self.puntos = 0
-        self.jugador = None
+        self.jugador = jugador
         self.targets = [None] * self.cantidadLanzaderas
+
+    def terminado(self):
+        return not self.getBarcosVivos()
 
     def setPosicionesIniciales(self):
         for i, barco in enumerate(self.barcos):
@@ -28,32 +31,23 @@ class Juego():
     def getBarcos(self):
         return self.barcos
         
-    def getValorCasillero(self, x, y):
+    def getDanioCasillero(self, x, y):
         return self.matriz[y][x]
-
-    def terminado(self):
-        return not self.getBarcosVivos()
-
-    def getPuntos(self):
-        return self.puntos
-    
-    def setJugador(self,jugador):
-        self.jugador = jugador
 
     def getCantidadLanzaderas(self):
         return self.cantidadLanzaderas
 
-    def jugar(self):
-        self.targets = self.jugador.turno(self)
+    def elegirTargets(self):
+        self.targets = self.jugador.elegirTargets(self)
         self.barcosAtacados = [i.getPosicion()[1] if i != None else None for i in self.targets ]
 
-    def avanzarTurno(self):
-        self.puntos += len(self.getBarcosVivos())
+    def jugarTurno(self):
+        self.jugador.addPuntos(len(self.getBarcosVivos()))
         for barco in self.targets:
-            if barco != None: barco.recibirDanio(self.getValorCasillero(*barco.getPosicion()))
+            if barco: barco.recibirDanio(self.getDanioCasillero(*barco.getPosicion()))
         self.avanzarBarcos()
         self.turno += 1
-       
+
     @staticmethod
     def ArchivoToBarcos(archivo):
         vida_barcos = []
