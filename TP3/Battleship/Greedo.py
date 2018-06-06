@@ -7,11 +7,11 @@ class Greedo(Jugador):
 	def elegirTargets(self, juego):
 		"""Recibe el estado del juego
 		Devuelve los targets seleccionados para cada lanzadera"""
-		dic = {} #dic = {barco:danioCasillero}
+		danioSegunBarco = {}
 		for barco in juego.getBarcos():
 			x, y = barco.getPosicion()
-			dic[barco] = juego.getDanioCasillero(x, y)
-		barcosOrdenados = sorted(dic.items(), key=lambda x: x[1])
+			danioSegunBarco[barco] = juego.getDanioCasillero(x, y)
+		barcosOrdenados = sorted(danioSegunBarco.items(), key=lambda x: x[1])
 		barcosDisponibles = len(barcosOrdenados)
 		barcoActual = barcosOrdenados[barcosDisponibles - 1]
 		targets = []

@@ -36,7 +36,8 @@ def main():
 	archivo = ARCHIVO
 	if not os.path.exists(archivo):
 		archivo = CrearGrilla.crearArchivo(ARCHIVO, DEFAULT_GRILLA)
-	greedo = Greedo() ; dyno = Dyno()
+	greedo = Greedo()
+	dyno = Dyno()
 	VistaJuego.titulo()
 	jugar(archivo, greedo, args.no_input)
 	VistaJuego.imprimirSeparacion()

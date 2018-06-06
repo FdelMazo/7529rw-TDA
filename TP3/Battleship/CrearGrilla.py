@@ -1,4 +1,4 @@
-import random
+import random, argparse
 
 FILAS = 5
 COLUMNAS = 10
@@ -37,4 +37,13 @@ def crearArchivo(archivo = FILE, params = PARAMS):
 	return archivo
 
 if __name__ == '__main__':
-	crearArchivo()
+	parser = argparse.ArgumentParser()
+	parser.add_argument('filas', help='Cantidad de filas', type=int)
+	parser.add_argument('columnas', help='Cantidad de columnas', type=int)
+	parser.add_argument('vidamin', help='Mínima vida del barco', action='store', type=int)
+	parser.add_argument('vidamax', help='Máxima vida del barco', action='store', type=int)
+	parser.add_argument('max_danio', help='Máximo danio de las celdas', action='store', type=int)
+	parser.add_argument('-f', '--file', help='Cambiar nombre de archivo', action='store', default=FILE)
+	args = parser.parse_args()
+	params = [args.filas, args.columnas, (args.vidamin, args.vidamax), args.max_danio]
+	crearArchivo(args.file, params)

@@ -39,8 +39,9 @@ class VistaJuego():
 		print(linea)
 
 	def informacionTurno(self):
+		print("\033[H\033[J")
 		print("*******************************")
-		string = "Turno: {}\n".format(self.juego.elegirTargets)
+		string = "Turno: {}\n".format(self.juego.turno)
 		string += "Puntos: {}\n".format(self.juego.jugador.getPuntos())
 		string += "Barcos en juego: {}\n\n".format(len(self.juego.getBarcosVivos()))
 		for i in range(self.juego.cantidadLanzaderas):
@@ -54,7 +55,7 @@ class VistaJuego():
 		string = bcolors.PURPLE
 		string += "\n\n*******************************\n"
 		string +=  "Turno finalizado!\n"
-		string += "En {} turnos, {} alcanzó {} puntos!\n".format(self.juego.elegirTargets, self.juego.jugador, self.juego.jugador.getPuntos())
+		string += "En {} turnos, {} alcanzó {} puntos!\n".format(self.juego.turno, self.juego.jugador, self.juego.jugador.getPuntos())
 		string += "*******************************"
 		string += bcolors.END
 		print(string)
@@ -74,6 +75,7 @@ class VistaJuego():
 
 	@staticmethod
 	def imprimirSeparacion():
+		print("\033[H\033[J")
 		string = bcolors.PURPLE
 		string += "\n*******************************\n"
 		string += "Cambio de turno!!!\n"
@@ -83,6 +85,7 @@ class VistaJuego():
 
 	@staticmethod
 	def imprimirGanador(jugador1, jugador2):
+		print("\033[H\033[J")
 		if jugador1.getPuntos()<jugador2.getPuntos():
 			ganador = jugador1
 			perdedor = jugador2
