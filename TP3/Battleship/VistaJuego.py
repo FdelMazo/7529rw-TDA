@@ -17,7 +17,7 @@ class VistaJuego():
     def imprimirMapa(self):
         for columna, fila in enumerate(self.juego.matriz):
             self.imprimirFila(fila, columna)
-        print()
+        print("*******************************\n")
         if self.input: input()
 
     def imprimirFila(self, fila, y):
@@ -54,7 +54,8 @@ class VistaJuego():
         else:
             os.system('cls||clear')
         print("*******************************")
-        string = "Turno: {}\n".format(self.juego.turno)
+        string = "Jugador: {}\n".format(self.juego.jugador)
+        string += "Turno: {}\n".format(self.juego.turno)
         string += "Puntos: {}\n".format(self.juego.jugador.getPuntos())
         string += "Lanzaderas: {}\n\n".format(self.juego.getCantidadLanzaderas())
         string += "Barcos en juego: {}\n\n".format(len(self.juego.getBarcosVivos()))
@@ -123,10 +124,11 @@ class VistaJuego():
         string += "\n\n*******************************\n"
         if ganador:
             ganadorString = "El ganador es {}!!!\n".format(ganador)
-            ganadorString += "Vencio con {} puntos versus los {} de su patético rival !!!\n".format(ganador.getPuntos(),
-                                                                                                    perdedor.getPuntos())
         else:
             ganadorString = "Empataron con {} puntos!!!\n".format(jugador1.getPuntos())
+
+        ganadorString += "{}: {} Puntos\n".format(jugador1, jugador1.getPuntos())
+        ganadorString += "{}: {} Puntos\n".format(jugador2, jugador2.getPuntos())
         string += ganadorString
         string += "*******************************\n\n"
         if sistema == "Linux": string += bcolors.END
