@@ -43,7 +43,7 @@ class VistaJuego():
             stringBarco += "\t\t Barco {}: Dead".format(y)
         else:
             if self.linux: stringBarco += bcolors.GREEN
-            stringBarco = "\t\t Barco {}: {} HP".format(y, barco.getVida())
+            stringBarco += "\t\t Barco {}: {} HP".format(y, barco.getVida())
         if self.linux: stringBarco += bcolors.END
         linea += stringBarco
         print(linea)
