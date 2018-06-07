@@ -5,8 +5,8 @@ class Greedo(Jugador):
 		super().__init__('Greedo')
 
 	def elegirTargets(self, juego):
-		"""Recibe el estado del juego
-		Devuelve los targets seleccionados para cada lanzadera"""
+		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy)
+		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
 		danioSegunBarco = {}
 		for barco in juego.getBarcos():
 			x, y = barco.getPosicion()

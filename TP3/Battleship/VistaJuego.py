@@ -53,6 +53,7 @@ class VistaJuego():
 		print("*******************************")
 		string = "Turno: {}\n".format(self.juego.turno)
 		string += "Puntos: {}\n".format(self.juego.jugador.getPuntos())
+		string += "Lanzaderas: {}\n\n".format(self.juego.getCantidadLanzaderas())
 		string += "Barcos en juego: {}\n\n".format(len(self.juego.getBarcosVivos()))
 		for i in range(self.juego.cantidadLanzaderas):
 			if self.juego.barcosAtacados[i] and not self.juego.terminado():
