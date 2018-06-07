@@ -8,7 +8,7 @@ class Greedo(Jugador):
 		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy)
 		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
 		danioSegunBarco = {}
-		for barco in juego.getBarcos():
+		for barco in juego.getBarcosVivos():
 			x, y = barco.getPosicion()
 			danioSegunBarco[barco] = juego.getDanioCasillero(x, y)
 		barcosOrdenados = sorted(danioSegunBarco.items(), key=lambda x: x[1])

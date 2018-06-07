@@ -8,7 +8,7 @@ from Dyno import Dyno
 import argparse
 
 DEFAULT_GRILLA = [5, 10, (500,1000), 300] # Filas, Columnas, Rango de Vida barco, maximo danio de celda
-DEFAULT_LANZADERAS = 3
+DEFAULT_LANZADERAS = 2
 ARCHIVO = 'grilla.coords'
 
 
