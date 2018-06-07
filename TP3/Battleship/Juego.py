@@ -39,12 +39,12 @@ class Juego():
 
     def elegirTargets(self):
         self.targets = self.jugador.elegirTargets(self)
-        self.barcosAtacados = [i.getPosicion()[1] if i != None else None for i in self.targets ]
+
 
     def jugarTurno(self):
         self.jugador.addPuntos(len(self.getBarcosVivos()))
-        for barco in self.targets:
-            if barco: barco.recibirDanio(self.getDanioCasillero(*barco.getPosicion()))
+        for t in self.targets:
+            if t!=None: self.barcos[t].recibirDanio(self.getDanioCasillero(*self.barcos[t].getPosicion()))
         self.avanzarBarcos()
         self.turno += 1
 

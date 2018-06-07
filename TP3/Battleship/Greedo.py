@@ -26,4 +26,4 @@ class Greedo(Jugador):
 					break
 				barcoActual = barcosOrdenados[barcosDisponibles-1]
 		targets += [None] * (juego.getCantidadLanzaderas() - len(targets))
-		return targets
+		return [t.getPosicion()[1] if t else None for t in targets ]

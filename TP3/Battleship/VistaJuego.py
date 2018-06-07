@@ -56,8 +56,8 @@ class VistaJuego():
 		string += "Lanzaderas: {}\n\n".format(self.juego.getCantidadLanzaderas())
 		string += "Barcos en juego: {}\n\n".format(len(self.juego.getBarcosVivos()))
 		for i in range(self.juego.cantidadLanzaderas):
-			if self.juego.barcosAtacados[i] and not self.juego.terminado():
-				barco = "Barco {}".format(self.juego.barcosAtacados[i])
+			if self.juego.targets[i] and not self.juego.terminado():
+				barco = "Barco {}".format(self.juego.targets[i])
 			else: barco = "None"
 			string += "Lanzadera {} --> {}\n".format(i, barco)
 		print(string)
