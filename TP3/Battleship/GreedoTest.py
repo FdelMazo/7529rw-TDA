@@ -126,7 +126,7 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         A = Barco(100)
         B = Barco(100)
         A.setPosicion(0, 0)
-        B.setPosicion(1, 0)
+        B.setPosicion(1, 1)
         juego = Juego(matriz, [A,B], 3, greedo)
         juego.elegirTargets()
         juego.jugarTurno()

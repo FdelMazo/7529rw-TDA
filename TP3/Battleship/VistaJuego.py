@@ -105,7 +105,7 @@ class VistaJuego():
 		if jugador1.getPuntos()<jugador2.getPuntos():
 			ganador = jugador1
 			perdedor = jugador2
-		elif jugador1.getPuntos()<jugador2.getPuntos():
+		elif jugador2.getPuntos()<jugador1.getPuntos():
 			ganador = jugador2
 			perdedor = jugador1
 		else: ganador,perdedor = '',''
@@ -114,7 +114,7 @@ class VistaJuego():
 		string += "\n\n*******************************\n"
 		if ganador:
 			ganadorString = "El ganador es {}!!!\n".format(ganador)
-			ganadorString += "Vencio con {} versus los {} de su patético rival !!!\n".format(ganador.getPuntos(),			                                                                                 perdedor.getPuntos())
+			ganadorString += "Vencio con {} puntos versus los {} de su patético rival !!!\n".format(ganador.getPuntos(),			                                                                                 perdedor.getPuntos())
 		else:
 			ganadorString = "Empataron con {} puntos!!!\n".format(jugador1.getPuntos())
 		string += ganadorString

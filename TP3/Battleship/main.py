@@ -33,6 +33,7 @@ def jugar(archivo, jugador, no_input, sistema):
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--no-input',help='Deshabilitar el input del usuario', action = 'store_true')
+	parser.add_argument('--delete-after',help='Borra el mapa al final de la ejecucion', action = 'store_true')
 	args = parser.parse_args()
 	archivo = ARCHIVO
 	if not os.path.exists(archivo):
@@ -44,6 +45,7 @@ def main():
 	VistaJuego.imprimirSeparacion(platform.system())
 	jugar(archivo, dyno, args.no_input, platform.system())
 	VistaJuego.imprimirGanador(greedo, dyno,platform.system())
+	if args.delete_after: os.remove(archivo)
 
 if __name__ == '__main__':
 	try: main()
