@@ -1,5 +1,5 @@
 import unittest
-from Greedo import *
+from Greedo import Greedo
 from Partida import Partida
 from Barco import Barco
 
@@ -9,9 +9,9 @@ class TestDerribarUnBarcoCon1Lanzadera(unittest.TestCase):
         matriz = [[100, 40, 30, 10]]
         barco = Barco(100)
         barco.setPosicion(0, 0)
-        juego = Partida(matriz, [barco], 1, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [barco], 1, greedo)
+        targets = greedo.elegirTodosLosTargets()
+        partida.jugarTurno(targets[0])
         self.assertTrue(barco.estaDerribado())
 
     def testBarcoNoDerribado(self):
@@ -19,9 +19,9 @@ class TestDerribarUnBarcoCon1Lanzadera(unittest.TestCase):
         matriz = [[10, 40, 30, 50]]
         barco = Barco(100)
         barco.setPosicion(0, 0)
-        juego = Partida(matriz, [barco], 1, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [barco], 1, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertFalse(barco.estaDerribado())
 
 
@@ -31,9 +31,9 @@ class TestDerribarUnBarcoCon3Lanzaderas(unittest.TestCase):
         matriz = [[50, 40, 30, 10]]
         barco = Barco(100)
         barco.setPosicion(0, 0)
-        juego = Partida(matriz, [barco], 3, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [barco], 3, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertTrue(barco.estaDerribado())
 
     def testBarcoNoDerribado(self):
@@ -41,9 +41,9 @@ class TestDerribarUnBarcoCon3Lanzaderas(unittest.TestCase):
         matriz = [[10, 40, 30, 50]]
         barco = Barco(100)
         barco.setPosicion(0, 0)
-        juego = Partida(matriz, [barco], 3, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [barco], 3, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertFalse(barco.estaDerribado())
 
 class TestDerribarDosBarcosCon1Lanzadera(unittest.TestCase):
@@ -54,9 +54,9 @@ class TestDerribarDosBarcosCon1Lanzadera(unittest.TestCase):
         B = Barco(100)
         A.setPosicion(0, 0)
         B.setPosicion(0, 1)
-        juego = Partida(matriz, [A, B], 1, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [A, B], 1, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertTrue(A.estaDerribado() and not B.estaDerribado())
 
     def testBDerribadoASinDerribar(self):
@@ -66,9 +66,9 @@ class TestDerribarDosBarcosCon1Lanzadera(unittest.TestCase):
         B = Barco(100)
         A.setPosicion(0, 0)
         B.setPosicion(0, 1)
-        juego = Partida(matriz, [A, B], 1, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [A, B], 1, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertTrue(not A.estaDerribado() and B.estaDerribado())
 
 class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
@@ -79,9 +79,9 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         B = Barco(100)
         A.setPosicion(0, 0)
         B.setPosicion(0, 1)
-        juego = Partida(matriz, [A, B], 3, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [A, B], 3, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertTrue(A.estaDerribado() and not B.estaDerribado())
 
     def testBDerribadoASinDerribar(self):
@@ -91,9 +91,9 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         B = Barco(100)
         A.setPosicion(0, 0)
         B.setPosicion(0, 1)
-        juego = Partida(matriz, [A, B], 3, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [A, B], 3, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertTrue(not A.estaDerribado() and B.estaDerribado())
 
     def testADerribadoADerribado(self):
@@ -103,9 +103,9 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         B = Barco(100)
         A.setPosicion(0, 0)
         B.setPosicion(0, 1)
-        juego = Partida(matriz, [A, B], 3, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [A, B], 3, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertTrue(A.estaDerribado() and B.estaDerribado())
 
     def testASinDerribarBSinDerribar1(self):
@@ -115,9 +115,9 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         B = Barco(1000)
         A.setPosicion(0, 0)
         B.setPosicion(0, 1)
-        juego = Partida(matriz, [A, B], 3, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [A, B], 3, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertFalse(A.estaDerribado() and B.estaDerribado())
 
     def testASinDerribarBDerribado2(self):
@@ -127,9 +127,9 @@ class TestDerribarDosBarcosCon3Lanzadera(unittest.TestCase):
         B = Barco(100)
         A.setPosicion(0, 0)
         B.setPosicion(1, 1)
-        juego = Partida(matriz, [A, B], 3, greedo)
-        juego.elegirTargets()
-        juego.jugarTurno()
+        partida = Partida(matriz, [A, B], 3, greedo)
+        partida.getNextTarget()
+        partida.jugarTurno()
         self.assertTrue(not A.estaDerribado() and B.estaDerribado())
 
 if __name__ == '__main__':

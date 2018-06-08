@@ -1,5 +1,3 @@
-import os
-
 
 class VistaPartida():
 	def __init__(self, partida, terminal):
@@ -34,9 +32,9 @@ class VistaPartida():
 				celda = "{}|".format(num)
 			linea += celda
 		if barco.estaDerribado():
-			stringBarco = self.terminal.pretty_string("\t\t Barco {}: Dead".format(y),'NOT_OK')
+			stringBarco = self.terminal.pretty_string("\t\t {}: Dead".format(barco),'NOT_OK')
 		else:
-			stringBarco = self.terminal.pretty_string("\t\t Barco {}: {} HP".format(y, barco.getVida()),'OK')
+			stringBarco = self.terminal.pretty_string("\t\t {}: {} HP".format(barco, barco.getVida()),'OK')
 		linea += stringBarco
 		print(linea)
 
@@ -48,8 +46,8 @@ class VistaPartida():
 		string += "Lanzaderas: {}\n\n".format(self.partida.getCantidadLanzaderas())
 		string += "Barcos en juego: {}\n\n".format(len(self.partida.getBarcosVivos()))
 		for i in range(self.partida.cantidadLanzaderas):
-			if self.partida.targetsActuales[i] != None and not self.partida.terminada():
-				barco = "Barco {}".format(self.partida.targetsActuales[i])
+			if self.partida.targets[i] != None and not self.partida.terminada():
+				barco = "Barco {}".format(self.partida.targets[i])
 			else:
 				barco = "None"
 			string += "Lanzadera {} --> {}\n".format(i, barco)

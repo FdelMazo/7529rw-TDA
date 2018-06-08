@@ -2,7 +2,10 @@ class Barco():
 	def __init__(self, vida):
 		self.vida = vida
 		self.x = None
-		self.y = None # La fila en la que se encuentra es equivalente al ID del barco (barco en fila 3 --> Barco 3)
+		self.y = None
+
+	def __str__(self):
+		return "Barco "+ str(self.getID())
 
 	def recibirDanio(self, danio):
 		self.vida -= danio
@@ -13,6 +16,10 @@ class Barco():
 
 	def getPosicion(self):
 		return self.x, self.y
+
+	def getID(self):
+		# La fila en la que se encuentra es equivalente al ID del barco (barco en fila 3 --> Barco 3)
+		return self.y
 
 	def setPosicion(self, x, y):
 		self.x, self.y = x, y

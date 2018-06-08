@@ -1,4 +1,3 @@
-import os
 from Terminal import Terminal
 from VistaPartida import VistaPartida
 

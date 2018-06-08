@@ -5,8 +5,7 @@ class Partida():
 		self.cantidadLanzaderas = cantidadLanzaderas
 		self.turno = 0
 		self.jugador = jugador
-		self.targets = []
-		self.targetsActuales = [None] * self.cantidadLanzaderas
+		self.targets = [None] * self.cantidadLanzaderas
 
 	def terminada(self):
 		return not self.getBarcosVivos()
@@ -23,16 +22,12 @@ class Partida():
 			else:
 				barco.setPosicion(x + 1, y)
 
-	def elegirTodosLosTargets(self):
-		self.targets = self.jugador.elegirTodosLosTargets(self)
+	def setTargets(self, targets):
+		self.targets = targets
 
-	def elegirTargets(self):
-		self.targetsActuales = self.targets[self.turno]
-		return self.targetsActuales
-
-	def jugarTurno(self,targets):
+	def jugarTurno(self):
 		self.jugador.addPuntos(len(self.getBarcosVivos()))
-		for t in targets:
+		for t in self.targets:
 			if t!=None: self.barcos[t].recibirDanio(self.getDanioCasillero(*self.barcos[t].getPosicion()))
 		self.avanzarBarcos()
 		self.turno += 1

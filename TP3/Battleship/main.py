@@ -1,7 +1,4 @@
-import os
-import CrearGrilla
-from Partida import Partida
-from VistaPartida import VistaPartida
+from Source import CrearGrilla
 from Juego import Juego
 from VistaJuego import VistaJuego
 from Greedo import Greedo
@@ -16,17 +13,22 @@ DEFAULT_LANZADERAS = 2 # Se puede pisar con argumentos al ejecutar el programa
 ARCHIVO = 'grilla.coords'
 
 
-def jugar(partida, vista):
+def jugar(partida, vista,jugador):
 	vista.start()
-	partida.elegirTodosLosTargets()
-	while not partida.terminada():
-		targets = partida.elegirTargets()
+	todosLosTargets = jugador.elegirTodosLosTargets(partida)
+	for target in todosLosTargets:
+		partida.setTargets(target)
 		vista.informacionTurno()
 		vista.imprimirMapa()
-		partida.jugarTurno(targets)
+		partida.jugarTurno()
 	vista.informacionTurno()
 	vista.imprimirMapa()
 	vista.end()
+
+	if not partida.terminada():
+		# We should never ever enter this if
+		raise RuntimeError("El jugador NO gano el juego. No fue deterministico su comportamiento.")
+
 
 
 def main():
@@ -50,11 +52,11 @@ def main():
 	vistaJuego.titulo()
 
 	jugadores = [Greedo(), Dyno()]
-	for i,j in enumerate(jugadores):
-		juego.agregarJugador(j)
-		partida = juego.nuevaPartidaCon(j)
+	for i,jugador in enumerate(jugadores):
+		juego.agregarJugador(jugador)
+		partida = juego.nuevaPartidaCon(jugador)
 		vistaPartida = vistaJuego.nuevaVistaPartida(partida)
-		jugar(partida, vistaPartida)
+		jugar(partida, vistaPartida, jugador)
 		if i != len(jugadores)-1: vistaJuego.cambioDeTurno()
 	vistaJuego.imprimirGanador()
 
