@@ -1,12 +1,12 @@
 from Jugador import Jugador
+from copy import copy,deepcopy
+
 
 class Greedo(Jugador):
 	def __init__(self):
 		super().__init__('Greedo')
 
 	def elegirTargets(self, juego):
-		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy)
-		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
 		danioSegunBarco = {}
 		for barco in juego.getBarcosVivos():
 			x, y = barco.getPosicion()
@@ -27,3 +27,16 @@ class Greedo(Jugador):
 				barcoActual = barcosOrdenados[barcosDisponibles-1]
 		targets += [None] * (juego.getCantidadLanzaderas() - len(targets))
 		return [t.getPosicion()[1] if t else None for t in targets ]
+
+	def elegirTodosLosTargets(self, partidaOriginal):
+		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy/simulacion)
+		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
+		simulacion = deepcopy(partidaOriginal)
+		targetsTotales = []
+
+		while not simulacion.terminada():
+			targets = self.elegirTargets(simulacion)
+			simulacion.jugarTurno(targets)
+			targetsTotales.append(targets)
+
+		return targetsTotales

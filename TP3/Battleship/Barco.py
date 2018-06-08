@@ -2,7 +2,7 @@ class Barco():
 	def __init__(self, vida):
 		self.vida = vida
 		self.x = None
-		self.y = None
+		self.y = None # La fila en la que se encuentra es equivalente al ID del barco (barco en fila 3 --> Barco 3)
 
 	def recibirDanio(self, danio):
 		self.vida -= danio
