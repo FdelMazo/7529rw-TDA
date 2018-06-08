@@ -25,22 +25,12 @@ class VistaJuego():
 		self.terminal.clear()
 
 	def imprimirGanador(self):
-		jugadores = self.juego.jugadores
-
-		if jugadores[0].getPuntos() < jugadores[1].getPuntos():
-			ganador = jugadores[0]
-			perdedor = jugadores[1]
-		elif jugadores[1].getPuntos() < jugadores[0].getPuntos():
-			ganador = jugadores[1]
-			perdedor = jugadores[0]
-		else:
-			ganador, perdedor = None,None
 		string = "*******************************\n"
-		if ganador: ganadorString = "El ganador es {}!!!\n".format(ganador)
-		else: ganadorString = "Empataron con {} puntos!!!\n".format(jugadores[0].getPuntos())
+		if self.juego.ganador: ganadorString = "El ganador es {}!!!\n".format(self.juego.ganador)
+		else: ganadorString = "Empataron con {} puntos!!!\n".format(self.juego.jugadores[0].getPuntos())
 
-		ganadorString += "{}: {} Puntos\n".format(jugadores[0], jugadores[0].getPuntos())
-		ganadorString += "{}: {} Puntos\n".format(jugadores[1], jugadores[1].getPuntos())
+		ganadorString += "{}: {} Puntos\n".format(self.juego.jugadores[0], self.juego.jugadores[0].getPuntos())
+		ganadorString += "{}: {} Puntos\n".format(self.juego.jugadores[1], self.juego.jugadores[1].getPuntos())
 		string += ganadorString
 		string += "*******************************\n"
 		print(self.terminal.pretty_string(string, 'TITLE'))

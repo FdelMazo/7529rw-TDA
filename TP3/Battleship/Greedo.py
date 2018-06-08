@@ -9,7 +9,7 @@ class Greedo(Jugador):
 		Greedy del Greedy: De mi turno a jugar, mi subproblema es que la lanzadera haga el mayor danio posible
 
 	Agarro el juego entero y lo simulo.
-	Como necesito ganar el turno, puedo iterar. Nunca me importa el resto de los turnos. Solo el actual
+	Como necesito el mejor turno (con mis condiciones de que el mejor == el que mas danio hace), puedo iterar. Nunca me importa el resto de los turnos. Solo el actual
 
 	for turno in turnos:
 		for lanzadera in lanzaderas:

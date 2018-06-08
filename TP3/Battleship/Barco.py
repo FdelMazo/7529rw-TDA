@@ -1,10 +1,14 @@
 class Barco():
 	def __init__(self, vida):
+		self.vidaOriginal = vida
 		self.vida = vida
 		self.x = None
 		self.y = None
 
 	def __str__(self):
+		return "Barco "+ str(self.getID())
+
+	def __repr__(self):
 		return "Barco "+ str(self.getID())
 
 	def recibirDanio(self, danio):
@@ -26,3 +30,6 @@ class Barco():
 
 	def getVida(self):
 		return self.vida
+
+	def resetVida(self):
+		self.vida = self.vidaOriginal

@@ -8,11 +8,13 @@ class Juego():
 		self.matriz = matriz
 		self.barcos = barcos
 		self.cantidadLanzaderas = cantidadLanzaderas
+		self.ganador, self.perdedor = None, None
 
 	def agregarJugador(self, jugador):
 		self.jugadores.append(jugador)
 
 	def nuevaPartidaCon(self, jugador, posicionesDefault = True):
+		for b in self.barcos: b.resetVida()
 		partida = Partida(self.matriz, self.barcos, self.cantidadLanzaderas, jugador)
 		if posicionesDefault: partida.setPosicionesIniciales()
 		return partida
@@ -40,3 +42,14 @@ class Juego():
 				linea = [int(x) for x in linea]
 				matriz.append(linea)
 		return matriz
+
+	def end(self):
+		if self.jugadores[0].getPuntos() < self.jugadores[1].getPuntos():
+			self.ganador = self.jugadores[0]
+			self.perdedor = self.jugadores[1]
+		elif jugadores[1].getPuntos() < self.jugadores[0].getPuntos():
+			self.ganador = self.jugadores[1]
+			self.perdedor = self.jugadores[0]
+
+	def getGanadorYPerdedor(self):
+		return self.ganador, self.perdedor
