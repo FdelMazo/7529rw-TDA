@@ -37,7 +37,7 @@ class Dyno(Jugador):
     def __init__(self):
         super().__init__('Dyno')
 
-    def elegirTargets(self, juego):
+    def elegirTargetDelTurno(self, juego):
         """Recibe el estado del juego, NO LO MODIFICA (dummy/copy)
         Devuelve una lista de barcos a los que ataca cada lanzadera"""
 
@@ -79,4 +79,4 @@ if __name__ == '__main__':
 
     juego = Partida(matrizTablero, barcos, cantidadLanzaderas, None)
     juego.setPosicionesIniciales()
-    print(dyno.elegirTargets(juego))
+    print(dyno.elegirTargetDelTurno(juego))

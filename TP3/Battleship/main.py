@@ -1,4 +1,4 @@
-from Source import CrearGrilla
+import CrearGrilla
 from Juego import Juego
 from VistaJuego import VistaJuego
 from Greedo import Greedo
@@ -15,9 +15,9 @@ ARCHIVO = 'grilla.coords'
 
 def jugar(partida, vista,jugador):
 	vista.start()
-	todosLosTargets = jugador.elegirTodosLosTargets(partida)
+	todosLosTargets = jugador.elegirTargetsDeLaPartida(partida)
 	for target in todosLosTargets:
-		partida.setTargets(target)
+		partida.setTargetDelTurno(target)
 		vista.informacionTurno()
 		vista.imprimirMapa()
 		partida.jugarTurno()

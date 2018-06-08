@@ -46,8 +46,8 @@ class VistaPartida():
 		string += "Lanzaderas: {}\n\n".format(self.partida.getCantidadLanzaderas())
 		string += "Barcos en juego: {}\n\n".format(len(self.partida.getBarcosVivos()))
 		for i in range(self.partida.cantidadLanzaderas):
-			if self.partida.targets[i] != None and not self.partida.terminada():
-				barco = "Barco {}".format(self.partida.targets[i])
+			if self.partida.targetDelTurno[i] != None and not self.partida.terminada():
+				barco = "Barco {}".format(self.partida.targetDelTurno[i])
 			else:
 				barco = "None"
 			string += "Lanzadera {} --> {}\n".format(i, barco)

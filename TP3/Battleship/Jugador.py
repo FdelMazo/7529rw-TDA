@@ -6,11 +6,14 @@ class Jugador():
 	def __str__(self):
 		return self.nombre
 
-	def elegirTargets(self, juego):
-		pass
-
 	def getPuntos(self):
 		return self.puntos
 
 	def addPuntos(self, puntos):
 		self.puntos += puntos
+
+	def elegirTargetDelTurno(self, juego):
+		pass
+
+	def elegirTargetsDeLaPartida(self, partidaOriginal):
+		pass

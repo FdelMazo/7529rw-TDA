@@ -19,37 +19,35 @@ class Greedo(Jugador):
 	def __init__(self):
 		super().__init__('Greedo')
 
-	def elegirTargets(self, partida):
+	def elegirTargetDelTurno(self, partida):
 		barcos, lanzaderas = partida.getBarcosVivos(), partida.getCantidadLanzaderas()
-		danioSegunBarco = {}
-		for barco in barcos:
+		danioSegunBarco = []
+		for barco in reversed(barcos):
 			x, y = barco.getPosicion()
-			danioSegunBarco[barco] = partida.getDanioCasillero(x, y)
-		barcosOrdenados = sorted(danioSegunBarco.items(), key=lambda x: x[1])
-		barcosDisponibles = len(barcosOrdenados)
-		barcoActual = barcosOrdenados[barcosDisponibles - 1]
+			danioSegunBarco.append((barco, partida.getDanioCasillero(x, y)))
+		barcosOrdenados = sorted(danioSegunBarco, key=lambda x: x[1])
+		barcoActual = barcosOrdenados[-1]
 		targets = []
 		for i in range(lanzaderas):
 			barco, danio = barcoActual
 			dummyVida = barco.getVida() - danio
 			targets.append(barco.getID())
 			if dummyVida <= 0:
-				barcosDisponibles -= 1
-				if barcosDisponibles == 0:
-					break
-				barcoActual = barcosOrdenados[barcosDisponibles-1]
+				barcosOrdenados.pop()
+				if not barcosOrdenados: break
+				barcoActual = barcosOrdenados[-1]
 		targets += [None] * (lanzaderas - len(targets))
 		return targets
 
-	def elegirTodosLosTargets(self, partidaOriginal):
+	def elegirTargetsDeLaPartida(self, partidaOriginal):
 		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy/simulacion)
 		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
 		simulacion = deepcopy(partidaOriginal)
 		targetsTotales = []
 
 		while not simulacion.terminada():
-			targets = self.elegirTargets(simulacion)
-			simulacion.setTargets(targets)
+			targets = self.elegirTargetDelTurno(simulacion)
+			simulacion.setTargetDelTurno(targets)
 			simulacion.jugarTurno()
 			targetsTotales.append(targets)
 
