@@ -47,7 +47,7 @@ class Juego():
 		if self.jugadores[0].getPuntos() < self.jugadores[1].getPuntos():
 			self.ganador = self.jugadores[0]
 			self.perdedor = self.jugadores[1]
-		elif jugadores[1].getPuntos() < self.jugadores[0].getPuntos():
+		elif self.jugadores[1].getPuntos() < self.jugadores[0].getPuntos():
 			self.ganador = self.jugadores[1]
 			self.perdedor = self.jugadores[0]
 

@@ -4,6 +4,7 @@ import itertools
 
 
 def listaOptima(listas):
+	# Medio polimorfica la funcion... Si recibe una lista de listas de listas, la hace lista de listas
 	if isinstance(listas[0], list) and isinstance(listas[0][0], list):
 		listas = [item for sublist in listas for item in sublist]
 
