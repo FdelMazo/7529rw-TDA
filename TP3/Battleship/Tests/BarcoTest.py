@@ -1,5 +1,5 @@
 import unittest
-from Barco import barco
+from Barco import Barco
 
 class TestBarcoDerribado(unittest.TestCase):
     def testBarcoDerribadoDanioJusto(self):
