@@ -44,12 +44,7 @@ class Juego():
 		return matriz
 
 	def end(self):
-		if self.jugadores[0].getPuntos() < self.jugadores[1].getPuntos():
-			self.ganador = self.jugadores[0]
-			self.perdedor = self.jugadores[1]
-		elif self.jugadores[1].getPuntos() < self.jugadores[0].getPuntos():
-			self.ganador = self.jugadores[1]
-			self.perdedor = self.jugadores[0]
+		self.leaderboard = sorted(self.jugadores, key=lambda x:x.getPuntos(),reverse=True)
 
-	def getGanadorYPerdedor(self):
-		return self.ganador, self.perdedor
+	def getLeaderboard(self):
+		return self.leaderboard

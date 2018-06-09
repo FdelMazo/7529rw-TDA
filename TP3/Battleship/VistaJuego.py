@@ -12,6 +12,7 @@ class VistaJuego():
 				 "Battleship: La Batalla Final! \n\n" \
 				 "En esta esquina, el memorizador Dyno! El mejor programador de la historia desde Thomas Cormen \n" \
 				 "En esta otra, el goloso Greedo! El sucesor al creador de la programacion greedy, John Greedy \n" \
+		         "Oh no! Que es esa cosa monstruosa allí? Esta entrando un nuevo participante! La horrorosa abominación, hija de nadie, GreedoBruto \n" \
 				 "*******************************\n"
 		print(self.terminal.pretty_string(string, 'TITLE'))
 		self.terminal.print_command()
@@ -26,12 +27,13 @@ class VistaJuego():
 
 	def imprimirGanador(self):
 		string = "*******************************\n"
-		if self.juego.ganador: ganadorString = "El ganador es {}!!!\n".format(self.juego.ganador)
-		else: ganadorString = "Empataron con {} puntos!!!\n".format(self.juego.jugadores[0].getPuntos())
-
-		ganadorString += "{}: {} Puntos\n".format(self.juego.jugadores[0], self.juego.jugadores[0].getPuntos())
-		ganadorString += "{}: {} Puntos\n".format(self.juego.jugadores[1], self.juego.jugadores[1].getPuntos())
+		if self.juego.getLeaderboard()[0].getPuntos() == self.juego.getLeaderboard()[1].getPuntos():
+			ganadorString = "Empataron!!!\n\n"
+		else:
+			ganadorString = "El ganador es {}!!!\n\n".format(self.juego.getLeaderboard()[0])
 		string += ganadorString
+		for j in self.juego.getLeaderboard():
+			string += "{}: {} Puntos\n".format(j, j.getPuntos())
 		string += "*******************************\n"
 		print(self.terminal.pretty_string(string, 'TITLE'))
 

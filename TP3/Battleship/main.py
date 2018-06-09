@@ -52,7 +52,7 @@ def main():
 	vistaJuego = VistaJuego(juego, args.no_input)
 	vistaJuego.titulo()
 
-	jugadores = [GreedoBruto(), Greedo()]
+	jugadores = [Greedo(), GreedoBruto(), Dyno()]
 	for i,jugador in enumerate(jugadores):
 		juego.agregarJugador(jugador)
 		partida = juego.nuevaPartidaCon(jugador)
@@ -61,7 +61,7 @@ def main():
 		if i != len(jugadores)-1: vistaJuego.cambioDeTurno()
 	juego.end()
 	vistaJuego.imprimirGanador()
-	return juego.getGanadorYPerdedor()[0]
+	return juego.getLeaderboard()[0]
 
 if __name__ == '__main__':
 	try:
