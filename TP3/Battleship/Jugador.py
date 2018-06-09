@@ -15,7 +15,9 @@ class Jugador():
 	def addPuntos(self, puntos):
 		self.puntos += puntos
 
-	def elegirTargetsDeLaPartida(self, partidaOriginal):
+	def elegirTargetsDeLaPartida(self, partida):
+		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy/simulacion)
+		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
 		pass
 
 	def turnoDondeMuere(self, barco, matriz):

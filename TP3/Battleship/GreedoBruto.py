@@ -40,6 +40,8 @@ class GreedoBruto(Jugador):
 		super().__init__('Greedo Bruto')
 
 	def elegirTargetDelTurno(self, partida):
+		"""Esta funcion y metodologia es valida porque greedy me pide lo mejor para mi subproblema, sin pensar en el resto
+		Puedo iterar mis turnos y elegir para cada turno por separado"""
 		barcos, lanzaderas = partida.getBarcos(), partida.getCantidadLanzaderas()
 		danios = [partida.getDanioCasillero(*b.getPosicion()) for b in barcos]
 		combinacionesPosibles = self.todasLasCombinacionesPosibles(barcos,lanzaderas)
@@ -47,8 +49,6 @@ class GreedoBruto(Jugador):
 		return mejorTurno
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
-		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy/simulacion)
-		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
 		simulacion = deepcopy(partidaOriginal)
 		targetsTotales = []
 

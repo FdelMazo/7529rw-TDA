@@ -20,6 +20,8 @@ class Greedo(Jugador):
 		super().__init__('Greedo')
 
 	def elegirTargetDelTurno(self, partida):
+		"""Esta funcion y metodologia es valida porque greedy me pide lo mejor para mi subproblema, sin pensar en el resto
+		Puedo iterar mis turnos y elegir para cada turno por separado"""
 		barcos, lanzaderas = partida.getBarcosVivos(), partida.getCantidadLanzaderas()
 		danioSegunBarco = []
 		for barco in reversed(barcos):
@@ -40,8 +42,6 @@ class Greedo(Jugador):
 		return targets
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
-		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy/simulacion)
-		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
 		simulacion = deepcopy(partidaOriginal)
 		targetsTotales = []
 
