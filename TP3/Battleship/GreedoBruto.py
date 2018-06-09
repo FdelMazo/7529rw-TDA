@@ -2,29 +2,30 @@ from Jugador import Jugador
 from copy import deepcopy
 import itertools
 
+def listaOptima(listaTargets, barcos, danios):
+	"""Para el subproblema de cual es el mejor turno posible, es decir, el que menos puntos haga pasar y mas danio haga es:
+		El turno que mas barcos derribe
+		De esos, el que menos tiros gaste en el barco
+		De esos, el que mas danio produzca"""
+	"""Recibe una lista con todas las combinaciones posibles de disparos (por ejemplo, un disparo al tercer barco con solo dos lanzaderas es [3,3]
+		Los simula, y agarra sus atributos (cantidad muertes, cuanto danio hizo, cuanto le cuesta matar
+		Los ordena establemente con los criterios
+		Devuelve el mejor"""
+	atributos = [] #Lista de tuplas de Targets, Muertos, SumVida, SumatoriaTirosPaMatar
+	for posibilidad in listaTargets:
+		turno = simularTurno(barcos, danios, posibilidad)
+		muertos = []
+		sumatoriaTirosParaMatar = 0
+		for i,b in enumerate(turno):
+			if b <= 0:
+				muertos.append(b)
+				sumatoriaTirosParaMatar = posibilidad.count(i)
+		sumatoriaVidas = sum([b for b in turno if b>0])
+		atributos.append((sumatoriaVidas,len(muertos), sumatoriaTirosParaMatar))
 
-def listaOptima(listas):
-	# Medio polimorfica la funcion... Si recibe una lista de listas de listas, la hace lista de listas
-	if isinstance(listas[0], list) and isinstance(listas[0][0], list):
-		listas = [item for sublist in listas for item in sublist]
-
-	listasSinDup = []
-	for l in listas:
-		if l not in listasSinDup: listasSinDup.append(l)
-	listas = listasSinDup
-
-	atributos = []
-	for lista in listas:
-		sumatoria, cantidadDerribados = sum([a for a in lista if a > 0]), len([a for a in lista if a <= 0])
-		atributos.append((sumatoria, cantidadDerribados))
-	opt = 0
-	for i in range(len(listas)):
-		if atributos[i][1] > atributos[opt][1]:
-			opt = i
-		elif atributos[i][1] == atributos[opt][1] and atributos[i][0] < atributos[opt][0]:
-			opt = i
-
-	return listas[opt]
+	atributosOrdenados = sorted(atributos, key=lambda x:(-x[1],x[2],x[0]))
+	indice = atributos.index(atributosOrdenados[0])
+	return listaTargets[indice]
 
 def todasLasCombinacionesPosibles(barcos, cantidadTiros):
 	"""Recibe la cantidad de barcos y la cantidad de tiros posibles en el turno
@@ -81,6 +82,9 @@ class GreedoBruto(Jugador):
 		ya que si mi objetivo final es producir la menor cantidad de puntos posibles, con esto los disminiyo a su maximo,
 		gracias a que estoy produciendo la mayor cantidad de muertes posibles
 		En la decision de generar x muertes en dos turnos iguales, se torna a generar mayor danio posible.
+
+	Ojo!
+	Sumatoria turnos optimos != Juego optimo
 	"""
 
 	def __init__(self):
@@ -89,16 +93,9 @@ class GreedoBruto(Jugador):
 	def elegirTargetDelTurno(self, partida):
 		barcos, lanzaderas = partida.getBarcos(), partida.getCantidadLanzaderas()
 		danios = [partida.getDanioCasillero(*b.getPosicion()) for b in barcos]
-
 		combinacionesPosibles = todasLasCombinacionesPosibles(barcos,lanzaderas)
-		simulaciones = []
-		for posibilidad in combinacionesPosibles:
-			simulaciones.append(simularTurno(barcos, danios, posibilidad))
-
-		mejorSimulacion = listaOptima(simulaciones)
-
-		mejorPosibilidad = combinacionesPosibles[simulaciones.index(mejorSimulacion)]
-		return mejorPosibilidad
+		mejorTurno = listaOptima(combinacionesPosibles, barcos, danios)
+		return mejorTurno
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
 		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy/simulacion)
