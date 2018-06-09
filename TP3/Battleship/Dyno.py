@@ -1,57 +1,6 @@
 from Jugador import Jugador
 from copy import deepcopy
-import itertools
 
-def listaOptima(listaTargets, barcos, danios):
-	"""Para el subproblema de cual es el mejor turno posible, es decir, el que menos puntos haga pasar y mas danio haga es:
-		El turno que mas barcos derribe
-		De esos, el que menos tiros gaste en el barco
-		De esos, el que mas danio produzca"""
-	"""Recibe una lista con todas las combinaciones posibles de disparos (por ejemplo, un disparo al tercer barco con solo dos lanzaderas es [3,3]
-		Los simula, y agarra sus atributos (cantidad muertes, cuanto danio hizo, cuanto le cuesta matar
-		Los ordena establemente con los criterios
-		Devuelve el mejor"""
-	atributos = [] #Lista de tuplas de Targets, Muertos, SumVida, SumatoriaTirosPaMatar
-	for posibilidad in listaTargets:
-		turno = simularTurno(barcos, danios, posibilidad)
-		muertos = []
-		sumatoriaTirosParaMatar = 0
-		for i,b in enumerate(turno):
-			if b <= 0:
-				muertos.append(b)
-				sumatoriaTirosParaMatar = posibilidad.count(i)
-		sumatoriaVidas = sum([b for b in turno if b>0])
-		atributos.append((sumatoriaVidas,len(muertos), sumatoriaTirosParaMatar))
-
-	atributosOrdenados = sorted(atributos, key=lambda x:(-x[1],x[2],x[0]))
-	indice = atributos.index(atributosOrdenados[0])
-	return listaTargets[indice]
-
-def todasLasCombinacionesPosibles(barcos, cantidadTiros):
-	"""Recibe la cantidad de barcos y la cantidad de tiros posibles en el turno
-	Devuelve una lista de listas con todas las combinaciones posibles"""
-	barcos = [b.getID() for b in barcos]
-
-	# Algun dia aprendere combinatoria....
-	# Hacer todas las combinaciones posibles con itertools y agregarlas ordenadas a un set para que no se repitan
-	combinacionesConRepeticiones = itertools.product(barcos, repeat=cantidadTiros)
-
-	combinacionesSinRepeticiones = set()
-	for c in combinacionesConRepeticiones:
-		combinacionesSinRepeticiones.add(tuple(sorted(c)))
-
-	listaDeListas = []
-	for c in combinacionesSinRepeticiones:
-		listaDeListas.append(list(c))
-
-	return listaDeListas
-
-def simularTurno(barcos, danios, target):
-	"""Recibe una lista de barcos y a quienes atacar y devuelve como quedarian sus vidas"""
-	vidasBarcos = [b.getVida() for b in barcos]
-	for n in target:
-		vidasBarcos[n] -= danios[n]
-	return vidasBarcos
 
 class Dyno(Jugador):
 	"""
@@ -93,8 +42,8 @@ class Dyno(Jugador):
 	def elegirTargetDelTurno(self, partida):
 		barcos, lanzaderas = partida.getBarcos(), partida.getCantidadLanzaderas()
 		danios = [partida.getDanioCasillero(*b.getPosicion()) for b in barcos]
-		combinacionesPosibles = todasLasCombinacionesPosibles(barcos,lanzaderas)
-		mejorTurno = listaOptima(combinacionesPosibles, barcos, danios)
+		combinacionesPosibles = self.todasLasCombinacionesPosibles(barcos,lanzaderas)
+		mejorTurno = self.turnoOptimo(combinacionesPosibles, barcos, danios)
 		return mejorTurno
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
@@ -102,6 +51,15 @@ class Dyno(Jugador):
 		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
 		simulacion = deepcopy(partidaOriginal)
 		targetsTotales = []
+		matriz = simulacion.getMatriz()
+
+		vuelta, ultimaColumna = max([self.turnoDondeMuere(b, matriz) for b in simulacion.getBarcos()]	)
+		cantidadColumnas = len(simulacion.getMatriz()[0])
+		cantidadBarcos = len(simulacion.getBarcos())
+
+
+		cotaTotal = vuelta*cantidadColumnas*cantidadBarcos
+		print(vuelta, cantidadColumnas,cotaTotal)
 
 		while not simulacion.terminada():
 			targets = self.elegirTargetDelTurno(simulacion)
@@ -110,3 +68,18 @@ class Dyno(Jugador):
 			targetsTotales.append(targets)
 
 		return targetsTotales
+
+# if __name__=='__main__':
+# 	from Juego import Juego
+# 	from Partida import Partida
+#
+# 	archivo = 'grilla.coords'
+# 	matrizTablero = Juego.ArchivoToMatriz(archivo)
+# 	barcos = Juego.ArchivoToBarcos(archivo)
+# 	cantidadLanzaderas = 3
+#
+# 	juego = Juego(matrizTablero, barcos, cantidadLanzaderas)
+# 	jugador = Dyno()
+# 	partida = Partida(matrizTablero, barcos, cantidadLanzaderas, jugador)
+# 	partida.setPosicionesIniciales()
+# 	jugador.elegirTargetsDeLaPartida(partida)
