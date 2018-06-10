@@ -31,7 +31,7 @@ class VistaJuego():
 			ganadorString = "El ganador es {}\n\n".format(self.juego.getLeaderboard()[0])
 		string += ganadorString
 		for j in self.juego.getLeaderboard():
-			string += "{}: {} Puntos\n".format(j, j.getPuntos())
+			string += "{}: {} Puntos de A\n".format(j, j.getPuntos())
 		string += "*******************************\n"
 		print(self.terminal.pretty_string(string, 'TITLE'))
 
