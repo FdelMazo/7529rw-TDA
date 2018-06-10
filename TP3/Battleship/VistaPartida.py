@@ -47,10 +47,13 @@ class VistaPartida():
 		string += "Barcos en juego: {}\n\n".format(len(self.partida.getBarcosVivos()))
 		for i in range(self.partida.cantidadLanzaderas):
 			if self.partida.targetDelTurno[i] != None and not self.partida.terminada():
-				barco = "Barco {}".format(self.partida.targetDelTurno[i])
+				coordenadas = (self.partida.turno, self.partida.targetDelTurno[i])
+				stringBarco = "Barco {}".format(self.partida.targetDelTurno[i])
+				stringDanioPotencial = "(Daño Potencial: {})".format(self.partida.getDanioCasillero(*coordenadas))
 			else:
-				barco = "None"
-			string += "Lanzadera {} --> {}\n".format(i, barco)
+				stringBarco = "None"
+				stringDanioPotencial = None
+			string += "Lanzadera {} --> {} {}\n".format(i, stringBarco,stringDanioPotencial)
 		print(string)
 
 	def end(self):
