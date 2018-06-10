@@ -40,7 +40,7 @@ class Juego():
 		with open(archivo, 'r') as f:
 			for linea in f:
 				linea = linea.split()
-				linea = linea[1:] #El primer valor es un barco
+				linea = linea[1:] # El primer valor es un barco
 				linea = [int(x) for x in linea]
 				matriz.append(linea)
 		return matriz

@@ -6,10 +6,10 @@ from Dyno import Dyno
 import argparse
 
 # Filas, Columnas, Rango de Vida barco, maximo danio de celda
-# De querer usar otra grilla, se recomienda crearla con CrearGrilla.py y pasarle los parametros a ese archivo
+# De querer usar otra grilla, crearla con CrearGrilla.py y pasarle los parametros a ese archivo
 DEFAULT_GRILLA = [5, 10, (500, 1000), 300]
 
-DEFAULT_LANZADERAS = 2
+DEFAULT_LANZADERAS = 4
 DEFAULT_ARCHIVO = 'grilla.coords'
 
 
@@ -57,8 +57,7 @@ def main():
 	juego = Juego(matrizTablero, barcos, cantidadLanzaderas)
 	vistaJuego = VistaJuego(juego, args.no_input)
 	vistaJuego.titulo()
-
-	jugadores = [Greedo()]
+	jugadores = [Greedo(), Dyno()]
 	for i,jugador in enumerate(jugadores):
 		juego.agregarJugador(jugador)
 		partida = juego.nuevaPartidaCon(jugador)

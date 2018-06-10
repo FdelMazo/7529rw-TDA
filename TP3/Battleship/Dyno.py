@@ -10,6 +10,23 @@ class Dyno(Jugador):
 	def __init__(self):
 		super().__init__('Dyno')
 
+	def turnoDondeMuere(self, barco, matriz):
+		"""Devuelve la primera columna en el que se le puede ganar a un barco con la tupla (NroVuelta, Columna)
+		Ojo, ambos indices comienzan en 1 en vez de en 0, porque se refieren a vueltas y a columnas (no turnos)"""
+		numFila = barco.getID()
+		fila = matriz[numFila]
+		objetivo = barco.getVida()
+
+		vuelta = 1
+		i = 0
+		while objetivo > 0:
+			for i,elem in enumerate(fila,1):
+				objetivo -= elem
+				if objetivo <= 0: break
+			if objetivo<=0: break
+			vuelta+=1
+		return (vuelta, i)
+
 	def elegirTargetDelTurno(self, partida):
 		barcos, lanzaderas = partida.getBarcos(), partida.getCantidadLanzaderas()
 		danios = [partida.getDanioCasillero(*b.getPosicion()) for b in barcos]
@@ -37,6 +54,7 @@ class Dyno(Jugador):
 			targetsTotales.append(targets)
 
 		return targetsTotales
+	
 
 # if __name__=='__main__':
 # 	from Juego import Juego

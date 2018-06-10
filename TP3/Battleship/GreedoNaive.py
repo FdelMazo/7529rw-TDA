@@ -24,6 +24,7 @@ class GreedoNaive(Jugador):
 		barcos, lanzaderas = partida.getBarcosVivos(), partida.getCantidadLanzaderas()
 		danioSegunBarco = []
 		for barco in reversed(barcos):
+			# Reversed para que sea estable el ordenamiento y si tiene dos barcos con la misma vida elija en orden
 			x, y = barco.getPosicion()
 			danioSegunBarco.append((barco, partida.getDanioCasillero(x, y)))
 		danioSegunBarco.sort(key=lambda x: x[1])
