@@ -198,6 +198,18 @@ class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 		self.assertFalse(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
 
+class MismasPruebasGreedoTestCuatroLanzaderasGreedoBruto(unittest.TestCase):
+	def testTresLanzaderasDosBarcosNoSeDisparaABarcoDerribado(self):
+		greedo = Greedo()
+		A = Barco(100)
+		B = Barco(100)
+		A.setPosicion(0, 0)
+		B.setPosicion(0, 1)
+		matriz = [[50],[100]]
+		partida = Partida(matriz, [A,B], 4, greedo)
+		targets = greedo.elegirTargetsDeLaPartida(partida)
+		self.assertEqual(targets[0], [1,0,0,None])
+
 class TestsDiferenciasGreedoBrutoGreedo(unittest.TestCase):
 	def testGreeedoBrutoEligeElMejorTurnoPosible(self):
 		greedobruto = GreedoBruto()

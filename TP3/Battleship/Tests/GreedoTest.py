@@ -84,7 +84,7 @@ class TestUnaLanzadera(unittest.TestCase):
 		self.assertFalse(B.estaDerribado())
 
 class TestDosLanzaderas(unittest.TestCase):
-	def testDosLanzaderasUnBarcoNoSeDisparaABarcoYaMuerto(self):
+	def testDosLanzaderasUnBarcoNoSeDisparaABarcoYaDerribado(self):
 		greedo = Greedo()
 		barco = Barco(100)
 		barco.setPosicion(0, 0)
@@ -196,6 +196,19 @@ class TestTresLanzaderas(unittest.TestCase):
 		partida.jugarTurno()
 		self.assertFalse(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
+
+
+class TestCuatroLanzaderas(unittest.TestCase):
+	def testTresLanzaderasDosBarcosNoSeDisparaABarcoDerribado(self):
+		greedo = Greedo()
+		A = Barco(100)
+		B = Barco(100)
+		A.setPosicion(0, 0)
+		B.setPosicion(0, 1)
+		matriz = [[50],[100]]
+		partida = Partida(matriz, [A,B], 4, greedo)
+		targets = greedo.elegirTargetsDeLaPartida(partida)
+		self.assertEqual(targets[0], [1,0,0,None])
 
 if __name__ == '__main__':
 	unittest.main()

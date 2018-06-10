@@ -32,9 +32,9 @@ class Greedo(Jugador):
 		targets = []
 		for i in range(lanzaderas):
 			barco, danio = barcoActual
-			dummyVida = barco.getVida() - danio
+			barco.recibirDanio(danio)
 			targets.append(barco.getID())
-			if dummyVida <= 0:
+			if barco.estaDerribado():
 				barcosOrdenados.pop()
 				if not barcosOrdenados: break
 				barcoActual = barcosOrdenados[-1]
