@@ -44,7 +44,7 @@ class Juego():
 		return matriz
 
 	def end(self):
-		self.leaderboard = sorted(self.jugadores, key=lambda x:x.getPuntos(),reverse=True)
+		self.leaderboard = sorted(self.jugadores, key=lambda x:x.getPuntos())
 
 	def getLeaderboard(self):
 		return self.leaderboard
