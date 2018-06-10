@@ -42,24 +42,24 @@ class VistaPartida():
 		print("*******************************")
 		string = "Jugador: {}\n".format(self.partida.jugador)
 		string += "Turno: {}\n".format(self.partida.turno)
-		string += "Puntos: {}\n".format(self.partida.jugador.getPuntos())
+		string += "Puntos del bando A: {}\n".format(self.partida.jugador.getPuntos())
 		string += "Lanzaderas: {}\n\n".format(self.partida.getCantidadLanzaderas())
 		string += "Barcos en juego: {}\n\n".format(len(self.partida.getBarcosVivos()))
 		for i in range(self.partida.cantidadLanzaderas):
 			if self.partida.targetDelTurno[i] != None and not self.partida.terminada():
-				coordenadas = (self.partida.turno, self.partida.targetDelTurno[i])
-				stringBarco = "Barco {}".format(self.partida.targetDelTurno[i])
-				stringDanioPotencial = "(Daño Potencial: {})".format(self.partida.getDanioCasillero(*coordenadas))
+				barco = self.partida.getBarcos()[i]
+				stringBarco = "Barco {}".format(barco)
+				stringDanioPotencial = "(Daño Potencial: {})".format(self.partida.getDanioCasillero(*barco.getPosicion()))
 			else:
 				stringBarco = "None"
-				stringDanioPotencial = None
+				stringDanioPotencial = ""
 			string += "Lanzadera {} --> {} {}\n".format(i, stringBarco,stringDanioPotencial)
 		print(string)
 
 	def end(self):
 		string = "*******************************\n" \
 				"Turno finalizado\n" \
-				"En {} turnos, {} alcanzó {} puntos\n".format(self.partida.turno, self.partida.jugador,
+				"En {} turnos, peleando contra {}, el bando A alcanzó {} puntos\n".format(self.partida.turno, self.partida.jugador,
 																self.partida.jugador.getPuntos())
 		string += "*******************************\n"
 		print(self.terminal.pretty_string(string,'TITLE'))

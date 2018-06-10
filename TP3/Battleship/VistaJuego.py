@@ -9,8 +9,9 @@ class VistaJuego():
 
 	def titulo(self):
 		string = "\n*******************************\n" \
-				 "Battleship \n\n" \
+				 "Battleship \n" \
 				 "*******************************\n"
+
 		print(self.terminal.pretty_string(string, 'TITLE'))
 		self.terminal.print_command()
 		self.terminal.clear()
