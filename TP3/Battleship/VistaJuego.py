@@ -24,14 +24,16 @@ class VistaJuego():
 		self.terminal.clear()
 
 	def imprimirGanador(self):
+		leaderboard = sorted(self.juego.partidas, key=lambda x: x.getPuntos())
 		string = "*******************************\n"
-		if self.juego.getLeaderboard()[0].getPuntos() == self.juego.getLeaderboard()[1].getPuntos():
+		if leaderboard[0].getPuntos() == leaderboard[1].getPuntos():
 			ganadorString = "Empataron\n\n"
 		else:
-			ganadorString = "El ganador es {}\n\n".format(self.juego.getLeaderboard()[0])
+			ganadorString = "El ganador es {}\n\n".format(leaderboard[0].getJugador())
 		string += ganadorString
-		for j in self.juego.getLeaderboard():
-			string += "{}: {} Puntos de A\n".format(j, j.getPuntos())
+		string += "Puntajes: \n"
+		for partida in leaderboard:
+			string += "  {}\n".format(partida)
 		string += "*******************************\n"
 		print(self.terminal.pretty_string(string, 'TITLE'))
 

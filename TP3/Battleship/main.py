@@ -60,9 +60,8 @@ def main():
 		vistaPartida = vistaJuego.nuevaVistaPartida(partida)
 		jugar(partida, vistaPartida, jugador)
 		if i != len(jugadores)-1: vistaJuego.cambioDeTurno()
-	juego.end()
 	vistaJuego.imprimirGanador()
-	return juego.getLeaderboard()[0]
+	return
 
 if __name__ == '__main__':
 	try:

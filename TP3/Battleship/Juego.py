@@ -5,6 +5,7 @@ from Barco import Barco
 class Juego():
 	def __init__(self, matriz, barcos, cantidadLanzaderas):
 		self.jugadores = []
+		self.partidas = []
 		self.matriz = matriz
 		self.barcos = barcos
 		self.cantidadLanzaderas = cantidadLanzaderas
@@ -17,6 +18,7 @@ class Juego():
 		for b in self.barcos: b.resetVida()
 		partida = Partida(self.matriz, self.barcos, self.cantidadLanzaderas, jugador)
 		if posicionesDefault: partida.setPosicionesIniciales()
+		self.partidas.append(partida)
 		return partida
 
 	@staticmethod
@@ -42,9 +44,3 @@ class Juego():
 				linea = [int(x) for x in linea]
 				matriz.append(linea)
 		return matriz
-
-	def end(self):
-		self.leaderboard = sorted(self.jugadores, key=lambda x:x.getPuntos())
-
-	def getLeaderboard(self):
-		return self.leaderboard

@@ -4,8 +4,12 @@ class Partida():
 		self.barcos = barcos
 		self.cantidadLanzaderas = cantidadLanzaderas
 		self.turno = 0
+		self.puntos = 0
 		self.jugador = jugador
 		self.targetDelTurno = [None] * self.cantidadLanzaderas
+
+	def __str__(self):
+		return "Partida de {} - Puntos del bando A: {} - Turno: {}".format(self.jugador, self.puntos, self.turno)
 
 	def terminada(self):
 		return not self.getBarcosVivos()
@@ -26,11 +30,14 @@ class Partida():
 		self.targetDelTurno = targets
 
 	def jugarTurno(self):
-		self.jugador.addPuntos(len(self.getBarcosVivos()))
+		self.puntos += len(self.getBarcosVivos())
 		for t in self.targetDelTurno:
 			if t!=None: self.barcos[t].recibirDanio(self.getDanioCasillero(*self.barcos[t].getPosicion()))
 		self.avanzarBarcos()
 		self.turno += 1
+
+	def getPuntos(self):
+		return self.puntos
 
 	def getBarcosVivos(self):
 		return [b for b in self.barcos if not b.estaDerribado()]
@@ -46,3 +53,6 @@ class Partida():
 
 	def getCantidadLanzaderas(self):
 		return self.cantidadLanzaderas
+
+	def getJugador(self):
+		return self.jugador
