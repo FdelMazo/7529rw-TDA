@@ -4,7 +4,7 @@ from Greedo import Greedo
 from Partida import Partida
 from Barco import Barco
 
-class MismasPruebasGreedoTestUnaLanzaderaGree(unittest.TestCase):
+class MismasPruebasGreedoTestUnaLanzaderaGreedoBruto(unittest.TestCase):
 	def testUnaLanzaderaUnBarcoUnicaOpcionPosibleDerribarlo(self):
 		greedobruto = GreedoBruto()
 		barco = Barco(100)
@@ -84,7 +84,28 @@ class MismasPruebasGreedoTestUnaLanzaderaGree(unittest.TestCase):
 		self.assertTrue(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
 
-class MismasPruebasGreedoTestTresLanzaderas(unittest.TestCase):
+class MismasPruebasGreedoTestDosLanzaderasGreedoBruto(unittest.TestCase):
+	def testDosLanzaderasUnBarcoNoSeDisparaABarcoYaMuerto(self):
+		greedo = Greedo()
+		barco = Barco(100)
+		barco.setPosicion(0, 0)
+		matriz = [[100]]
+		partida = Partida(matriz, [barco], 2, greedo)
+		targets = greedo.elegirTargetsDeLaPartida(partida)
+		self.assertEqual(targets[0], [0,None])
+
+	def testDosLanzaderasDosBarcosSeMataAUNoSeDaniaAlOtro(self):
+		greedo = Greedo()
+		A = Barco(100)
+		B = Barco(100)
+		A.setPosicion(0, 0)
+		B.setPosicion(0, 1)
+		matriz = [[100],[50]]
+		partida = Partida(matriz, [A,B], 2, greedo)
+		targets = greedo.elegirTargetsDeLaPartida(partida)
+		self.assertEqual(targets[0], [0,1])
+
+class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 	def testTresLanzaderasUnBarcoDerribado(self):
 		greedobruto = GreedoBruto()
 		barco = Barco(100)
