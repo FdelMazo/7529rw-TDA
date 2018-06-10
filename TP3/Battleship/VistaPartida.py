@@ -6,7 +6,7 @@ class VistaPartida():
 
 	def start(self):
 		string = "Comienza la partida de {}\n".format(self.partida.jugador)
-		string += "{} lanzaderas de misiles, {} barcos, y mucha, mucha, muuuuuuuucha acción\n".format(
+		string += "{} lanzaderas de misiles, {} barcos\n".format(
 					 self.partida.cantidadLanzaderas,
 					 len(self.partida.getBarcos()))
 		print(self.terminal.pretty_string(string, 'TITLE'))
@@ -55,8 +55,8 @@ class VistaPartida():
 
 	def end(self):
 		string = "*******************************\n" \
-				"Turno finalizado!\n" \
-				"En {} turnos, {} alcanzó {} puntos!\n".format(self.partida.turno, self.partida.jugador,
+				"Turno finalizado\n" \
+				"En {} turnos, {} alcanzó {} puntos\n".format(self.partida.turno, self.partida.jugador,
 																self.partida.jugador.getPuntos())
 		string += "*******************************\n"
 		print(self.terminal.pretty_string(string,'TITLE'))
