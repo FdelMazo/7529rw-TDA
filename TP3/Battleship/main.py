@@ -27,7 +27,7 @@ def jugar(partida, vista,jugador):
 	vista.end()
 
 	if not partida.terminada():
-		# We should never ever enter this if
+		# Nunca se debería entrar a este if.
 		raise RuntimeError("El jugador NO gano el juego. No fue deterministico su comportamiento.")
 
 
