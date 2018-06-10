@@ -26,10 +26,10 @@ class VistaJuego():
 	def imprimirGanador(self):
 		leaderboard = sorted(self.juego.partidas, key=lambda x: x.getPuntos())
 		string = "*******************************\n"
-		if leaderboard[0].getPuntos() == leaderboard[1].getPuntos():
-			ganadorString = "Empataron\n\n"
-		else:
+		if len(leaderboard) == 1 or leaderboard[0].getPuntos() < leaderboard[1].getPuntos():
 			ganadorString = "El ganador es {}\n\n".format(leaderboard[0].getJugador())
+		else:
+			ganadorString = "Empataron\n\n"
 		string += ganadorString
 		string += "Puntajes: \n"
 		for partida in leaderboard:
