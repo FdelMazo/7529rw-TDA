@@ -28,7 +28,7 @@ class Dyno(Jugador):
 
 
 		cotaTotal = vuelta*cantidadColumnas*cantidadBarcos
-		print(vuelta, cantidadColumnas,cotaTotal)
+		#print(vuelta, cantidadColumnas,cotaTotal)
 
 		while not simulacion.terminada():
 			targets = self.elegirTargetDelTurno(simulacion)
