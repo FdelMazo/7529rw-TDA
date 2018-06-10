@@ -21,6 +21,7 @@ class Jugador():
 		objetivo = barco.getVida()
 
 		vuelta = 1
+		i = 0
 		while objetivo > 0:
 			for i,elem in enumerate(fila,1):
 				objetivo -= elem
