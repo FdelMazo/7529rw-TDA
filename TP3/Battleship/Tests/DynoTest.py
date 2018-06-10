@@ -1,5 +1,5 @@
 import unittest
-from Greedo import Greedo
+from GreedoNaive import GreedoNaive
 from Dyno import Dyno
 from Partida import Partida
 from Barco import Barco
@@ -212,7 +212,7 @@ class TestsDiferenciasGreedoBrutoGreedo(unittest.TestCase):
 		self.assertFalse(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
 
-		greedo = Greedo()
+		greedo = GreedoNaive()
 		A = Barco(300)
 		B = Barco(200)
 		C = Barco(100)
