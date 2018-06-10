@@ -35,13 +35,13 @@ def jugar(partida, vista,jugador):
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-y', '--no-input', help='Deshabilitar el input del usuario', action='store_true')
-	parser.add_argument('-o', '--overwrite', help='Sobreescribir el mapa al comenzar la ejecución', action='store_true')
+	parser.add_argument('-o', '--sobreescribir', help='Sobreescribir el mapa al comenzar la ejecución', action='store_true')
 	parser.add_argument('-l', '--lanzaderas', help='Elegir la cantidad de lanzaderas a usar', type=int, action='store', default=DEFAULT_LANZADERAS)
 	args = parser.parse_args()
 
 	archivo = ARCHIVO
 
-	if CrearGrilla.archivoNoExiste(archivo) or args.overwrite:
+	if CrearGrilla.archivoNoExiste(archivo) or args.sobreescribir:
 		archivo = CrearGrilla.crearArchivo(ARCHIVO, DEFAULT_GRILLA)
 
 	matrizTablero = Juego.ArchivoToMatriz(archivo)
@@ -52,7 +52,8 @@ def main():
 	vistaJuego = VistaJuego(juego, args.no_input)
 	vistaJuego.titulo()
 
-	jugadores = [Greedo(), GreedoBruto(), Dyno()]
+	#jugadores = [Greedo(), GreedoBruto(), Dyno()]
+	jugadores = [Greedo(), Dyno()]
 	for i,jugador in enumerate(jugadores):
 		juego.agregarJugador(jugador)
 		partida = juego.nuevaPartidaCon(jugador)

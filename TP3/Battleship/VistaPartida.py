@@ -32,7 +32,7 @@ class VistaPartida():
 				celda = "{}|".format(num)
 			linea += celda
 		if barco.estaDerribado():
-			stringBarco = self.terminal.pretty_string("\t\t {}: Dead".format(barco),'NOT_OK')
+			stringBarco = self.terminal.pretty_string("\t\t {}: Destruído".format(barco),'NOT_OK')
 		else:
 			stringBarco = self.terminal.pretty_string("\t\t {}: {} HP".format(barco, barco.getVida()),'OK')
 		linea += stringBarco
