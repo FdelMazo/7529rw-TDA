@@ -24,20 +24,22 @@ class Greedo(Jugador):
 		Puedo iterar mis turnos y elegir para cada turno por separado"""
 		barcos, lanzaderas = partida.getBarcosVivos(), partida.getCantidadLanzaderas()
 		danioSegunBarco = []
-		for barco in reversed(barcos):
+		for barco in reversed(barcos): #reversed para que sea estable y si tiene dos barcos con la misma vida mate al primero en orden
 			x, y = barco.getPosicion()
 			danioSegunBarco.append((barco, partida.getDanioCasillero(x, y)))
 		barcosOrdenados = sorted(danioSegunBarco, key=lambda x: x[1])
 		barcoActual = barcosOrdenados[-1]
+		vidaActual = barcoActual[0].getVida()
 		targets = []
 		for i in range(lanzaderas):
 			barco, danio = barcoActual
-			barco.recibirDanio(danio)
+			vidaActual -= danio
 			targets.append(barco.getID())
-			if barco.estaDerribado():
+			if vidaActual <=0:
 				barcosOrdenados.pop()
 				if not barcosOrdenados: break
 				barcoActual = barcosOrdenados[-1]
+				vidaActual = barcoActual[0].getVida()
 		targets += [None] * (lanzaderas - len(targets))
 		return targets
 
