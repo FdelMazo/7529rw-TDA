@@ -62,4 +62,7 @@ if __name__ == '__main__':
 	parser.add_argument('-f', '--file', help='Cambiar nombre de archivo', action='store', default=FILE)
 	args = parser.parse_args()
 	params = [args.filas, args.columnas, (args.vidamin, args.vidamax), args.max_danio]
-	crearArchivo(args.file, params)
+	archivo = crearArchivo(args.file, params)
+	with open(archivo) as f:
+		lineas = f.readlines()
+		for l in lineas: print(l.strip())
