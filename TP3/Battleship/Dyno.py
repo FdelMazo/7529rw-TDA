@@ -28,11 +28,27 @@ class Dyno(Jugador):
 		return (vuelta, i)
 
 	def elegirTargetDelTurno(self, partida):
-		barcos, lanzaderas = partida.getBarcos(), partida.getCantidadLanzaderas()
-		danios = [partida.getDanioCasillero(*b.getPosicion()) for b in barcos]
-		combinacionesPosibles = self.todasLasCombinacionesPosibles(barcos,lanzaderas)
-		mejorTurno = self.turnoOptimo(combinacionesPosibles, barcos, danios)
-		return mejorTurno
+		barcos, lanzaderas = partida.getBarcosVivos(), partida.getCantidadLanzaderas()
+		danioSegunBarco = []
+		for barco in reversed(barcos):
+			# Reversed para que sea estable el ordenamiento y si tiene dos barcos con la misma vida elija en orden
+			x, y = barco.getPosicion()
+			danioSegunBarco.append((barco, partida.getDanioCasillero(x, y)))
+		danioSegunBarco.sort(key=lambda x: x[1])
+		barcoActual = danioSegunBarco[-1]
+		vidaActual = barcoActual[0].getVida()
+		targets = []
+		for i in range(lanzaderas):
+			barco, danio = barcoActual
+			vidaActual -= danio
+			targets.append(barco.getID())
+			if vidaActual <=0:
+				danioSegunBarco.pop()
+				if not danioSegunBarco: break
+				barcoActual = danioSegunBarco[-1]
+				vidaActual = barcoActual[0].getVida()
+		targets += [None] * (lanzaderas - len(targets))
+		return targets
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
 		simulacion = deepcopy(partidaOriginal)
@@ -54,7 +70,7 @@ class Dyno(Jugador):
 			targetsTotales.append(targets)
 
 		return targetsTotales
-	
+
 
 # if __name__=='__main__':
 # 	from Juego import Juego
