@@ -33,6 +33,14 @@ def filasToArchivo(filas, archivo):
 		f.write('\n'.join(filas))
 	return archivo
 
+def verificarGrilla(archivo):
+	with open(archivo) as f:
+		lineas = f.readlines()
+		if len(lineas[0].split()) == 1:
+			raise IOError("El archivo no es valido. Debe especificarse al menos una columna")
+		columnas = [len(l.split()) for l in lineas]
+		if len(set(columnas))!=1:
+			raise IOError("El archivo no es valido. Todas las filas deben contener la misma cantidad de columnas")
 
 def crearArchivo(archivo=FILE, params=PARAMS):
 	filas = crearTablero(*params)

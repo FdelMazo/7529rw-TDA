@@ -40,6 +40,11 @@ def main():
 	args = parser.parse_args()
 
 	archivo = ARCHIVO
+	try:
+		CrearGrilla.verificarGrilla(archivo)
+	except IOError as e:
+		print(e)
+		return
 
 	if CrearGrilla.archivoNoExiste(archivo) or args.sobreescribir:
 		archivo = CrearGrilla.crearArchivo(ARCHIVO, DEFAULT_GRILLA)
