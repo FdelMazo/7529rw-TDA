@@ -227,6 +227,32 @@ class TestsDiferenciasGreedoBrutoGreedo(unittest.TestCase):
 		self.assertFalse(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
 
+	def testGreedoBrutoElijeMejorTurnoQueGreedo2(self):
+		greedobruto = GreedoBruto()
+		A = Barco(700)
+		B = Barco(260)
+		A.setPosicion(0, 0)
+		B.setPosicion(0, 1)
+		matriz = [[300], [280]]
+		partida = Partida(matriz, [A, B], 2, greedobruto)
+		targets = greedobruto.elegirTargetsDeLaPartida(partida)
+		partida.setTargetDelTurno(targets[0])
+		partida.jugarTurno()
+		self.assertFalse(A.estaDerribado())
+		self.assertTrue(B.estaDerribado())
+
+		greedo = Greedo()
+		A = Barco(700)
+		B = Barco(260)
+		A.setPosicion(0, 0)
+		B.setPosicion(0, 1)
+		partidaG = Partida(matriz, [A, B], 2, greedo)
+		targets = greedo.elegirTargetsDeLaPartida(partidaG)
+		partidaG.setTargetDelTurno(targets[0])
+		partidaG.jugarTurno()
+		self.assertFalse(A.estaDerribado())
+		self.assertFalse(B.estaDerribado())
+
 
 if __name__ == '__main__':
 	unittest.main()
