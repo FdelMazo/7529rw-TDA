@@ -39,7 +39,7 @@ class Jugador():
 			Los simula, y agarra sus atributos (cantidad muertes, cuanto danio hizo, cuanto le cuesta matar
 			Los ordena establemente con los criterios
 			Devuelve el mejor"""
-		atributos = [] #Lista de tuplas de Targets, Muertos, SumVida, SumatoriaTirosPaMatar
+		atributos = [] #Lista de tuplas de Muertos, SumVida, SumatoriaTirosPaMatar
 		for posibilidad in listaTargets:
 			turno = self.simularTurno(barcos, danios, posibilidad)
 			muertos = []

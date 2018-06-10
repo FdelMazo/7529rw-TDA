@@ -2,7 +2,7 @@ import CrearGrilla
 from Juego import Juego
 from VistaJuego import VistaJuego
 from Greedo import Greedo
-from GreedoBruto import GreedoBruto
+from GreedoSmart import GreedoSmart
 from Dyno import Dyno
 import argparse
 
@@ -40,14 +40,15 @@ def main():
 	args = parser.parse_args()
 
 	archivo = ARCHIVO
+
+	if CrearGrilla.archivoNoExiste(archivo) or args.sobreescribir:
+		archivo = CrearGrilla.crearArchivo(ARCHIVO, DEFAULT_GRILLA)
+
 	try:
 		CrearGrilla.verificarGrilla(archivo)
 	except IOError as e:
 		print(e)
 		return
-
-	if CrearGrilla.archivoNoExiste(archivo) or args.sobreescribir:
-		archivo = CrearGrilla.crearArchivo(ARCHIVO, DEFAULT_GRILLA)
 
 	matrizTablero = Juego.ArchivoToMatriz(archivo)
 	barcos = Juego.ArchivoToBarcos(archivo)
@@ -57,8 +58,7 @@ def main():
 	vistaJuego = VistaJuego(juego, args.no_input)
 	vistaJuego.titulo()
 
-	#jugadores = [Greedo(), GreedoBruto(), Dyno()]
-	jugadores = [Greedo(), Dyno()]
+	jugadores = [Greedo(), GreedoSmart()]
 	for i,jugador in enumerate(jugadores):
 		juego.agregarJugador(jugador)
 		partida = juego.nuevaPartidaCon(jugador)

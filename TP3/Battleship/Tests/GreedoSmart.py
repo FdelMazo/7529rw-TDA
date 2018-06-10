@@ -1,12 +1,12 @@
 import unittest
-from GreedoBruto import GreedoBruto
+from GreedoSmart import GreedoSmart
 from Greedo import Greedo
 from Partida import Partida
 from Barco import Barco
 
-class MismasPruebasGreedoTestUnaLanzaderaGreedoBruto(unittest.TestCase):
+class MismasPruebasGreedoTestUnaLanzaderaGreedoSmart(unittest.TestCase):
 	def testUnaLanzaderaUnBarcoUnicaOpcionPosibleDerribarlo(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		barco = Barco(100)
 		barco.setPosicion(0, 0)
 		matriz = [[100, 40, 30, 10]]
@@ -17,7 +17,7 @@ class MismasPruebasGreedoTestUnaLanzaderaGreedoBruto(unittest.TestCase):
 		self.assertTrue(barco.estaDerribado())
 
 	def testUnaLanzaderaUnBarcoUnicaOpcionPosibleNoDerribarlo(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		barco = Barco(100)
 		barco.setPosicion(0, 0)
 		matriz = [[10, 40, 30, 10]]
@@ -28,7 +28,7 @@ class MismasPruebasGreedoTestUnaLanzaderaGreedoBruto(unittest.TestCase):
 		self.assertFalse(barco.estaDerribado())
 
 	def testUnaLanzaderaDosBarcosSacaLaMayorCantidadPosible(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(100)
 		B = Barco(100)
 		A.setPosicion(0, 0)
@@ -43,7 +43,7 @@ class MismasPruebasGreedoTestUnaLanzaderaGreedoBruto(unittest.TestCase):
 		self.assertTrue(A.getVida() < B.getVida())
 
 	def testUnaLanzaderaDosBarcosDerribaAlQuePuede(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(100)
 		B = Barco(100)
 		A.setPosicion(0, 0)
@@ -57,7 +57,7 @@ class MismasPruebasGreedoTestUnaLanzaderaGreedoBruto(unittest.TestCase):
 		self.assertFalse(B.estaDerribado())
 
 	def testUnaLanzaderaDosBarcosDerribaAlQuePuedeInvertido(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(100)
 		B = Barco(100)
 		A.setPosicion(0, 0)
@@ -71,7 +71,7 @@ class MismasPruebasGreedoTestUnaLanzaderaGreedoBruto(unittest.TestCase):
 		self.assertTrue(B.estaDerribado())
 
 	def testUnaLanzaderaDosBarcosDerribaIgualesDerribaAlPrimero(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(100)
 		B = Barco(100)
 		A.setPosicion(0, 0)
@@ -84,7 +84,7 @@ class MismasPruebasGreedoTestUnaLanzaderaGreedoBruto(unittest.TestCase):
 		self.assertTrue(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
 
-class MismasPruebasGreedoTestDosLanzaderasGreedoBruto(unittest.TestCase):
+class MismasPruebasGreedoTestDosLanzaderasGreedoSmart(unittest.TestCase):
 	def testDosLanzaderasUnBarcoNoSeDisparaABarcoYaMuerto(self):
 		greedo = Greedo()
 		barco = Barco(100)
@@ -105,9 +105,9 @@ class MismasPruebasGreedoTestDosLanzaderasGreedoBruto(unittest.TestCase):
 		targets = greedo.elegirTargetsDeLaPartida(partida)
 		self.assertEqual(targets[0], [0,1])
 
-class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
+class MismasPruebasGreedoTestTresLanzaderasGreedoSmart(unittest.TestCase):
 	def testTresLanzaderasUnBarcoDerribado(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		barco = Barco(100)
 		barco.setPosicion(0, 0)
 		matriz = [[50, 40, 30, 10]]
@@ -118,7 +118,7 @@ class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 		self.assertTrue(barco.estaDerribado())
 
 	def testTresLanzaderasUnBarcoNoDerribado(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		barco = Barco(100)
 		barco.setPosicion(0, 0)
 		matriz = [[10, 40, 30, 10]]
@@ -129,7 +129,7 @@ class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 		self.assertFalse(barco.estaDerribado())
 
 	def testTresLanzaderasDosBarcoUnoDerribado(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(100)
 		B = Barco(100)
 		A.setPosicion(0, 0)
@@ -143,7 +143,7 @@ class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 		self.assertFalse(B.estaDerribado())
 
 	def testTresLanzaderasDosBarcoUnoDerribadoInvertido(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(100)
 		B = Barco(100)
 		A.setPosicion(0, 0)
@@ -157,7 +157,7 @@ class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 		self.assertTrue(B.estaDerribado())
 
 	def testTresLanzaderasDosBarcoAmbosDerribados(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(100)
 		B = Barco(100)
 		A.setPosicion(0, 0)
@@ -171,7 +171,7 @@ class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 		self.assertTrue(B.estaDerribado())
 
 	def testTresLanzaderasDosBarcoNingunoDerribado(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(1000)
 		B = Barco(1000)
 		A.setPosicion(0, 0)
@@ -185,7 +185,7 @@ class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 		self.assertFalse(B.estaDerribado())
 
 	def testTresLanzaderasDosBarcoNingunoDerribado2(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(100)
 		B = Barco(100)
 		A.setPosicion(0, 0)
@@ -198,7 +198,7 @@ class MismasPruebasGreedoTestTresLanzaderasGreedoBruto(unittest.TestCase):
 		self.assertFalse(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
 
-class MismasPruebasGreedoTestCuatroLanzaderasGreedoBruto(unittest.TestCase):
+class MismasPruebasGreedoTestCuatroLanzaderasGreedoSmart(unittest.TestCase):
 	def testTresLanzaderasDosBarcosNoSeDisparaABarcoDerribado(self):
 		greedo = Greedo()
 		A = Barco(100)
@@ -210,9 +210,9 @@ class MismasPruebasGreedoTestCuatroLanzaderasGreedoBruto(unittest.TestCase):
 		targets = greedo.elegirTargetsDeLaPartida(partida)
 		self.assertEqual(targets[0], [1,0,0,None])
 
-class TestsDiferenciasGreedoBrutoGreedo(unittest.TestCase):
+class TestsDiferenciasGreedoSmartGreedo(unittest.TestCase):
 	def testGreeedoBrutoEligeElMejorTurnoPosible(self):
-		greedobruto = GreedoBruto()
+		greedobruto = GreedoSmart()
 		A = Barco(300)
 		B = Barco(200)
 		C = Barco(100)
@@ -228,8 +228,8 @@ class TestsDiferenciasGreedoBrutoGreedo(unittest.TestCase):
 		self.assertFalse(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
 
-	def testGreedoBrutoElijeMejorTurnoQueGreedo(self):
-		greedobruto = GreedoBruto()
+	def testGreedoSmartElijeMejorTurnoQueGreedo(self):
+		greedobruto = GreedoSmart()
 		A = Barco(300)
 		B = Barco(200)
 		C = Barco(100)
@@ -260,8 +260,8 @@ class TestsDiferenciasGreedoBrutoGreedo(unittest.TestCase):
 		self.assertFalse(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
 
-	def testGreedoBrutoElijeMejorTurnoQueGreedo2(self):
-		greedobruto = GreedoBruto()
+	def testGreedoSmartElijeMejorTurnoQueGreedo2(self):
+		greedobruto = GreedoSmart()
 		A = Barco(700)
 		B = Barco(260)
 		A.setPosicion(0, 0)

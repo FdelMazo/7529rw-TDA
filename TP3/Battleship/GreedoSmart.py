@@ -1,10 +1,10 @@
 from Jugador import Jugador
 from copy import deepcopy
-import itertools
 
-class GreedoBruto(Jugador):
+
+class GreedoSmart(Jugador):
 	"""
-	Greedy Bruto (AKA: Greedy Inteligente, pero se llama Bruto porque usa un poco de fuerza bruta):
+	Greedy Smart:
 		Greedy: De mi conjunto de turnos a jugar, mi subproblema es hacer el mejor turno
 		En vez de mi mejor turno ser el que mas danio saca (Naive), ahora es el que mas mata, y luego el que mas saca.
 		Entonces, tengo que sacar todas las posibles combinaciones de mi turno (fuerza bruta) y elegir el optimo de eso.
@@ -37,16 +37,39 @@ class GreedoBruto(Jugador):
 	"""
 
 	def __init__(self):
-		super().__init__('Greedo Bruto')
+		super().__init__('Greedo Smart')
 
 	def elegirTargetDelTurno(self, partida):
 		"""Esta funcion y metodologia es valida porque greedy me pide lo mejor para mi subproblema, sin pensar en el resto
 		Puedo iterar mis turnos y elegir para cada turno por separado"""
-		barcos, lanzaderas = partida.getBarcos(), partida.getCantidadLanzaderas()
-		danios = [partida.getDanioCasillero(*b.getPosicion()) for b in barcos]
-		combinacionesPosibles = self.todasLasCombinacionesPosibles(barcos,lanzaderas)
-		mejorTurno = self.turnoOptimo(combinacionesPosibles, barcos, danios)
-		return mejorTurno
+		barcos, lanzaderas = partida.getBarcosVivos(), partida.getCantidadLanzaderas()
+		atributosBarco = [] #Lista de tuplas de (Barco, Danio en su casillero, Tiros para matarlo en este turno)
+		for barco in reversed(barcos): #reversed para que sea estable el ordenamiento y si tiene dos barcos con la misma vida elija en orden
+			x, y = barco.getPosicion()
+			danio = partida.getDanioCasillero(x, y)
+			vida = barco.getVida()
+			tirosParaMatar = lanzaderas+2 # Equivalente a poner en infinito
+			for i in range(1,lanzaderas+1):
+				if i*danio >=vida:
+					tirosParaMatar = i
+					break
+			atributosBarco.append((barco, danio, tirosParaMatar))
+
+		barcosOrdenados = sorted(atributosBarco, key=lambda x: (-x[2],x[1]))
+		barcoActual = barcosOrdenados[-1]
+		vidaActual = barcoActual[0].getVida()
+		targets = []
+		for i in range(lanzaderas):
+			barco, danio,t = barcoActual
+			vidaActual -= danio
+			targets.append(barco.getID())
+			if vidaActual <=0:
+				barcosOrdenados.pop()
+				if not barcosOrdenados: break
+				barcoActual = barcosOrdenados[-1]
+				vidaActual = barcoActual[0].getVida()
+		targets += [None] * (lanzaderas - len(targets))
+		return targets
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
 		simulacion = deepcopy(partidaOriginal)
