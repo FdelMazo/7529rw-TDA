@@ -210,5 +210,3 @@ class TestCuatroLanzaderas(unittest.TestCase):
 		targets = greedo.elegirTargetsDeLaPartida(partida)
 		self.assertEqual(targets[0], [1,0,0,None])
 
-if __name__ == '__main__':
-	unittest.main()

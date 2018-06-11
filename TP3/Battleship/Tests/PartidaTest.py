@@ -63,6 +63,3 @@ class TestPartidaTerminada(unittest.TestCase):
 		partida = Partida([[0, 0], [0, 0]], barcos, 0, None)
 		self.assertTrue(partida.terminada())
 		self.assertFalse(partida.getBarcosVivos())
-
-if __name__ == '__main__':
-	unittest.main()

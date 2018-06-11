@@ -26,6 +26,3 @@ class TestDevolverTuplasOrdenadas(unittest.TestCase):
         partida = Partida(matriz, [barcoA, barcoB, barcoC], 1, dino)
         tuplas = dino.devolverTuplasOrdenadasDanioTurnoBarco(partida)
         self.assertEqual(tuplas, [(100, 0, barcoB), (80, 2, barcoC), (70, 1, barcoC), (60, 1, barcoA), (50, 0, barcoC), (40, 2, barcoB), (30, 2, barcoA), (10, 0, barcoA), (3, 1, barcoB)])
-
-if __name__ == '__main__':
-	unittest.main()

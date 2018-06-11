@@ -209,6 +209,3 @@ class TestsDiferenciasBrutus(unittest.TestCase):
 		partidaGreedy = Partida(matriz, [A, B, C], 2, greedo)
 		targetsGreedy = greedo.elegirTargetsDeLaPartida(partidaGreedy)
 		self.assertEqual(targetsBrutus[:-1],targetsGreedy[:-1])
-
-if __name__ == '__main__':
-	unittest.main()

@@ -285,7 +285,3 @@ class TestsDiferenciasGreedoNaive(unittest.TestCase):
 		partidaG.jugarTurno()
 		self.assertFalse(A.estaDerribado())
 		self.assertFalse(B.estaDerribado())
-
-
-if __name__ == '__main__':
-	unittest.main()

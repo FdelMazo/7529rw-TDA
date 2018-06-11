@@ -27,6 +27,3 @@ class TestPosicion(unittest.TestCase):
         barco.setPosicion(3,7)
         self.assertEqual(barco.getPosicion(), (3,7))
         self.assertEqual(barco.getPosicion()[1], barco.getID())
-
-if __name__ == '__main__':
-	unittest.main()
