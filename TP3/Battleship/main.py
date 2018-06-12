@@ -57,7 +57,7 @@ def main():
 	cantidadLanzaderas = args.lanzaderas
 
 	if args.set_posiciones_iniciales:
-		BandoA.elegirPosicionesBarcos(matrizTablero, barcos, cantidadLanzaderas)
+		BandoA.setPosiciones(matrizTablero, barcos, cantidadLanzaderas)
 
 	juego = Juego(matrizTablero, barcos, cantidadLanzaderas)
 	vistaJuego = VistaJuego(juego, args.no_input)
