@@ -37,10 +37,9 @@ def encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLan
 		if turnosDondeMuere: turnosParaTodos[barcos[y]] = sorted(turnosDondeMuere)
 	return turnosParaTodos
 
-def ordenarPorBarcoMasDificilDeMatar(matriz, barcos, cantidadLanzaderas):
-	turnosParaTodos = encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLanzaderas)
+def ordenarPorBarcoMasDificilDeMatar(turnosParaTodos):
 	heapBarcosDificiles = []
-	for barco in turnosParaTodos.keys():
+	for barco in turnosParaTodos:
 		cantPosiblesCombinaciones = len(turnosParaTodos[barco])
 		heappush(heapBarcosDificiles, (cantPosiblesCombinaciones, barco.getID()))
 	return heapBarcosDificiles
@@ -58,21 +57,31 @@ class Dyno(Jugador):
 		pass
 
 
+def combinacionDePosibilidadesAPartidas(idBarco, posibilidades):
+	partidas = []
+	for posibilidad in posibilidades:
+		partida = []
+		for turno in posibilidad:
+			while len(partida) <= turno: partida += [None]
+			partida[turno] = [idBarco]
+		partidas.append(partida)
+	return partidas
+
 if __name__=='__main__':
 	from Juego import Juego
 	from Partida import Partida
 
 	archivo = 'grilla.coords'
-	matrizTablero = Juego.ArchivoToMatriz(archivo)
+	matriz = Juego.ArchivoToMatriz(archivo)
 	barcos = Juego.ArchivoToBarcos(archivo)
 	cantidadLanzaderas = 1
 
-	juego = Juego(matrizTablero, barcos, cantidadLanzaderas)
+	juego = Juego(matriz, barcos, cantidadLanzaderas)
 	jugador = Dyno()
-	partida = Partida(matrizTablero, barcos, cantidadLanzaderas, jugador)
+	partida = Partida(matriz, barcos, cantidadLanzaderas, jugador)
 	partida.setPosicionesIniciales()
-	heap = ordenarPorBarcoMasDificilDeMatar(matrizTablero, barcos, cantidadLanzaderas)
-	while heap:
-		cantPosiblesCombinaciones, id = heappop(heap)
-		print("Hay {} chances de matar al {}".format(cantPosiblesCombinaciones, barcos[id]))
-	# jugador.elegirTargetsDeLaPartida(partida)
+	turnosParaTodos = encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLanzaderas)
+	heapDeBarcosDificiles = ordenarPorBarcoMasDificilDeMatar(turnosParaTodos)
+	for barco in turnosParaTodos:
+		partidasPorBarco = combinacionDePosibilidadesAPartidas(barco.getID(), turnosParaTodos[barco])
+		print("Las distintas partidas para ganarle a {} son: {}".format(barco, partidasPorBarco))
