@@ -44,6 +44,22 @@ def ordenarPorBarcoMasDificilDeMatar(turnosParaTodos):
 		heappush(heapBarcosDificiles, (cantPosiblesCombinaciones, barco.getID()))
 	return heapBarcosDificiles
 
+def simularPartidaConPartidaParcial(partidaParcial, partidaBarcoActual):
+	for i, turno in enumerate(partidaBarcoActual):
+		if turno and i<len(partidaParcial) and partidaParcial[i] != None:
+			return False
+	partidaResultado = []
+	for i, turno in enumerate(partidaParcial):
+		if i<len(partidaResultado):
+			if not partidaResultado[i]: partidaResultado[i] = partidaParcial[i]
+		else: partidaResultado.insert(i, turno)
+	for i, turno in enumerate(partidaBarcoActual):
+		if i<len(partidaResultado):
+			if not partidaResultado[i]: partidaResultado[i] = partidaBarcoActual[i]
+		else: partidaResultado.insert(i, turno)
+	return partidaResultado
+
+
 
 class Dyno(Jugador):
 	"""
@@ -54,8 +70,30 @@ class Dyno(Jugador):
 		super().__init__('Dyno')
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
-		pass
+		matriz, barcos, cantidadLanzaderas = partidaOriginal.getMatriz(), partidaOriginal.getBarcosVivos(), partidaOriginal.getCantidadLanzaderas()
+		turnosParaTodos = encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLanzaderas)
+		heapDeBarcosDificiles = ordenarPorBarcoMasDificilDeMatar(turnosParaTodos)
 
+		resultados = []
+		_, barcoActualID = heappop(heapDeBarcosDificiles)
+		partidasPorBarco = combinacionDePosibilidadesAPartidas(barcoActualID, turnosParaTodos[barcos[barcoActualID]])
+		resultados = partidasPorBarco
+
+		while heapDeBarcosDificiles:
+			_, barcoActualID = heappop(heapDeBarcosDificiles)
+			barcoActual = barcos[barcoActualID]
+			partidasBarcoActual = combinacionDePosibilidadesAPartidas(barcoActualID,
+			                                                          turnosParaTodos[barcos[barcoActualID]])
+			for i, partida in enumerate(resultados):
+				partidasPosiblesAAppendear = []
+				for partidaActual in partidasBarcoActual:
+					partidaPosible = simularPartidaConPartidaParcial(partida, partidaActual)
+					if partidaPosible: partidasPosiblesAAppendear.append(partidaPosible)
+				resultados[i] = minimosPuntos(partidasPosiblesAAppendear)
+		return minimosPuntos(resultados)
+
+def minimosPuntos(partidas):
+	return min(partidas,key=len)
 
 def combinacionDePosibilidadesAPartidas(idBarco, posibilidades):
 	partidas = []
@@ -66,22 +104,3 @@ def combinacionDePosibilidadesAPartidas(idBarco, posibilidades):
 			partida[turno] = [idBarco]
 		partidas.append(partida)
 	return partidas
-
-if __name__=='__main__':
-	from Juego import Juego
-	from Partida import Partida
-
-	archivo = 'grilla.coords'
-	matriz = Juego.ArchivoToMatriz(archivo)
-	barcos = Juego.ArchivoToBarcos(archivo)
-	cantidadLanzaderas = 1
-
-	juego = Juego(matriz, barcos, cantidadLanzaderas)
-	jugador = Dyno()
-	partida = Partida(matriz, barcos, cantidadLanzaderas, jugador)
-	partida.setPosicionesIniciales()
-	turnosParaTodos = encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLanzaderas)
-	heapDeBarcosDificiles = ordenarPorBarcoMasDificilDeMatar(turnosParaTodos)
-	for barco in turnosParaTodos:
-		partidasPorBarco = combinacionDePosibilidadesAPartidas(barco.getID(), turnosParaTodos[barco])
-		print("Las distintas partidas para ganarle a {} son: {}".format(barco, partidasPorBarco))
