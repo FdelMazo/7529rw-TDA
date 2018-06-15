@@ -38,6 +38,6 @@ def elegirPosicionesBarcos(matriz, barcos, cantidadLanzaderas):
 	return posiciones
 
 def setPosiciones(matriz, barcos, cantidadLanzaderas):
-	posiciones = elegirPosiciones(matriz, barcos, cantidadLanzaderas)
+	posiciones = elegirPosicionesBarcos(matriz, barcos, cantidadLanzaderas)
 	for i, posicion in enumerate(posiciones):
 		barcos[i].setPosicion(*posicion)
