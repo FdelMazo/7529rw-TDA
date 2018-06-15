@@ -105,3 +105,24 @@ def combinacionDePosibilidadesAPartidas(idBarco, posibilidades):
 			partida[turno] = [idBarco]
 		partidas.append(partida)
 	return partidas
+
+if __name__=='__main__':
+	from Juego import Juego
+	from Partida import Partida
+
+	archivo = 'grilla.coords'
+	matriz = Juego.ArchivoToMatriz(archivo)
+	barcos = Juego.ArchivoToBarcos(archivo)
+	cantidadLanzaderas = 2
+
+	juego = Juego(matriz, barcos, cantidadLanzaderas)
+	jugador = Dyno()
+	partida = Partida(matriz, barcos, cantidadLanzaderas, jugador)
+	partida.setPosicionesIniciales()
+	targets = jugador.elegirTargetsDeLaPartida(partida)
+
+	print(targets)
+	#turnosParaTodos = encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLanzaderas)
+	#heapDeBarcosDificiles = ordenarPorBarcoMasDificilDeMatar(turnosParaTodos)
+	#for barco in turnosParaTodos:
+	#   artidasPorBarco = combinacionDePosibilidadesAPartidas(barco.getID(), turnosParaTodos[barco])
