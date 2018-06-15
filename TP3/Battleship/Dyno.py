@@ -5,26 +5,29 @@ from heapq import heappush, heappop
 import itertools
 
 import itertools
-def psl(l, ts):
+def allSubsetsMoreThan(lista, objetivo):
 	combs = []
-	for i in range(len(l)):
-		for c in itertools.combinations(l, i):
-			if sum(c) >= ts:
+	for i in range(len(lista)):
+		for c in itertools.combinations(lista, i):
+			if sum(c) >= objetivo:
 				combs.append(list(c))
 	return combs
+
 def removeDups(combs):
 	newCombs = []
 	for c in combs:
 		if c in newCombs: continue
 		newCombs.append(c)
 	return newCombs
-def filter(comb, ts):
+
+def sacarSobrantes(comb, ts):
 	for elem in comb[:]:
 		indice = comb.index(elem)
 		comb.remove(elem)
 		if sum(comb) >= ts:
 			continue
 		comb.insert(indice, elem)
+
 def listaAIndices(lista, listaOriginal):
 	listaIndices = []
 	for elem in lista:
@@ -34,62 +37,31 @@ def listaAIndices(lista, listaOriginal):
 		listaIndices.append(indice)
 	return listaIndices
 
-def subsetMoreThan(lista, objetivo, cantidadLanzaderas, listaOriginal):
+def combinacionesMatadoras(objetivo, listaOriginal):
 	resultados = []
-	combs = psl(listaOriginal, objetivo)
-	for comb in combs:
-		filter(comb, objetivo)
-	combs = removeDups(combs)
-	for comb in combs:
-		indexes = listaAIndices(comb, listaOriginal)
+	combinaciones = allSubsetsMoreThan(listaOriginal, objetivo)
+	for combinacion in combinaciones:
+		sacarSobrantes(combinacion, objetivo)
+	combinaciones = removeDups(combinaciones)
+	for combinacion in combinaciones:
+		indexes = listaAIndices(combinacion, listaOriginal)
 		resultados.append(indexes)
 	return resultados
 
-	# listaMultiplicada = copy(lista)
-	# if sum(listaMultiplicada[:-1]) >= objetivo:
-	# 	return subsetMoreThan(lista[:-1], objetivo, cantidadLanzaderas,listaOriginal)
-	# # Dirtiest hack in history: https://stackoverflow.com/a/34238688
-	# for elem in listaMultiplicada[:]:
-	# 	indice = listaMultiplicada.index(elem)
-	# 	listaMultiplicada.remove(elem)
-	# 	if sum(listaMultiplicada) >= objetivo:
-	# 		lista.pop(indice)
-	# 	else: listaMultiplicada.insert(indice, elem)
-	# if sum(listaMultiplicada) < objetivo: return
-	# resultado = []
-	# for elem in lista:
-	# 	indice = listaOriginal.index(elem)
-	# 	if indice in resultado:
-	# 		indice += listaOriginal[indice:].index(elem) +1
-	# 	resultado.append(indice)
-	# return resultado
-
-def turnosDondePuedeMorir(fila, barco, cantidadLanzaderas):
-	combinaciones = subsetMoreThan(fila, barco.getVida(), cantidadLanzaderas, fila)
+def combinacionesParaBarco(fila, barco, cantidadLanzaderas):
+	combinaciones = combinacionesMatadoras(barco.getVida(), fila)
 	combinacionesMatadorasBarco = []
 	for combinacion in combinaciones:
 		for i, turnos in enumerate(combinacion):
 			turnos = [turnos] + [None] * (cantidadLanzaderas - 1)
 			combinacion[i] = turnos
-		# Crear una lista para cada turno, que sea el turno que recibio, y cantidadLanzaderas-1 de Nones
 		if combinacion not in combinacionesMatadorasBarco: combinacionesMatadorasBarco.append(combinacion)
 	return combinacionesMatadorasBarco
 
-	# combinacionesMatadorasBarco = []
-	# for j in range(len(fila)):
-	# 	combinacion = subsetMoreThan(fila[j:], barco.getVida(), cantidadLanzaderas, fila)
-	# 	if combinacion and combinacion not in combinacionesMatadorasBarco:
-	# 		for i,turnos in enumerate(combinacion):
-	# 			turnos = [turnos] + [None] * (cantidadLanzaderas-1)
-	# 			combinacion[i] = turnos
-	# 		# Crear una lista para cada turno, que sea el turno que recibio, y cantidadLanzaderas-1 de Nones
-	# 		combinacionesMatadorasBarco.append(combinacion)
-	# return combinacionesMatadorasBarco
-
-def encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLanzaderas):
+def encontrarTodaCombinacionParaTodoBarco(matriz, barcos, cantidadLanzaderas):
 	turnosParaTodos = {}
 	for y,fila in enumerate(matriz):
-		turnosDondeMuere = turnosDondePuedeMorir(fila, barcos[y], cantidadLanzaderas)
+		turnosDondeMuere = combinacionesParaBarco(fila, barcos[y], cantidadLanzaderas)
 		if turnosDondeMuere: turnosParaTodos[barcos[y]] = sorted(turnosDondeMuere)
 	return turnosParaTodos
 
@@ -115,7 +87,6 @@ def simularPartidaConPartidaParcial(partidaParcial, partidaBarcoActual, cantidad
 	return partidaResultado
 
 
-
 class Dyno(Jugador):
 	"""
 	Dyno dyno
@@ -126,17 +97,15 @@ class Dyno(Jugador):
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
 		matriz, barcos, cantidadLanzaderas = partidaOriginal.getMatriz(), partidaOriginal.getBarcosVivos(), partidaOriginal.getCantidadLanzaderas()
-		turnosParaTodos = encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLanzaderas)
+
+		turnosParaTodos = encontrarTodaCombinacionParaTodoBarco(matriz, barcos, cantidadLanzaderas)
 		heapDeBarcosDificiles = ordenarPorBarcoMasDificilDeMatar(turnosParaTodos)
-		resultados = []
 		_, barcoActualID = heappop(heapDeBarcosDificiles)
-		#Partida por barco es la forma en la que mato a el barco, con una partida VALIDA (lista de turnos) ej: [[0], [1]] partida validade una lanzadera. [ [1,2], [3,None] ] partida valida de dos
 		partidasPorBarco = combinacionDePosibilidadesAPartidas(barcoActualID, turnosParaTodos[barcos[barcoActualID]])
 		resultados = partidasPorBarco
 
 		while heapDeBarcosDificiles:
 			_, barcoActualID = heappop(heapDeBarcosDificiles)
-			barcoActual = barcos[barcoActualID]
 			partidasBarcoActual = combinacionDePosibilidadesAPartidas(barcoActualID,
 			                                                          turnosParaTodos[barcos[barcoActualID]])
 			for i, partida in enumerate(resultados):
@@ -176,7 +145,3 @@ if __name__=='__main__':
 	targets = jugador.elegirTargetsDeLaPartida(partida)
 
 	print(targets)
-	#turnosParaTodos = encontrarTodosLosTurnosDondeMuerenTodosLosBarcos(matriz, barcos, cantidadLanzaderas)
-	#heapDeBarcosDificiles = ordenarPorBarcoMasDificilDeMatar(turnosParaTodos)
-	#for barco in turnosParaTodos:
-	#   artidasPorBarco = combinacionDePosibilidadesAPartidas(barco.getID(), turnosParaTodos[barco])
