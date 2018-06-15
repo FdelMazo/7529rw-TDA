@@ -1,10 +1,11 @@
 from Jugador import Jugador
 from copy import deepcopy
+from copy import copy
 from heapq import heappush, heappop
 import itertools
 
 def subsetMoreThan(lista, objetivo, cantidadLanzaderas, listaOriginal):
-	listaMultiplicada = [i * cantidadLanzaderas for i in lista]
+	listaMultiplicada = copy(lista)
 	if sum(listaMultiplicada[:-1]) >= objetivo:
 		return subsetMoreThan(lista[:-1], objetivo, cantidadLanzaderas,listaOriginal)
 	# Dirtiest hack in history: https://stackoverflow.com/a/34238688
