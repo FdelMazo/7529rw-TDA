@@ -54,7 +54,7 @@ def main():
 
 	matrizTablero = Juego.ArchivoToMatriz(archivo)
 	barcos = Juego.ArchivoToBarcos(archivo)
-	cantidadLanzaderas = args.lanzaderas
+	cantidadLanzaderas = args.lanzaderas or DEFAULT_LANZADERAS
 
 	if args.set_posiciones_iniciales:
 		BandoA.setPosiciones(matrizTablero, barcos, cantidadLanzaderas)
