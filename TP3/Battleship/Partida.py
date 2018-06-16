@@ -31,8 +31,9 @@ class Partida():
 
 	def jugarTurno(self):
 		self.puntos += len(self.getBarcosVivos())
-		for t in self.targetDelTurno:
-			if t!=None: self.barcos[t].recibirDanio(self.getDanioCasillero(*self.barcos[t].getPosicion()))
+		if self.targetDelTurno:
+			for t in self.targetDelTurno:
+				if t!=None: self.barcos[t].recibirDanio(self.getDanioCasillero(*self.barcos[t].getPosicion()))
 		self.avanzarBarcos()
 		self.turno += 1
 
