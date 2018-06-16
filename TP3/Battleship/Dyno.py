@@ -123,9 +123,7 @@ class Dyno(Jugador):
 				if item!=None and item not in barcosDePrimeraPartida:
 					barcosDePrimeraPartida.append(item)
 		barcosRemanentes = [b for b in barcos if b.getID() not in barcosDePrimeraPartida]
-		if not barcosRemanentes:
-			print("Primera partida")
-			return primeraPartida
+		if not barcosRemanentes: return primeraPartida
 		segundaPartida = []
 		for b in barcosRemanentes:
 			vida = b.getVida()
