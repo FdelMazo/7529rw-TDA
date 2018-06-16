@@ -119,10 +119,12 @@ class Dyno(Jugador):
 		primeraPartida = minimosPuntos(resultados)
 		barcosDePrimeraPartida = []
 		for sublist in primeraPartida:
+			if not sublist: continue
 			for item in sublist:
 				if item!=None and item not in barcosDePrimeraPartida:
 					barcosDePrimeraPartida.append(item)
-		barcosRemanentes = [b for b in barcos if b.getID() not in barcosDePrimeraPartida]
+		if barcosDePrimeraPartida: barcosRemanentes = [b for b in barcos if b.getID() not in barcosDePrimeraPartida]
+		else: barcosRemanentes = [b for b in barcos if b.getID()]
 		if not barcosRemanentes: return primeraPartida
 		segundaPartida = []
 		for b in barcosRemanentes:
