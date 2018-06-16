@@ -32,7 +32,7 @@ def listaAIndices(lista, listaOriginal):
 	listaIndices = []
 	for elem in lista:
 		indice = listaOriginal.index(elem)
-		if indice in listaIndices:
+		while indice in listaIndices:
 			indice += listaOriginal[indice+1:].index(elem) +1
 		listaIndices.append(indice)
 	return listaIndices
