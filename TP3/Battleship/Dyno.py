@@ -74,7 +74,7 @@ def ordenarPorBarcoMasDificilDeMatar(turnosParaTodos):
 
 def simularPartidaConPartidaParcial(partidaParcial, partidaBarcoActual, cantidadLanzaderas):
 	for turnoParcial, turnoActual in zip(partidaParcial, partidaBarcoActual):
-		if turnoActual and turnoParcial and all(turnoParcial): return False
+		if turnoActual and turnoParcial and all([x for x in turnoParcial if x!=0]): return False
 	partidaResultado = []
 	for turnoParcial, turnoActual in zip(partidaParcial, partidaBarcoActual):
 		turnoParcialValido = [x for x in turnoParcial if x!=None] if turnoParcial else []
@@ -102,6 +102,7 @@ class Dyno(Jugador):
 		heapDeBarcosDificiles = ordenarPorBarcoMasDificilDeMatar(turnosParaTodos)
 		_, barcoActualID = heappop(heapDeBarcosDificiles)
 		partidasPorBarco = combinacionDePosibilidadesAPartidas(barcoActualID, turnosParaTodos[barcos[barcoActualID]])
+
 		resultados = partidasPorBarco
 
 		while heapDeBarcosDificiles:
@@ -114,10 +115,58 @@ class Dyno(Jugador):
 					partidaPosible = simularPartidaConPartidaParcial(partida, partidaActual, cantidadLanzaderas)
 					if partidaPosible and partidaPosible not in partidasPosiblesAAppendear: partidasPosiblesAAppendear.append(partidaPosible)
 				if partidasPosiblesAAppendear: resultados[i] = minimosPuntos(partidasPosiblesAAppendear)
-		return minimosPuntos(resultados)
+
+		primeraPartida = minimosPuntos(resultados)
+		barcosDePrimeraPartida = []
+		for sublist in primeraPartida:
+			for item in sublist:
+				if item!=None and item not in barcosDePrimeraPartida:
+					barcosDePrimeraPartida.append(item)
+		barcosRemanentes = [b for b in barcos if b.getID() not in barcosDePrimeraPartida]
+		if not barcosRemanentes:
+			print("Primera partida")
+			return primeraPartida
+		segundaPartida = []
+		for b in barcosRemanentes:
+			vida = b.getVida()
+			id = b.getID()
+			for i,turno in enumerate(primeraPartida):
+				turnoNuevo = copy(turno)
+				if turno and all([x for x in turno if x!=0]):
+					pass
+				elif not turno:
+					turnoNuevo = [b.getID()] * (cantidadLanzaderas)
+					vida -= cantidadLanzaderas*matriz[id][i-1]
+				else:
+					for i,lanzadera in enumerate(turno):
+						if lanzadera==None:
+							turnoNuevo[i] = b.getID()
+							vida -= matriz[id][i-1]
+				segundaPartida.append(turnoNuevo)
+			while(vida>0):
+				segundaPartida.append([b.getID()] * (cantidadLanzaderas))
+				vida -= cantidadLanzaderas * matriz[id][i-1]
+			segundaPartida.append([b.getID()] * (cantidadLanzaderas))
+		return segundaPartida
+
+def contadoresPeorTurno(partida):
+	lanzaderas = 0
+	for turno in partida:
+		if turno:
+			lanzaderas=len(turno)
+			break
+	contadorNones = 0
+	for turno in partida:
+		if turno: contadorNones += turno.count(None)
+		else: contadorNones += lanzaderas
+	return contadorNones
 
 def minimosPuntos(partidas):
-	return min(partidas,key=len)
+	atributoPartidas = []
+	for partida in partidas:
+		atributoPartidas.append((partida,contadoresPeorTurno(partida)))
+	return max(atributoPartidas, key= lambda x: -x[1])[0]
+
 
 def combinacionDePosibilidadesAPartidas(idBarco, posibilidades):
 	partidas = []
