@@ -10,7 +10,7 @@ import argparse
 # De querer usar otra grilla, crearla con CrearGrilla.py y pasarle los parametros a ese archivo
 DEFAULT_GRILLA = [5, 10, (500, 1000), 300]
 
-DEFAULT_LANZADERAS = 1
+DEFAULT_LANZADERAS = 3
 DEFAULT_ARCHIVO = 'grilla.coords'
 
 
