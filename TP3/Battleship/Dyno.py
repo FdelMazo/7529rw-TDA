@@ -86,6 +86,21 @@ def simularPartidaConPartidaParcial(partidaParcial, partidaBarcoActual, cantidad
 	partidaResultado += partidaBarcoActual[len(partidaResultado):]
 	return partidaResultado
 
+def definirPartidaAJugar(heapDeBarcosDificiles, turnosParaTodos, partidasPorBarco, barcos, cantidadLanzaderas):
+    resultados = partidasPorBarco
+    while heapDeBarcosDificiles:
+        _, barcoActualID = heappop(heapDeBarcosDificiles)
+        partidasBarcoActual = combinacionDePosibilidadesAPartidas(barcoActualID,
+                                                              turnosParaTodos[barcos[barcoActualID]])
+        for i, partida in enumerate(resultados):
+            partidasPosiblesAAppendear = []
+            for partidaActual in partidasBarcoActual:
+                partidaPosible = simularPartidaConPartidaParcial(partida, partidaActual, cantidadLanzaderas)
+                if partidaPosible and partidaPosible not in partidasPosiblesAAppendear: partidasPosiblesAAppendear.append(
+                    partidaPosible)
+            if partidasPosiblesAAppendear: resultados[i] = minimosPuntos(partidasPosiblesAAppendear)
+    return resultados
+
 
 class Dyno(Jugador):
 	"""
@@ -103,18 +118,7 @@ class Dyno(Jugador):
 		_, barcoActualID = heappop(heapDeBarcosDificiles)
 		partidasPorBarco = combinacionDePosibilidadesAPartidas(barcoActualID, turnosParaTodos[barcos[barcoActualID]])
 
-		resultados = partidasPorBarco
-
-		while heapDeBarcosDificiles:
-			_, barcoActualID = heappop(heapDeBarcosDificiles)
-			partidasBarcoActual = combinacionDePosibilidadesAPartidas(barcoActualID,
-			                                                          turnosParaTodos[barcos[barcoActualID]])
-			for i, partida in enumerate(resultados):
-				partidasPosiblesAAppendear = []
-				for partidaActual in partidasBarcoActual:
-					partidaPosible = simularPartidaConPartidaParcial(partida, partidaActual, cantidadLanzaderas)
-					if partidaPosible and partidaPosible not in partidasPosiblesAAppendear: partidasPosiblesAAppendear.append(partidaPosible)
-				if partidasPosiblesAAppendear: resultados[i] = minimosPuntos(partidasPosiblesAAppendear)
+		resultados = definirPartidaAJugar(heapDeBarcosDificiles, turnosParaTodos, partidasPorBarco, barcos, cantidadLanzaderas)
 
 		primeraPartida = minimosPuntos(resultados)
 		barcosDePrimeraPartida = []
