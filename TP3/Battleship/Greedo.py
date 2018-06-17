@@ -37,7 +37,9 @@ class Greedo(Jugador):
 		atributosBarco = {}
 
 		def calcular_tiros(vida, danio):
-			return vida//danio + 1
+			if not danio:
+				danio = 1
+			return -(-vida//danio)
 		
 		for barco in barcos:
 			vida = barco.getVida()
