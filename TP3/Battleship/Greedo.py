@@ -15,6 +15,19 @@ class Greedo(Jugador):
 	def __init__(self):
 		super().__init__('Greedo')
 
+	def elegirTargetsDeLaPartida(self, partidaOriginal):
+		# Deepcopy hace copias de todos los objetos dentro del objeto, entonces puedo sacarles vida a mis barcos sin molestar a la partida original, de la cual no puedo ni debo tocar nada
+		simulacion = deepcopy(partidaOriginal)
+		targetsTotales = []
+
+		while not simulacion.terminada():
+			targets = self.elegirTargetDelTurno(simulacion)
+			simulacion.setTargetDelTurno(targets)
+			simulacion.jugarTurno()
+			targetsTotales.append(targets)
+
+		return targetsTotales
+	
 	def elegirTargetDelTurno(self, partida):
 		"""Esta funcion y metodologia es valida porque greedy me pide lo mejor para mi subproblema actual, sin pensar en el resto
 		Puedo iterar mis turnos y elegir para cada turno por separado"""
@@ -23,18 +36,14 @@ class Greedo(Jugador):
 		# Diccionario de listas de [Tiros suficientes para matarlo en este turno, danio en casilla, vida]
 		atributosBarco = {}
 
+		def calcular_tiros(vida, danio):
+			return vida//danio + 1
+		
 		for barco in barcos:
-			x, y = barco.getPosicion()
-			danio = partida.getDanioCasillero(x, y)
 			vida = barco.getVida()
-			id = barco.getID()
-			tirosParaMatar = lanzaderas+1 # Equivalente a poner en infinito
-			for i in range(1,lanzaderas+1):
-				if i*danio >=vida:
-					tirosParaMatar = i
-					break
-			atributosBarco[barco] = (tirosParaMatar, danio, barco.getVida(), id)
-
+			danio = partida.getDanioCasillero(*barco.getPosicion())
+			atributosBarco[barco] = (calcular_tiros(vida, danio), danio, vida, barco.getID())
+		
 		def sortPorTiros(dic):
 			return lambda x: (-dic[x][0],dic[x][1], -dic[x][3])
 
@@ -56,16 +65,3 @@ class Greedo(Jugador):
 				if not atributosBarco: break
 		targets += [None] * (lanzaderas - len(targets))
 		return targets
-
-	def elegirTargetsDeLaPartida(self, partidaOriginal):
-		# Deepcopy hace copias de todos los objetos dentro del objeto, entonces puedo sacarles vida a mis barcos sin molestar a la partida original, de la cual no puedo ni debo tocar nada
-		simulacion = deepcopy(partidaOriginal)
-		targetsTotales = []
-
-		while not simulacion.terminada():
-			targets = self.elegirTargetDelTurno(simulacion)
-			simulacion.setTargetDelTurno(targets)
-			simulacion.jugarTurno()
-			targetsTotales.append(targets)
-
-		return targetsTotales
