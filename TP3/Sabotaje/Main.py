@@ -18,6 +18,4 @@ def PlanVigilancia():
 		print("Flujo máximo de la red sin " + str(a).rstrip() + ": "+ str(flujoMaximo(red)).rstrip() )
 		red.agregarArista(numOrigen, numDestino, peso, identificador)
 	
-
-	
 PlanVigilancia()
