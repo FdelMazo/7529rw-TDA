@@ -62,8 +62,6 @@ def jugar(partida, vista,jugador):
 		vista.informacionTurno()
 		vista.imprimirMapa()
 		partida.jugarTurno()
-	vista.informacionTurno()
-	vista.imprimirMapa()
 	vista.end()
 
 	if not partida.terminada():
