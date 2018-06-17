@@ -1,6 +1,6 @@
 from Vertice import *
 from Arista import *
-from Sabotage import cargarArchivoSabotage
+from AntiSabotaje import *  
 
 class RedDeTransporte:
 	'''
@@ -213,7 +213,7 @@ class RedDeTransporte:
 			raise ValueError("Arista Inexistente.")
 
 	
-	def esConexa(self):
+	def estaConectada(self):
 		verticesAccesibles = llegarAlSumidero(self)
 		
 		if ( ( self.sumidero.obtenerNumero() not in verticesAccesibles )
@@ -234,7 +234,7 @@ class RedDeTransporte:
 			identificador = a.obtenerId()
 			aristaBorrada = self.borrarArista(numOrigen, numDestino, identificador)
 			
-			if not self.esConexa():
+			if not self.estaConectada():
 				aristasDeCorte.append(aristaBorrada)
 			
 			self.agregarArista(numOrigen, numDestino, pesoArista, identificador)
@@ -288,15 +288,5 @@ def llegarAlSumidero_visitar(v, visitados):
 		if w.obtenerNumero() not in visitados:
 			llegarAlSumidero_visitar(w, visitados)
 
-
-
-red = RedDeTransporte()
-
-with open("MapasDePrueba/mapa42.map") as file:
-	lineas = file.readlines()
-	
-	for linea in lineas:	
-		numOrigen, numDestino, peso = linea.split(' ')
-		red.agregarArista(int(numOrigen), int(numDestino), int(peso))
-
-print(red.obtenerAristasDeCorte())
+red = cargarArchivoAntiSabotaje("MapasDePrueba/mapa39.map")
+aristasProtegidas = proteger2Aristas(red)

@@ -360,7 +360,17 @@ class SabotajeTest(unittest.TestCase):
 		self.assertTrue(lasAristasProtegidasSonCorrectas(
 		aristasAProteger,
 		aristasProtegidas))
-
+	
+	
+	def test_proteger_dos_aritas_protege_las_aristas_esperadas35(self):
+		red = cargarArchivoAntiSabotaje("MapasDePrueba/mapa45.map")
+		aristasAProteger =  [ red.obtenerAristasDesdeHasta(0,2)[0],
+		red.obtenerAristasDesdeHasta(2,3)[0] ]
+		aristasProtegidas = proteger2Aristas(red)
+		self.assertTrue(lasAristasProtegidasSonCorrectas(
+		aristasAProteger,
+		aristasProtegidas))
+	
 
 	def test_carga_del_archivo_exitosa(self):
 		red = RedDeTransporte()
