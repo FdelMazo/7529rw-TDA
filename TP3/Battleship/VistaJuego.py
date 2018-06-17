@@ -1,8 +1,8 @@
 from Terminal import Terminal
 from VistaPartida import VistaPartida
 
-
 class VistaJuego():
+	"""Clase encargada de mostrar el juego. Es decir, un conjunto de partidas con distintos jugadores"""
 	def __init__(self, juego, no_input):
 		self.juego = juego
 		self.terminal = Terminal(no_input)
@@ -13,7 +13,7 @@ class VistaJuego():
 				 "*******************************\n"
 
 		print(self.terminal.pretty_string(string, 'TITLE'))
-		self.terminal.print_command()
+		self.terminal.print_avisar_input()
 		self.terminal.clear()
 
 	def cambioDeTurno(self):

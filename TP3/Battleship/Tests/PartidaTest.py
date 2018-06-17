@@ -28,7 +28,7 @@ class TestBarco(unittest.TestCase):
 		barco2 = Barco(100)
 		barcos = [barco1, barco2]
 		partida = Partida([[0, 0], [0, 0]], barcos, 0, None)
-		partida.setPosicionesIniciales()
+		partida.setPosicionesDefault()
 		for i,b in enumerate(barcos):
 			self.assertEqual(b.getPosicion(),(0,i))
 

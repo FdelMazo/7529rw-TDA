@@ -1,4 +1,5 @@
 class Partida():
+	"""Clase responsable de la partida de cada jugador, sin idea de el resto de las partidas"""
 	def __init__(self, matriz, barcos, cantidadLanzaderas, jugador):
 		self.matriz = matriz
 		self.barcos = barcos
@@ -14,7 +15,7 @@ class Partida():
 	def terminada(self):
 		return not self.getBarcosVivos()
 
-	def setPosicionesIniciales(self):
+	def setPosicionesDefault(self):
 		for i, barco in enumerate(self.barcos):
 			barco.setPosicion(0,i)
 
@@ -33,6 +34,8 @@ class Partida():
 		self.puntos += len(self.getBarcosVivos())
 		if self.targetDelTurno:
 			for t in self.targetDelTurno:
+				# Cabe aclarar (aca o en otro lado del codigo) que se esta lleno de !=None
+				# Esto es porque un target puede ser el barco 0, y en python evalua a falso (entonces no se puede hacer if not t)
 				if t!=None: self.barcos[t].recibirDanio(self.getDanioCasillero(*self.barcos[t].getPosicion()))
 		self.avanzarBarcos()
 		self.turno += 1

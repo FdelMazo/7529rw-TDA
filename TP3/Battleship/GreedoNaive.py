@@ -11,10 +11,6 @@ class GreedoNaive(Jugador):
 	Agarro el juego entero y lo simulo.
 	Como necesito el mejor turno (con mis condiciones de que el mejor == el que mas danio hace), puedo iterar.
 	Nunca me importa el resto de los turnos. Solo el actual.
-
-	for turno in turnos:
-		for lanzadera in lanzaderas:
-			hago el mayor danio posible
 	"""
 
 	def __init__(self):
@@ -27,7 +23,7 @@ class GreedoNaive(Jugador):
 			# Reversed para que sea estable el ordenamiento y si tiene dos barcos con la misma vida elija en orden
 			x, y = barco.getPosicion()
 			danioSegunBarco.append((barco, partida.getDanioCasillero(x, y)))
-		danioSegunBarco.sort(key=lambda x: x[1])
+		danioSegunBarco.sort(key=lambda x: x[1]) # ordeno segun danio de menor a mayor
 		barcoActual = danioSegunBarco[-1]
 		vidaActual = barcoActual[0].getVida()
 		targets = []

@@ -7,10 +7,9 @@ class Brutus(Jugador):
 	Brutus:
 		Greedy: De mi conjunto de turnos a jugar, mi subproblema es hacer el mejor turno
 		Fuerza Bruta: Saco todas las posibles combinaciones de mi turno y elejo el optimo de eso.
-		Turno optimo: El que mas mata, y despues el que mas danio saca
+		Turno optimo: El que mas barcos mata, y de esos el que mas danio saca
 
-	Ojo!
-	Sumatoria turnos optimos != Juego optimo
+	Considerablemente lento (fuerza bruta)
 	"""
 
 	def __init__(self):

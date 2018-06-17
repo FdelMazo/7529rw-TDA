@@ -7,5 +7,5 @@ class Jugador():
 
 	def elegirTargetsDeLaPartida(self, partida):
 		"""Recibe el estado del juego, NO LO MODIFICA (dummy/copy/simulacion)
-		Devuelve una lista de filas de barcos a los que ataca cada lanzadera"""
-		pass
+		Devuelve todos los turnos a jugar"""
+		raise NotImplementedError

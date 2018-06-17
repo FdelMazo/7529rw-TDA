@@ -13,7 +13,6 @@ CLEAR = "\033[H\033[J"
 
 COLOR_SEGUN_FUNCION = {'OK': GREEN, 'NOT_OK': RED, 'TITLE': PURPLE}
 
-
 class Terminal():
 	"""Clase encargada del manejo de colores, limpiado de la terminal y separacion con teclado (input)
 	En Linux se imprimen cadenas con colores
@@ -40,5 +39,5 @@ class Terminal():
 		if self.linux: print(CLEAR)
 		elif self.windows: os.system('cls')
 
-	def print_command(self):
+	def print_avisar_input(self):
 		if self.input: print(self.pretty_string('ENTER PARA CONTINUAR', 'TITLE'))

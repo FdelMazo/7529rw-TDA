@@ -6,13 +6,7 @@ class Greedo(Jugador):
 	"""
 	Greedo Smart:
 		Greedy: De mi conjunto de turnos a jugar, mi subproblema es hacer el mejor turno
-		Fuerza Bruta: Saco todas las posibles combinaciones de mi turno y elejo el optimo de eso.
-		Turno optimo: El que mas mata, y despues el que mas danio saca
-
-	Dentro del problema del turno (y no del juego), esta solucion es la optima,
-		ya que si mi objetivo final es producir la menor cantidad de puntos posibles, con esto los disminiyo a su maximo,
-		gracias a que estoy produciendo la mayor cantidad de muertes posibles
-		En la decision de generar x muertes en dos turnos iguales, se torna a generar mayor danio posible.
+		Turno optimo: El que mas barcos mata, y de esos el que mas danio saca
 
 	Ojo!
 	Sumatoria turnos optimos != Juego optimo
@@ -53,6 +47,7 @@ class Greedo(Jugador):
 			tirosParaMatar, danio, vida, id = atributosBarco[barcoActual]
 			if not (lanzaderas - i >= tirosParaMatar):
 				barcoActual = max(atributosBarco, key=sortPorDanio(atributosBarco))
+				tirosParaMatar, danio, vida, id = atributosBarco[barcoActual]
 			targets.append(barcoActual.getID())
 			vida -= danio
 			atributosBarco[barcoActual] = tirosParaMatar-1, danio, vida, id
@@ -63,6 +58,7 @@ class Greedo(Jugador):
 		return targets
 
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
+		# Deepcopy hace copias de todos los objetos dentro del objeto, entonces puedo sacarles vida a mis barcos sin molestar a la partida original, de la cual no puedo ni debo tocar nada
 		simulacion = deepcopy(partidaOriginal)
 		targetsTotales = []
 

@@ -143,7 +143,15 @@ def jugarSegundaPartida(barcosRemanentes, primeraPartida, matriz, cantidadLanzad
 
 class Dyno(Jugador):
 	"""
-	Dyno dyno
+	Dyno:
+		Juega partidas reducidas, y en base a esas genera nuevas partidas. Así, hasta llegar a la mejor partida.
+
+		La reduccion consiste en partidas de una lanzadera y un barco
+
+		Entonces, iterando desde barco mas dificil de matar:
+			- Busca cuales son sus partidas posibles a jugar
+			- De lo que ya tenia memorizado, busca las partidas posibles para jugar con un barco mas que lo anterior
+			- De las combinaciones, elige la mejor partida
 	"""
 
 	def __init__(self):
