@@ -23,18 +23,16 @@ class Dyno(Jugador):
 	def elegirTargetsDeLaPartida(self, partidaOriginal):
 		matriz, barcos, cantidadLanzaderas = partidaOriginal.getMatriz(), partidaOriginal.getBarcosVivos(), partidaOriginal.getCantidadLanzaderas()
 
-		turnosParaTodos = self.comoMatarBarcos(matriz, barcos, cantidadLanzaderas)
+		turnosParaTodos = self.comoMatarBarcos(matriz, barcos)
 		heapDeBarcosDificiles = sortPorBarcoDificilDeMatar(turnosParaTodos)
 		_, barcoActualID = heappop(heapDeBarcosDificiles)
 		partidasPorBarco = self.combinacionesAPartidas(barcoActualID, turnosParaTodos[barcos[barcoActualID]],cantidadLanzaderas)
 
 		resultados = self.definirPartidaAJugar(heapDeBarcosDificiles, turnosParaTodos, partidasPorBarco, barcos,cantidadLanzaderas)
 
-		primeraPartida, barcosRemanentes = self.jugarPrimeraPartida(resultados, barcos)
-		if not barcosRemanentes: return primeraPartida
-
-		segundaPartida = jugarSegundaPartida(barcosRemanentes, primeraPartida, matriz, cantidadLanzaderas)
-		return segundaPartida
+		partida, barcosRemanentes = self.jugarPartidaMatrizFinita(resultados, barcos)
+		if barcosRemanentes: partida = matarBarcosRemanentes(partida, barcosRemanentes, matriz, cantidadLanzaderas)
+		return partida
 
 	def partidaOptima(self, partidas):
 		"""La partida optima de una lista de partidas es la mas 'ajustada', es decir, la que mas dispara y gana lo antes posible
@@ -103,20 +101,13 @@ class Dyno(Jugador):
 				while indice in listaIndices:
 					indice += listaOriginal[indice + 1:].index(elem) + 1
 				listaIndices.append(indice)
-			resultados.append(listaIndices)
+			if listaIndices not in resultados: resultados.append(listaIndices)
 		return resultados
 
-	def combinacionesParaBarco(self, fila, barco, cantidadLanzaderas):
-		combinaciones = self.combinacionesMatadoras(fila, barco.getVida())
-		combinacionesMatadorasBarco = []
-		for combinacion in combinaciones:
-			if combinacion not in combinacionesMatadorasBarco: combinacionesMatadorasBarco.append(combinacion)
-		return combinacionesMatadorasBarco
-
-	def comoMatarBarcos(self, matriz, barcos, cantidadLanzaderas):
+	def comoMatarBarcos(self, matriz, barcos):
 		turnosParaTodos = {}
 		for y, fila in enumerate(matriz):
-			turnosDondeMuere = self.combinacionesParaBarco(fila, barcos[y], cantidadLanzaderas)
+			turnosDondeMuere = self.combinacionesMatadoras(fila, barcos[y].getVida())
 			if turnosDondeMuere: turnosParaTodos[barcos[y]] = sorted(turnosDondeMuere)
 		return turnosParaTodos
 
@@ -134,19 +125,18 @@ class Dyno(Jugador):
 				if partidasPosiblesAAppendear: resultados[i] = self.partidaOptima(partidasPosiblesAAppendear)
 		return resultados
 
-	def jugarPrimeraPartida(self, resultados, barcos):
+	def jugarPartidaMatrizFinita(self, resultados, barcos):
 		primeraPartida = self.partidaOptima(resultados)
-		barcosRemanentes = None
-		barcosDePrimeraPartida = []
+		barcosAtacados = []
 		for sublist in primeraPartida:
 			if not sublist: continue
 			for item in sublist:
-				if item != None and item not in barcosDePrimeraPartida:
-					barcosDePrimeraPartida.append(item)
-		if barcosDePrimeraPartida:
-			barcosRemanentes = [b for b in barcos if b.getID() not in barcosDePrimeraPartida]
+				if item != None and item not in barcosAtacados:
+					barcosAtacados.append(item)
+		if barcosAtacados:
+			barcosRemanentes = sorted([b for b in barcos if b.getID() not in barcosAtacados],key=lambda b:-b.getVida())
 		else:
-			barcosRemanentes = [b for b in barcos if b.getID()]
+			barcosRemanentes = sorted([b for b in barcos if b.getID()],key=lambda b:-b.getVida())
 		return primeraPartida, barcosRemanentes
 
 
@@ -173,26 +163,28 @@ def simularPartidaConPartidaParcial(partidaParcial, partidaBarcoActual, cantidad
 	return partidaResultado
 
 
-def jugarSegundaPartida(barcosRemanentes, primeraPartida, matriz, cantidadLanzaderas):
-	segundaPartida = []
-	for b in barcosRemanentes:
-		vida = b.getVida()
-		id = b.getID()
-		for i, turno in enumerate(primeraPartida):
+def matarBarcosRemanentes(partida, barcosRemanentes , matriz, cantidadLanzaderas):
+	"""De manera greedy, mata a todos los barcos que no pudo matar en una partida con la matriz finita
+	Primero llena todas las lanzaderas sin disparar con el primer barco remanente"""
+	partidaNueva = []
+	for barco in barcosRemanentes:
+		vida = barco.getVida()
+		id = barco.getID()
+		for i, turno in enumerate(partida):
 			turnoNuevo = copy(turno)
-			if turno and all([x for x in turno if x != 0]):
-				pass
+			if turno and all([x for x in turno if x != 0]): pass
 			elif not turno:
-				turnoNuevo = [b.getID()] * (cantidadLanzaderas)
-				vida -= cantidadLanzaderas * matriz[id][i - 1]
+				turnoNuevo = [barco.getID()] * (cantidadLanzaderas)
+				vida -= cantidadLanzaderas * matriz[id][i]
 			else:
 				for i, lanzadera in enumerate(turno):
 					if lanzadera == None:
-						turnoNuevo[i] = b.getID()
-						vida -= matriz[id][i - 1]
-			segundaPartida.append(turnoNuevo)
+						turnoNuevo[i] = id
+						vida -= matriz[id][i]
+			partidaNueva.append(turnoNuevo)
+			if vida <= 0: break
 		while (vida > 0):
-			segundaPartida.append([b.getID()] * (cantidadLanzaderas))
-			vida -= cantidadLanzaderas * matriz[id][i-1]
-		segundaPartida.append([b.getID()] * (cantidadLanzaderas))
-	return segundaPartida
+			partidaNueva.append([barco.getID()] * (cantidadLanzaderas))
+			vida -= cantidadLanzaderas * matriz[id][i]
+		partidaNueva.append([barco.getID()] * (cantidadLanzaderas))
+	return partidaNueva
