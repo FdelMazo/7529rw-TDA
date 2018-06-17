@@ -175,14 +175,14 @@ class Dyno(Jugador):
 					turnoNuevo = [barco.getID()] * (cantidadLanzaderas)
 					vida -= cantidadLanzaderas * matriz[id][i]
 				else:
-					for i, lanzadera in enumerate(turno):
+					for j, lanzadera in enumerate(turno):
 						if lanzadera == None:
-							turnoNuevo[i] = id
+							turnoNuevo[j] = id
 							vida -= matriz[id][i]
 				partidaNueva.append(turnoNuevo)
 				if vida <= 0: break
 			while (vida > 0):
+				columna = len(partidaNueva) % len(matriz[id])
 				partidaNueva.append([barco.getID()] * (cantidadLanzaderas))
-				vida -= cantidadLanzaderas * matriz[id][i]
-			partidaNueva.append([barco.getID()] * (cantidadLanzaderas))
+				vida -= cantidadLanzaderas * matriz[id][columna]
 		return partidaNueva
