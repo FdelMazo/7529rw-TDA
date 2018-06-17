@@ -101,6 +101,45 @@ def definirPartidaAJugar(heapDeBarcosDificiles, turnosParaTodos, partidasPorBarc
             if partidasPosiblesAAppendear: resultados[i] = minimosPuntos(partidasPosiblesAAppendear)
     return resultados
 
+def jugarPrimeraPartida(resultados, barcos):
+    primeraPartida = minimosPuntos(resultados)
+    barcosRemanentes = None
+    barcosDePrimeraPartida = []
+    for sublist in primeraPartida:
+        if not sublist: continue
+        for item in sublist:
+            if item != None and item not in barcosDePrimeraPartida:
+                barcosDePrimeraPartida.append(item)
+    if barcosDePrimeraPartida:
+        barcosRemanentes = [b for b in barcos if b.getID() not in barcosDePrimeraPartida]
+    else:
+        barcosRemanentes = [b for b in barcos if b.getID()]
+    return primeraPartida, barcosRemanentes
+
+def jugarSegundaPartida(barcosRemanentes, primeraPartida, matriz, cantidadLanzaderas):
+    segundaPartida = []
+    for b in barcosRemanentes:
+        vida = b.getVida()
+        id = b.getID()
+        for i, turno in enumerate(primeraPartida):
+            turnoNuevo = copy(turno)
+            if turno and all([x for x in turno if x != 0]):
+                pass
+            elif not turno:
+                turnoNuevo = [b.getID()] * (cantidadLanzaderas)
+                vida -= cantidadLanzaderas * matriz[id][i - 1]
+            else:
+                for i, lanzadera in enumerate(turno):
+                    if lanzadera == None:
+                        turnoNuevo[i] = b.getID()
+                        vida -= matriz[id][i - 1]
+            segundaPartida.append(turnoNuevo)
+        while (vida > 0):
+            segundaPartida.append([b.getID()] * (cantidadLanzaderas))
+            vida -= cantidadLanzaderas * matriz[id][i - 1]
+        segundaPartida.append([b.getID()] * (cantidadLanzaderas))
+    return segundaPartida
+
 
 class Dyno(Jugador):
 	"""
@@ -120,37 +159,10 @@ class Dyno(Jugador):
 
 		resultados = definirPartidaAJugar(heapDeBarcosDificiles, turnosParaTodos, partidasPorBarco, barcos, cantidadLanzaderas)
 
-		primeraPartida = minimosPuntos(resultados)
-		barcosDePrimeraPartida = []
-		for sublist in primeraPartida:
-			if not sublist: continue
-			for item in sublist:
-				if item!=None and item not in barcosDePrimeraPartida:
-					barcosDePrimeraPartida.append(item)
-		if barcosDePrimeraPartida: barcosRemanentes = [b for b in barcos if b.getID() not in barcosDePrimeraPartida]
-		else: barcosRemanentes = [b for b in barcos if b.getID()]
+		primeraPartida, barcosRemanentes = jugarPrimeraPartida(resultados, barcos)
 		if not barcosRemanentes: return primeraPartida
-		segundaPartida = []
-		for b in barcosRemanentes:
-			vida = b.getVida()
-			id = b.getID()
-			for i,turno in enumerate(primeraPartida):
-				turnoNuevo = copy(turno)
-				if turno and all([x for x in turno if x!=0]):
-					pass
-				elif not turno:
-					turnoNuevo = [b.getID()] * (cantidadLanzaderas)
-					vida -= cantidadLanzaderas*matriz[id][i-1]
-				else:
-					for i,lanzadera in enumerate(turno):
-						if lanzadera==None:
-							turnoNuevo[i] = b.getID()
-							vida -= matriz[id][i-1]
-				segundaPartida.append(turnoNuevo)
-			while(vida>0):
-				segundaPartida.append([b.getID()] * (cantidadLanzaderas))
-				vida -= cantidadLanzaderas * matriz[id][i-1]
-			segundaPartida.append([b.getID()] * (cantidadLanzaderas))
+
+		segundaPartida = jugarSegundaPartida(barcosRemanentes, primeraPartida, matriz, cantidadLanzaderas)
 		return segundaPartida
 
 def contadoresPeorTurno(partida):
