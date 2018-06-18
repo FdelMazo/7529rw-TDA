@@ -103,11 +103,6 @@ def actualizarCuellosDeBotella(cuellosDeBotella, cuelloDeBotella, redOriginal):
 
 
 def FordFulkerson(redOriginal):
-	'''
-	Devuelve el flujo máximo de la red, sus cuellos de botella
-	y los caminos "reales" (sin aristas de regresión) realizados
-	para computar el flujo máximo.
-	'''
 	
 	flujo = {}
 	capacidad = {}
