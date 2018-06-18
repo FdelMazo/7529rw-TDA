@@ -25,7 +25,9 @@ class Dyno(Jugador):
 
 		turnosParaTodos = {}
 		for id, fila in enumerate(matriz):
-			turnosDondeMuere = self.combinacionesMatadoras(fila, barcos[id].getVida())
+			barco = barcos[id]
+			inicio = barco.getPosicion()[0]
+			turnosDondeMuere = self.combinacionesMatadoras(fila[inicio:], barcos[id].getVida())
 			if turnosDondeMuere: turnosParaTodos[barcos[id]] = sorted(turnosDondeMuere)
 
 		heapDeBarcosDificiles = self.sortPorBarcoDificilDeMatar(turnosParaTodos)
@@ -132,7 +134,7 @@ class Dyno(Jugador):
 				if item != None and item not in barcosAtacados:
 					barcosAtacados.append(item)
 		if barcosAtacados:
-			barcosRemanentes = sorted([b for b in barcos if b.getID() not in barcosAtacados],key=lambda b:-b.getVida())
+			barcosRemanentes = sorted([b for b in barcos if b.getID() not in barcosAtacados],key=lambda b:b.getVida())
 		else:
 			barcosRemanentes = sorted([b for b in barcos if b.getID()],key=lambda b:-b.getVida())
 		return resultados, barcosRemanentes
@@ -165,24 +167,33 @@ class Dyno(Jugador):
 		"""De manera greedy, mata a todos los barcos que no pudo matar en una partida con la matriz finita
 		Primero llena todas las lanzaderas sin disparar con el primer barco remanente"""
 		partidaNueva = []
+		partidaLlena = False
+		actual = len(barcosRemanentes)-1
+		for i, turno in enumerate(partida):
+			barco = barcosRemanentes[actual]
+			vida = barco.getVida()
+			id = barco.getID()
+			xPosicionOriginal = barco.getPosicion()[0]
+			columna = (xPosicionOriginal + i)% len(matriz[id])
+			turnoNuevo = copy(turno)
+			if turno and all([x for x in turno if x != 0]): pass
+			if not turno:
+				turnoNuevo = [barco.getID()] * (cantidadLanzaderas)
+				vida -= cantidadLanzaderas * matriz[id][columna]
+			else:
+				for j, lanzadera in enumerate(turno):
+					if lanzadera == None:
+						turnoNuevo[j] = id
+						vida -= matriz[id][columna]
+			partidaNueva.append(turnoNuevo)
+			if vida <= 0: barcosRemanentes.pop()
+
 		for barco in barcosRemanentes:
 			vida = barco.getVida()
 			id = barco.getID()
-			for i, turno in enumerate(partida):
-				turnoNuevo = copy(turno)
-				if turno and all([x for x in turno if x != 0]): pass
-				elif not turno:
-					turnoNuevo = [barco.getID()] * (cantidadLanzaderas)
-					vida -= cantidadLanzaderas * matriz[id][i]
-				else:
-					for j, lanzadera in enumerate(turno):
-						if lanzadera == None:
-							turnoNuevo[j] = id
-							vida -= matriz[id][i]
-				partidaNueva.append(turnoNuevo)
-				if vida <= 0: break
+			xPosicionOriginal = barco.getPosicion()[0]
 			while (vida > 0):
-				columna = len(partidaNueva) % len(matriz[id])
+				columna = (len(partidaNueva) + xPosicionOriginal) % len(matriz[id])
 				partidaNueva.append([barco.getID()] * (cantidadLanzaderas))
 				vida -= cantidadLanzaderas * matriz[id][columna]
 		return partidaNueva
