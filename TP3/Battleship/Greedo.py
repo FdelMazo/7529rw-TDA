@@ -21,14 +21,14 @@ class Greedo(Jugador):
 		targetsTotales = []
 
 		while not simulacion.terminada():
-			targets = self.elegirTargetDelTurno(simulacion)
+			targets = self.elegirTargetsDelTurno(simulacion)
 			simulacion.setTargetDelTurno(targets)
 			simulacion.jugarTurno()
 			targetsTotales.append(targets)
 
 		return targetsTotales
 	
-	def elegirTargetDelTurno(self, partida):
+	def elegirTargetsDelTurno(self, partida):
 		"""Esta funcion y metodologia es valida porque greedy me pide lo mejor para mi subproblema actual, sin pensar en el resto
 		Puedo iterar mis turnos y elegir para cada turno por separado"""
 		barcos, lanzaderas = partida.getBarcosVivos(), partida.getCantidadLanzaderas()
@@ -36,28 +36,17 @@ class Greedo(Jugador):
 		# Diccionario de listas de [Tiros suficientes para matarlo en este turno, danio en casilla, vida]
 		atributosBarco = {}
 
-		def calcular_tiros(vida, danio):
-			if not danio:
-				danio = 1
-			return -(-vida//danio)
-		
 		for barco in barcos:
 			vida = barco.getVida()
 			danio = partida.getDanioCasillero(*barco.getPosicion())
-			atributosBarco[barco] = (calcular_tiros(vida, danio), danio, vida, barco.getID())
-		
-		def sortPorTiros(dic):
-			return lambda x: (-dic[x][0],dic[x][1], -dic[x][3])
-
-		def sortPorDanio(dic):
-			return lambda x: (dic[x][1], -dic[x][3])
+			atributosBarco[barco] = (tirosParaMatarlo(vida, danio), danio, vida, barco.getID())
 
 		targets = []
 		for i in range(lanzaderas):
-			barcoActual = max(atributosBarco, key=sortPorTiros(atributosBarco))
+			barcoActual = max(atributosBarco, key=maxSegunTiro(atributosBarco))
 			tirosParaMatar, danio, vida, id = atributosBarco[barcoActual]
 			if not (lanzaderas - i >= tirosParaMatar):
-				barcoActual = max(atributosBarco, key=sortPorDanio(atributosBarco))
+				barcoActual = max(atributosBarco, key=maxSegunDanio(atributosBarco))
 				tirosParaMatar, danio, vida, id = atributosBarco[barcoActual]
 			targets.append(barcoActual.getID())
 			vida -= danio
@@ -67,3 +56,14 @@ class Greedo(Jugador):
 				if not atributosBarco: break
 		targets += [None] * (lanzaderas - len(targets))
 		return targets
+
+
+def tirosParaMatarlo(vida, danio):
+	if danio==0: danio = 1
+	return -(-vida//danio)
+
+def maxSegunTiro(dic):
+	return lambda x: (-dic[x][0], dic[x][1], -dic[x][3])
+
+def maxSegunDanio(dic):
+	return lambda x: (dic[x][1], -dic[x][3])
