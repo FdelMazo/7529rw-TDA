@@ -1,15 +1,17 @@
 def elegirMejorColumna(lista, objetivo, cantidadLanzaderas):
 	lista = [x * cantidadLanzaderas for x in lista]
-	hileraAcumulada,mejorHilera,indice = [], [], 0
+	hileraAcumulada,mejorHilera,indice,sumatoria = [], [], 0,0
 	for i,elem in enumerate(lista):
 		hileraAcumulada.append(elem)
-		if sum(hileraAcumulada)>objetivo:
-			hileraAcumulada.remove(elem)
+		sumatoria+=elem
+		if sumatoria>objetivo:
+			hileraAcumulada.pop()
 			if len(hileraAcumulada) > len(mejorHilera):
 				mejorHilera = hileraAcumulada
 				indice = i - (len(mejorHilera))
 			hileraAcumulada = []
-	if sum(hileraAcumulada) <= objetivo and len(hileraAcumulada) > len(mejorHilera):
+			sumatoria = 0
+	if len(hileraAcumulada) > len(mejorHilera):
 		indice = len(hileraAcumulada) - 1
 	if not mejorHilera: return lista.index(min(lista))
 	return indice
