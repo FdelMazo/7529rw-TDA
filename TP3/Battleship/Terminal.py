@@ -20,7 +20,7 @@ class Terminal():
 	No se puede asumir el comportamiento de cualquier otro OS"""
 
 	def __init__(self, no_input):
-		self.linux = True if platform.system() == 'Linux' else False
+		self.linux = True if platform.system() == 'Linux' and os.isatty(1) else False
 		self.windows = True if platform.system() == 'Windows' else False
 		self.input = not no_input
 

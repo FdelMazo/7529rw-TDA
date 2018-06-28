@@ -31,6 +31,7 @@ class Dyno(Jugador):
 			if turnosDondeMuere: turnosParaTodos[barcos[id]] = sorted(turnosDondeMuere)
 
 		heapDeBarcosDificiles = self.sortPorBarcoDificilDeMatar(turnosParaTodos)
+		if not heapDeBarcosDificiles: return self.matarBarcosRemanentes([], barcos, matriz, cantidadLanzaderas)
 		_, barcoMasDificil = heappop(heapDeBarcosDificiles)
 		partidasPrimerBarco = self.combinacionesAPartidas(barcoMasDificil, turnosParaTodos[barcos[barcoMasDificil]],cantidadLanzaderas)
 		partidaAJugar = self.definirPartidaAJugar(heapDeBarcosDificiles, turnosParaTodos, partidasPrimerBarco, barcos,cantidadLanzaderas)
