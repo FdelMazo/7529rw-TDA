@@ -1,6 +1,6 @@
-%sudo apt-get install texlive texlive-lang-spanish
-%sudo apt-get install python-pygments
-%pdflatex -shell-escape Informe.tex
+% sudo apt-get install texlive texlive-lang-spanish
+% sudo apt-get install python-pygments
+% pdflatex --shell-escape Informe.tex
 
 \documentclass[article,a4paper]{article}
 
@@ -17,6 +17,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{minted}
+\usepackage{hyperref}
 \newcommand{\bigO}{\mathcal{O}}
 
 \pagestyle{fancy}
@@ -27,6 +28,12 @@
 \fancyfoot[C]{\thepage}
 \renewcommand{\footrulewidth}{0.4pt}
 \setlength{\footskip}{17pt}
+
+\hypersetup{
+    pdftitle={Trabajo Práctico 1},
+	pdfsubject={Teoría de Algoritmos I},
+	pdfauthor={Grupo MinMax},
+}
 
 \begin{document}
 
